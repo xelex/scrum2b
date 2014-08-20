@@ -1,7 +1,24 @@
 <% content_for :header_tags do %>
-    <%= stylesheet_link_tag 'version', :plugin => 'scrum2b' %>
+  <%= stylesheet_link_tag 'version', :plugin => 'scrum2b' %>
+  <%= javascript_include_tag "angular.min.js", :plugin => 'scrum2b' %>
 <% end %>
-<div class="content full_mode">
+<script>
+  var project = angular.module('project', []);
+    project.controller('BoardsCtrl', function ($scope){
+      $scope.versions = [
+          <% @list_versions_open.each do |version| %>
+            {"name":" <%= version.name %> ","id":" <%= version.id %> "},
+          <% end %>
+          ];
+      $scope.members = [
+          <% @members.each do |member| %>
+            {"name":" <%= member.firstname + ' ' + member.lastname %> ","id":" <%= member.id %> "},
+          <% end %>
+          ];
+      });
+</script>
+<div  ng-app="project" >
+<div class="content full_mode" ng-controller="BoardsCtrl">
   <div  class="filter" >
     <div class="filter_left">
       <h3>Scrum2B Tool Demo prototype</h3>
@@ -12,20 +29,16 @@
       <ul >
         <li>
           <select>
-            <option>Sprint 1</option>
-            <option>Sprint 2</option>
-            <option>Sprint 3</option>
-            <option>Sprint 4</option>
-            <option>Sprint 5</option>
+            <option ng-repeat="version in versions" value="{{ version.id }}">{{ version.name }}</option>
           </select>
         </li>
         <li>
-          <select>
-            <option>Member 1</option>
-            <option>Member 2</option>
-            <option>Member 3</option>
-            <option>Member 4</option>
-            <option>Member 5</option>
+          <select name="select_member" id="select_member">
+            <option value="all" ><%= l(:label_select_all_member)%></option>
+            <% if User.current.logged? %>
+             <option value="me" <% if session[:params_select_member] && session[:params_select_member] == "me" %><%= selected="selected" %><% end %>><%= l(:label_select_me)%></option>
+            <% end %>
+            <option ng-repeat="member in members" value=" {{ member.id }}">{{ member.name }}</option>
           </select>
         </li>
         <li>
@@ -34,7 +47,7 @@
       </ul>
     </div>
   </div> <!--end filter-->
-  <span class="icon_backlog"><img src="images/icon-right.png"></span>
+  <span class="icon_backlog"><%= image_tag('abc.jpeg')%></span>
   <span class="closed_backlog" ><img src="images/icon-left.png"></span>
   <div class="backlog ">
     <div class="padding_5 background_d">
@@ -1673,7 +1686,7 @@
   </div><!--end popup-->
 
 </div><!--end content-->
-
+</div>
 <script type="text/javascript">
 	
 $(document).ready(function(){

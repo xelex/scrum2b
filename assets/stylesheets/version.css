@@ -22,17 +22,16 @@
   .backlog #sortable_backlog { overflow: auto; height: 450px !important; min-height: 450px !important; max-height: 450px !important; }
   /*filter*/
   .filter { height: 60px; background: #275888; color: #ebebeb; margin-bottom: 30px; }
-  .filter h3 {color: #ebebeb}
-  .filter .filter_left { width: 40%; float: left; }
-  .filter .filter_right { width: 60%; float: left; }
+  .filter h3,.filter p {color: #ebebeb;margin:0px;padding:0px;}
+  .filter h3 {margin-top:5px;line-height: 28px}
+  .filter .filter_left { width: 30%; float: left;text-align: center }
+  .filter .filter_right { width: 70%; float: left; }
   .filter .filter_left .icon_backlog img { height: 20px; width: 20px; }
-  .filter .filter_left ul { display: inline-flex; list-style: none; margin-top: 15px; }
-  .filter .filter_right  img { height: 40px; width: 40px; text-align: right; }
-  .filter .filter_right ul { float: right; text-align: right; display: inline-flex; list-style: none; margin-top: 15px; margin-right: 5px}
-  .filter .filter_right ul li { margin-left: 10px; }
-  .filter .filter_right ul li select {border-radius: 5px; height: 25px; width: 90px;}
-  .filter .filter_right ul li input {border-radius: 5px; height: 25px; width: 60px;}
-  .filter .filter_right {text-align: center;}
+  .filter .filter_left ul { display: inline-flex; list-style: none; margin:0;padding: 0px }
+  .filter .filter_right ul { float: right; text-align: right; display: inline-flex; list-style: none; margin: 0 5px  0 0;padding: 0px }
+  .filter .filter_right ul li { margin-left: 10px; line-height: 60px}
+  .filter .filter_right ul li select,.filter .filter_right ul li input  {border-radius: 2px; height: 20px;padding: 0 5px;border: none}
+  {border-radius: 2px; height: 20px;padding: 0 5px}
 
   .message { width: 30%; height: 100px; text-align: center; position: fixed; top: 10px; left: 440px; z-index: 1001;background: #C18888; opacity: 0.5;}
   .message span { position: fixed; top: 13px; z-index: 1010; left: 808px;  }
