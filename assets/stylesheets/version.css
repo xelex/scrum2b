@@ -1,3 +1,11 @@
+.clearfix:after { content: "."; display: block; clear: both; visibility: hidden;line-height: 0; height: 0; }
+ 
+  .clearfix { display: inline-block; }
+ 
+  html[xmlns] .clearfix { display: block; }
+ 
+  * html .clearfix { height: 1%; }
+
   #content {padding: 5px 0px !important; }
   body { margin: 0;}
 
@@ -7,18 +15,20 @@
   .s2b_column_4 { width: 26.66666666667%; float: left;}
   .s2b_column_5 { width: 32.2% !important; float: left;}
   .background_d {background: #7996a5 !important; color: #ebebeb}
-  .width_75 {width: 72.5%; float: right;}
+  .width_75 {width: 74.5%; float: right;}
   .width_33 {width: 33.33333% !important;}
   .border_status {border: 1px solid #9a9a9a;}
 
-  .sprint_1, .sprint_2, .sprint_3, .sprint_4 {height: auto !important; padding-bottom: 50px !important;}
-  .backlog {min-height: 50px; z-index: 30; position: absolute; left: 30px; width: 25%; }
+  .sprint { display: none;}
+  .sprint_1, .sprint_2, .sprint_3, .sprint_4 {height: auto !important; /*padding-bottom: 50px !important;*/}
+  .backlog {min-height: 50px; z-index: 30; position: absolute; width: 25%; }
 
-  .backlog span {font-family: Tahoma,Verdana,Arial,sans-serif; color: #eb8f00; font-size: 18px;}
+  .backlog span {font-family: Tahoma,Verdana,Arial,sans-serif; color: #ebebeb; font-size: 18px;}
   .backlog .icon_add_issue img { float: right; }
   .backlog #sortable_backlog { overflow: auto; height: 450px !important; min-height: 450px !important; max-height: 450px !important; }
+  .title_backlog {text-align: center;}
   /*filter*/
-  .filter { height: 60px; background: #275888; color: #ebebeb;}
+  .filter { height: 60px; background: #275888; color: #ebebeb; margin-bottom: 5px;}
   .filter h3,.filter p {color: #ebebeb;margin:0px;padding:0px;}
   .filter h3 {margin-top:5px;line-height: 28px}
   .filter .filter_left { width: 30%; float: left;text-align: center }
@@ -34,10 +44,13 @@
   .message span { position: fixed; top: 13px; z-index: 1010; left: 808px;  }
   .message span img {width: 20px; height: 20px; }
   .ui-accordion-content { padding-left: 0px !important; padding-right: 0px !important; }
-  .closed_backlog img { height: 20px; width: 20px; position: absolute; top: 120px; }
+  .closed_backlog { width: 45px; text-align: right; float: left;line-height: 20px !important; padding: 1px 4px; margin: 5px 6px; background: #9cc3a8 url("/plugin_assets/scrum2b/images/icon_hide.png") no-repeat 3px 3px; font-size: 14px !important;}
+  
 
   .sprint_total { }
-
+  .sprint {
+    width: 100% !important;
+  }
   /*chi hien 3 sprint dau an colose*/
   .backlog_mode .backlog { display: block;}
   .backlog_mode .issue_closed { display: none;}
@@ -54,14 +67,14 @@
   .full_mode .open_sprint_closed { display: none; }
   .full_mode .closed_backlog {display: none;}
 
-  .ui-state-active {background: linear-gradient(#ECA947, #D29539) !important; }
+  .title_sprint_active {background: linear-gradient(#ECA947, #D29539) !important; }
 
-  .title_sprint {background: #275888; border-radius: 0px !important; color: #ebebeb }
+  .title_sprint {background: #275888; border-radius: 0px !important; color: #ebebeb; padding: 10px;margin: 0px 0px 5px 0px; }
 
   .status_sprint {height: 35px; background: linear-gradient(#ECA947, #D29539); }
   .status_sprint span { line-height: 35px; font-weight: bold; color: #ebebeb; margin-left: 10px; font-size: 16px;}
-  .status_sprint .icon_add_issue {float: right; border: 1px; line-height: 20px; padding: 1px 4px; margin: 5px 6px;
-   background: #9cc3a8 url("/plugin_assets/scrum2b/images/icon_add.png") no-repeat 5px 3px; font-size: 14px; width: 45px; text-align: right;
+  .icon_add_issue {float: right; border: 1px; line-height: 20px !important ; padding: 1px 4px; margin: 5px 6px;
+   background: #9cc3a8 url("/plugin_assets/scrum2b/images/icon_add.png") no-repeat 5px 3px; font-size: 14px !important; width: 45px !important; text-align: right;
     }
   .title_issue { position: relative; }
   .title_issue a{ line-height: 0px !important; color: #54626d !important; }
@@ -180,3 +193,5 @@
   .ui-sortable-placeholder { visibility: visible !important; }
 
   .location_start_issue { height: 30px; background: #666; opacity: 0.5}
+
+  .active {display: block;}

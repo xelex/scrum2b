@@ -16,6 +16,7 @@ class S2bBoardsController < S2bApplicationController
     session[:view_issue] = "board"   
     @list_versions_open = opened_versions_list
     @list_versions_closed = closed_versions_list
+    @issues = @project.issues
   end
   
   def update_status

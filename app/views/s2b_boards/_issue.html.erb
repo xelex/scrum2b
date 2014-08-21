@@ -1,7 +1,7 @@
-<div class="issue ui-state-default small_mode">
+<div class="issue ui-state-default small_mode" ng-repeat="issue in issues" >
   <div class="title_issue">
-    <a href="#">#4 Install thai Capistrano for automatic...</a>
-    <span href="" class="icon_config" ><%= image_tag('icon-config.png', :plugin => 'scrum2b') %></span> 
+    <a href="#">{{ issue.subject }}</a>
+    <span class="icon_config" ><%= image_tag('icon-config.png', :plugin => 'scrum2b') %></span> 
   </div><!--end title issue -->
   <div class="setting hide">
     <ul>
