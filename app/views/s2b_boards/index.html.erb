@@ -16,6 +16,13 @@
             {"name":" <%= member.firstname + ' ' + member.lastname %> ","id":" <%= member.id %> "},
           <% end %>
           ];
+      $scope.new_issues = [
+          <% @new_issues.each do |issue| %>
+            {"subject":" <%= issue.subject %> ","id":" <%= issue.id %> ","assigned_to":"<%= issue.assigned_to %>","description":"<%= issue.description %>"},
+          <% end %>
+          ];
+      
+          
       });
 </script>
 
