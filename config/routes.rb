@@ -1,5 +1,8 @@
 # Plugin's routes
 # See: http://guides.rubyonrails.org/routing.html
+get  's2b_boards/getdata' => 's2b_boards#getdata'
+post  's2b_boards/getdata' => 's2b_boards#getdata'
+post  's2b_boards/getissues' => 's2b_boards#getissues'
 
 post 's2b_boards/index' => 's2b_boards#index'
 get  's2b_boards/index' => 's2b_boards#index'

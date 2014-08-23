@@ -16,7 +16,18 @@ class S2bBoardsController < S2bApplicationController
     session[:view_issue] = "board"   
     @list_versions_open = opened_versions_list
     @list_versions_closed = closed_versions_list
-    @issues = @project.issues
+  end
+  
+  def getdata
+    @versions =  opened_versions_list
+    @issues = opened_versions_list.first.fixed_issues # <- not too useful
+    render :json => {:versions => @versions, :issues => @issues}
+  end
+  
+  def getissues
+    version = Version.find(params[:version_id])
+    @issues = version.fixed_issues # <- not too useful
+    render :json => {:issues => @issues}
   end
   
   def update_status
