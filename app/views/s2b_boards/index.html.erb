@@ -4,94 +4,93 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 <script>
   var scrum2b = angular.module('scrum2b', []);
-    scrum2b.controller('BoardsCtrl', function ($scope, listissues){
-      listissues.list().then(
+  scrum2b.controller('BoardsCtrl', function ($scope, listissues){
+    listissues.list().then(
+      function(data){
+        var arrayissues = [];
+        var arrayversions = [];
+         angular.forEach(data.issues, function(value) {
+           angular.forEach(value, function(value,key) {
+             arrayissues.push(value);
+            })
+         })
+         angular.forEach(data.versions, function(value) {
+           angular.forEach(value, function(value,key) {
+             arrayversions.push(value);
+            })
+         })
+        console.log( "You clicked a paragraph!" + arrayversions);
+        $scope.versions = arrayversions;
+        $scope.issues = arrayissues;
+      }
+    )
+
+    $scope.getIssues = function(version){
+      listissues.getIssues(version.id).then(
         function(data){
-          var arrayissues = [];
-          var arrayversions = [];
-           angular.forEach(data.issues, function(value) {
-             angular.forEach(value, function(value,key) {
-               arrayissues.push(value);
-              })
-           })
-           angular.forEach(data.versions, function(value) {
-             angular.forEach(value, function(value,key) {
-               arrayversions.push(value);
-              })
-           })
-          console.log( "You clicked a paragraph!" + arrayversions);
-          $scope.versions = arrayversions;
-          $scope.issues = arrayissues;
-          console.log ("AAAAAAAAAAAAAAa" + arrayversions[1].name);
-        }
-      )
-      
-      $scope.getIssues = function(version){
-        listissues.getIssues(version.id).then(
-          function(data){
-            arrayissues = [];
-            angular.forEach(data, function(value) {
+          arrayissues = [];
+          angular.forEach(data, function(value) {
+            angular.forEach(value, function(value,key) {
               angular.forEach(value, function(value,key) {
-                angular.forEach(value, function(value,key) {
-                  arrayissues.push(value);
-                })
+                arrayissues.push(value);
               })
             })
-            $scope.issues = arrayissues;
-            console.log( "You clicked a paragraph!" + arrayissues);
-          }
-        )
-      }
-    });
-    
-    scrum2b.service('listissues', function($http, $q){
-        function getIssues(version_id){
-           var request = $http({
-            method: "post",
-            url: "getissues",
-            params: {
-              action: "get"
-            },
-            data: {
-              project_id: "<%= @project.id %>",
-              version_id: version_id,
-            },
-          });
-          return( request.then( handleSuccess, handleError ) );
+          })
+          $scope.issues = arrayissues;
+          console.log( "You clicked a paragraph!" + arrayissues);
         }
-        function getData(callback){
-            var request = $http({
-            method: "post",
-            url: "getdata",
-            params: {
-              action: "get"
-            },
-            data: {
-              project_id: "<%= @project.id %>"
-            },
-          });
-          return( request.then( handleSuccess, handleError ) );
-        }
-
-        return {
-          list: getData,
-          getIssues: getIssues,
-        }
-        function handleError ( response ){
-          if (
-              ! angular.isObject( response.data ) ||
-              ! response.data.message
-            ) {
-            return ( $q.reject("false") );
-          };
-
-          return ( $q.reject( response.data.message ) );
-        }
-
-        function  handleSuccess( response ){
-          return ( response.data );
-        }
+      )
+    }
+  });
+  
+  scrum2b.service('listissues', function($http, $q){
+    function getIssues(version_id){
+       var request = $http({
+        method: "post",
+        url: "getissues",
+        params: {
+          action: "get"
+        },
+        data: {
+          project_id: "<%= @project.id %>",
+          version_id: version_id,
+        },
       });
+      return( request.then( handleSuccess, handleError ) );
+    }
+    function getData(callback){
+        var request = $http({
+        method: "post",
+        url: "getdata",
+        params: {
+          action: "get"
+        },
+        data: {
+          project_id: "<%= @project.id %>"
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+
+    return {
+      list: getData,
+      getIssues: getIssues,
+    }
+    function handleError ( response ){
+      if (
+          ! angular.isObject( response.data ) ||
+          ! response.data.message
+        ) {
+        return ( $q.reject("false") );
+      };
+
+      return ( $q.reject( response.data.message ) );
+    }
+
+    function  handleSuccess( response ){
+      return ( response.data );
+    }
+  });
 </script>
 
 <div ng-app="scrum2b" >
