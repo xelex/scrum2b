@@ -1,6 +1,6 @@
 <div ng-repeat="version in versions" >
-	<h3 class="title_sprint" ng-class="{title_sprint_active : $first}" ng-click="getIssues(version)" > {{version.name}} </h3>
-	<div class="sprint_1 sprint sprint-active clearfix" ng-class="{active : $first}">
+	<h3 class="title_sprint" ng-class="{'title_sprint_active': isActive(version)}" ng-click="getIssues(version)" > {{version.name}} </h3>	
+	<div class="sprint_1 sprint sprint-active clearfix" ng-class="{'active': isActive(version)}">
 	  <div class="s2b_column_4 hide_backlog ">
 	    <div class="padding_5 ">
 	      <div class="border_status">

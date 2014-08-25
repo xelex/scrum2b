@@ -1,4 +1,4 @@
-class S2bApplicationController < ApplicationController
+class S2bApi::ProjectController < ApplicationController
   unloadable
 
   skip_before_filter :verify_authenticity_token
@@ -43,6 +43,7 @@ class S2bApplicationController < ApplicationController
                           :closed => 6,
                           :all => 7}
   
+ 
   def editable_for_project?
     return @editable_for_project if @editable_for_project.present?
     @viewable_for_project = true and return true if User.current.admin?
@@ -66,7 +67,6 @@ class S2bApplicationController < ApplicationController
     end
     return @viewable_for_project
   end
-
   def check_permission(permission_type = :view)
     redirect_to :back if permission_type == :view && !viewable_for_project?
     redirect_to :back if permission_type == :edit && !editable_for_project?

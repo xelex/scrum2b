@@ -1,11 +1,14 @@
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'version', :plugin => 'scrum2b' %>
+  <%= stylesheet_link_tag 'application', :plugin => 'scrum2b' %>
+  <%= javascript_include_tag "application", :plugin => 'scrum2b' %>
+  <%= javascript_include_tag "validate", :plugin => 'scrum2b' %>
 <% end %>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 <script>
   var scrum2b = angular.module('scrum2b', []);
   scrum2b.controller('BoardsCtrl', function ($scope, listissues){
-    listissues.list().then(
+    list_issues.list().then(
       function(data){
         var arrayissues = [];
         var arrayversions = [];
@@ -19,16 +22,16 @@
              arrayversions.push(value);
             })
          })
-        console.log( "You clicked a paragraph!" + arrayversions);
+        console.log( "last Version:" + arrayversions[0]);
         $scope.versions = arrayversions;
         $scope.issues = arrayissues;
       }
-    )
-
+    );
     $scope.getIssues = function(version){
-      listissues.getIssues(version.id).then(
+      list_issues.getIssues(version.id).then(
         function(data){
           arrayissues = [];
+          console.log( "You clicked a paragraph!" + data )
           angular.forEach(data, function(value) {
             angular.forEach(value, function(value,key) {
               angular.forEach(value, function(value,key) {
@@ -40,14 +43,18 @@
           console.log( "You clicked a paragraph!" + arrayissues);
         }
       )
+      $scope.selected = version;
     }
+    $scope.isActive = function(version) {
+      return $scope.selected === version;
+    };
   });
   
-  scrum2b.service('listissues', function($http, $q){
+  scrum2b.service('list_issues', function($http, $q){
     function getIssues(version_id){
        var request = $http({
         method: "post",
-        url: "getissues",
+        url: "get_issues_version",
         params: {
           action: "get"
         },
@@ -61,7 +68,7 @@
     function getData(callback){
         var request = $http({
         method: "post",
-        url: "getdata",
+        url: "get_data",
         params: {
           action: "get"
         },
@@ -133,4 +140,4 @@
     </div><!--accordion-->
 	</div><!--end content-->
 </div>
-<%= render :partial => "/s2b_boards/jquery" %>
+
