@@ -1,4 +1,4 @@
-class S2bApi::ProjectController < ApplicationController
+class ProjectController < ApplicationController
   unloadable
 
   skip_before_filter :verify_authenticity_token
@@ -22,7 +22,6 @@ class S2bApi::ProjectController < ApplicationController
   include RepositoriesHelper
   helper :sort
   include SortHelper
-  include IssuesHelper
   helper :timelog
   include Redmine::Export::PDF
   helper :issues

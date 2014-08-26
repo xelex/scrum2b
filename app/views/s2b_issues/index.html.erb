@@ -1,14 +1,14 @@
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'version', :plugin => 'scrum2b' %>
   <%= stylesheet_link_tag 'application', :plugin => 'scrum2b' %>
   <%= javascript_include_tag "application", :plugin => 'scrum2b' %>
-  <%= javascript_include_tag "validate", :plugin => 'scrum2b' %>
+  <%= javascript_include_tag "angular", :plugin => 'scrum2b' %>
 <% end %>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 <script>
   var scrum2b = angular.module('scrum2b', []);
-  scrum2b.controller('BoardsCtrl', function ($scope, listissues){
-    list_issues.list().then(
+  scrum2b.controller('BoardsCtrl', function ($scope, ListIssues){
+    ListIssues.list().then(
       function(data){
         var arrayissues = [];
         var arrayversions = [];
@@ -22,13 +22,13 @@
              arrayversions.push(value);
             })
          })
-        console.log( "last Version:" + arrayversions[0]);
+        console.log( "list Version:" + arrayversions);
         $scope.versions = arrayversions;
         $scope.issues = arrayissues;
       }
     );
     $scope.getIssues = function(version){
-      list_issues.getIssues(version.id).then(
+      ListIssues.getIssues(version.id).then(
         function(data){
           arrayissues = [];
           console.log( "You clicked a paragraph!" + data )
@@ -48,9 +48,12 @@
     $scope.isActive = function(version) {
       return $scope.selected === version;
     };
+    var $ = jQuery.noConflict();
+    
   });
   
-  scrum2b.service('list_issues', function($http, $q){
+  
+  scrum2b.service('ListIssues', function($http, $q){
     function getIssues(version_id){
        var request = $http({
         method: "post",
@@ -98,6 +101,7 @@
       return ( response.data );
     }
   });
+
 </script>
 
 <div ng-app="scrum2b" >
@@ -133,11 +137,11 @@
 	  <span class="icon_backlog">Backlog </span>
 	  
 	  <!-- Backlog -->
-	  <%= render :partial => "/s2b_boards/backlog" %>
+	  <%= render :partial => "s2b_issues/backlog" %>
 	  <!--begin 4 sprint-->
 	  <div id="accordion" class="sprint_total">
-  	  <%= render :partial => "/s2b_boards/sprint" %>
+  	  <%= render :partial => "s2b_issues/sprint" %>
     </div><!--accordion-->
 	</div><!--end content-->
 </div>
-
+<%= render :partial => "s2b_issues/jquery" %>

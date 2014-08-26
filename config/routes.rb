@@ -1,13 +1,12 @@
 # Plugin's routes
 # See: http://guides.rubyonrails.org/routing.html
-get  's2b_issues/get_data' => 's2b_api/issues#get_data'
-post  's2b_issues/get_data' => 's2b_api/issues#get_data'
-post  's2b_issues/get_issues_version' => 's2b_api/issues#get_issues_version'
-get  's2b_issues/get_issues_version' => 's2b_api/issues#get_issues_version'
+get  's2b_issues/get_data' => 's2b_issues#get_data'
+post  's2b_issues/get_data' => 's2b_issues#get_data'
+post  's2b_issues/get_issues_version' => 's2b_issues#get_issues_version'
+get  's2b_issues/get_issues_version' => 's2b_issues#get_issues_version'
 
-post 's2b_issues/index' => 's2b_api/issues#index'
-get  's2b_issues/index' => 's2b_api/issues#index'
-
+post 's2b_issues/index' => 's2b_issues#index'
+get  's2b_issues/index' => 's2b_issues#index'
 # post 's2b_boards/update_status' => 's2b_boards#update_status'
 # post "s2b_boards/update_progress" => "s2b_boards#update_progress"
 # post "s2b_boards/close_issue" => "s2b_boards#close_issue"

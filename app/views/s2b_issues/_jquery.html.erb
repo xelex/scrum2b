@@ -1,6 +1,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
-
+  check_height_max();
+  $('.status_sprint').on('click',function(){alert(1)});
   $(".title_sprint").click(function(){
     if ( $(this).hasClass("title_sprint_active") ) {
       $(this).removeClass("title_sprint_active");
@@ -12,7 +13,7 @@ $(document).ready(function(){
       $(this).parent().find('.sprint').addClass("active");
     };
   });
-  check_height_max();
+  
   $('.title_sprint').on('click',function(){
     $('.sprint').removeClass('sprint-active');
     $(this).next().addClass('sprint-active');

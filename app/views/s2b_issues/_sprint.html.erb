@@ -9,9 +9,9 @@
 	          <span class="icon_add_issue">Add</span>
 	        </div>
 	        <!-- add new issue -->
-	        <%= render :partial => "/s2b_boards/add_new_issue" %>
+	        <%= render :partial => "/s2b_issues/add_new_issue" %>
 	        <div class="connectedSortable check_height" id="sortable1">
-	        	<%= render :partial => "/s2b_boards/issue" %>
+	        	<%= render :partial => "/s2b_issues/issue" %>
 	        </div><!--end connectedSortable-->
 	      </div><!--end border-->
 	    </div><!--end padding 5 -->
@@ -23,9 +23,9 @@
 	          <span>In Progess</span>
 	          <span class="icon_add_issue">Add</span>
 	        </div>
-	        <%= render :partial => "/s2b_boards/add_new_issue" %>
+	        <%= render :partial => "/s2b_issues/add_new_issue" %>
 	        <div class="connectedSortable check_height" id="sortable2" >
-	        	<%= render :partial => "/s2b_boards/issue" %>
+	        	<%= render :partial => "/s2b_issues/issue" %>
 	        </div><!--end connectedSortable-->  
 	      </div><!--end border status-->
 	    </div><!--end padding 5 -->
@@ -37,7 +37,7 @@
 	          <span>Resolved</span>
 	        </div>
 	        <div class="connectedSortable check_height" id="sortable3">
-	          <%= render :partial => "/s2b_boards/issue" %>
+	          <%= render :partial => "/s2b_issues/issue" %>
 	        </div><!--end connectedSortable-->  
 	      </div><!--end padding 5 -->
 	    </div><!--end border status-->
@@ -50,7 +50,7 @@
 	        <span class="closed_issue">Hide</span> 
 	      </div>
 	      <div class="connectedSortable check_height" id="sortable4">
-	        <%= render :partial => "/s2b_boards/issue" %>
+	        <%= render :partial => "/s2b_issues/issue" %>
 	      </div><!--end connectedSortable-->  
 	      </div>
 	    </div><!--end padding 5 -->
