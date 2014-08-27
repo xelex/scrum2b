@@ -48,7 +48,7 @@ $(document).ready(function(){
   $('.select_progess_issue').live('click',function(){
     $(this).show();
   })
-  $(".value_progess").click(function(e){
+  $(".value_progess").live('click', function(e){
     $('.select_progess_issue').hide();
     $(this).parent().find('.select_progess_issue').toggle();
     e.stopPropagation();
