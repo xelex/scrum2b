@@ -6,7 +6,7 @@
 	      <div class="border_status">
 	        <div class="status_sprint">
 	          <span>New Isuse</span>
-	          <span class="icon_add_issue">Add</span>
+	          <span class="icon_add_issue"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <!-- add new issue -->
 	        <%= render :partial => "/s2b_issues/add_new_issue" %>
@@ -21,7 +21,7 @@
 	    	<div class="border_status">
 	        <div class="status_sprint">
 	          <span>In Progess</span>
-	          <span class="icon_add_issue">Add</span>
+	          <span class="icon_add_issue"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <%= render :partial => "/s2b_issues/add_new_issue" %>
 	        <div class="connectedSortable check_height" id="sortable2" >
@@ -47,7 +47,7 @@
 	    	<div class="border_status">
 	      <div class="status_sprint">
 	        <span>Close</span>
-	        <span class="closed_issue">Hide</span> 
+	        <span class="closed_issue"><i class="fa fa-minus-circle"></i>Hide</span> 
 	      </div>
 	      <div class="connectedSortable check_height" id="sortable4">
 	        <%= render :partial => "/s2b_issues/issue" %>
@@ -56,7 +56,7 @@
 	    </div><!--end padding 5 -->
 	  </div><!--end sprint 4-->
 	  <div class="open_sprint_closed">
-	    <span ><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></span>
+	    <span><i class="fa fa-angle-left fa-lg"></i> Open</span>
 	  </div>
 	</div>
 </div>

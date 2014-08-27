@@ -1,7 +1,8 @@
 <div class="issue ui-state-default small_mode" ng-repeat="issue in issues" >
   <div class="title_issue">
     <a href="#">{{ issue.subject }}</a>
-    <span class="icon_config" ><%= image_tag('icon-config.png', :plugin => 'scrum2b') %></span> 
+    <span class="icon_config" ><i class="fa fa-cog"></i></span> 
+
   </div><!--end title issue -->
   <div class="setting hide">
     <ul>
@@ -24,14 +25,14 @@
     <div class="progress_issue">
       <div class="value_progess">
         <span><input type="text" class="amount" readonly >%</span>
-        <%= image_tag('sans_down.png', :plugin => 'scrum2b') %>
+        <i class="fa fa-caret-down"></i>
       </div>
       <div class="select_progess_issue hide">
         <div class="triangle"></div>
         <div class="slider-vertical" style="height:100px;"></div>
       </div>
       <br>
-      <span class="icon_down"><%= image_tag('dropdown.png', :plugin => 'scrum2b') %></span>
+      <span class="icon_down"><i issue="123" class="fa fa-angle-double-down fa-lg"></i></span>
     </div>
   </div><!--end content issue-->
   <div class="detail_issue">
@@ -51,7 +52,7 @@
           <span class="open_comment">Comment</span>
         </li>
       </ul>
-      <span class="icon_top "><%= image_tag('droptop.png', :plugin => 'scrum2b') %></span>
+      <span class="icon_top "><i class="fa fa-angle-double-up fa-lg"></i></span>
     </div>
 
     <div class="file">
