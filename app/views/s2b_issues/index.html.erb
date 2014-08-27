@@ -13,11 +13,11 @@
   scrum2b.controller('BoardsCtrl', function ($scope, ListIssues){
     ListIssues.list().then(
       function(data){
-        var arrayissues = [];
+        var arrayIssues = [];
         var arrayversions = [];
          angular.forEach(data.issues, function(value) {
            angular.forEach(value, function(value,key) {
-             arrayissues.push(value);
+             arrayIssues.push(value);
             })
          })
          angular.forEach(data.versions, function(value) {
@@ -25,27 +25,45 @@
              arrayversions.push(value);
             })
          })
-        console.log( "list Version:" + arrayversions);
         $scope.versions = arrayversions;
-        $scope.issues = arrayissues;
+        $scope.issues = arrayIssues;
+        $scope.allIssues = arrayIssues;
+        console.log( "Array issues" + $scope.allIssues);
       }
     );
     $scope.getIssues = function(version){
-      ListIssues.getIssues(version.id).then(
-        function(data){
-          arrayissues = [];
-          console.log( "You clicked a paragraph!" + data )
-          angular.forEach(data, function(value) {
-            angular.forEach(value, function(value,key) {
+      var array_version_id = []
+      angular.forEach($scope.allIssues,function(value){
+        array_version_id.push(value.fixed_version_id)
+      })
+      var indexOfVersion  = array_version_id.indexOf(version.id)
+      console.log( "Request data" + array_version_id  )
+      if (indexOfVersion >= 0){
+        var arrayIssues = [];
+        angular.forEach($scope.allIssues, function(value) {
+          if(value.fixed_version_id == version.id){
+            arrayIssues.push(value);
+          }
+         })
+        $scope.issues = arrayIssues;
+      }else{
+        ListIssues.getIssues(version.id).then(
+          function(data){
+            var arrayIssues = [];
+            console.log( "You clicked a paragraph!" + data )
+            angular.forEach(data, function(value) {
               angular.forEach(value, function(value,key) {
-                arrayissues.push(value);
+                angular.forEach(value, function(value,key) {
+                  arrayIssues.push(value);
+                  $scope.allIssues.push(value);
+                })
               })
             })
-          })
-          $scope.issues = arrayissues;
-          console.log( "You clicked a paragraph!" + arrayissues);
-        }
-      )
+            $scope.issues = arrayIssues;
+          }
+        )
+        console.log( "Array all issues" + $scope.allIssues);
+      }
       $scope.selected = version;
     }
     $scope.isActive = function(version) {
