@@ -2,6 +2,7 @@
 $(document).ready(function(){
   
   check_height_max();
+<<<<<<< HEAD
 
 
   $('body').live('click','.status_sprint', function(){
@@ -9,6 +10,9 @@ $(document).ready(function(){
   });
 
   $(".title_sprint").live('click',function(){
+=======
+  $(".title_sprint").click(function(){
+>>>>>>> bk
     if ( $(this).hasClass("title_sprint_active") ) {
       $(this).removeClass("title_sprint_active");
       $(this).parent().find('.sprint').removeClass("active");
@@ -202,15 +206,7 @@ $(document).ready(function(){
     $('.add_new_issue').hide();
     check_height_max();
   });
-
-  $(".icon_add_issue").live("click", function(){
-    $(this).parent().parent().find('.add_new_issue').show();
-  });
   
-  $(".cancel_issue").live('click',function(){
-    $(this).parent().parent().parent().parent().parent().parent().hide();
-  });
-
   $(function() {
     $( ".add_new_issue .begin, .add_new_issue .end " ).datepicker();
   });

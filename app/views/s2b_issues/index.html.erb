@@ -5,131 +5,8 @@
   <%= javascript_include_tag "application", :plugin => 'scrum2b' %>
   <%= javascript_include_tag "angular", :plugin => 'scrum2b' %>
 <% end %>
-
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-<script>
-  var scrum2b = angular.module('scrum2b', []);
-  scrum2b.controller('BoardsCtrl', function ($scope, ListIssues){
-    ListIssues.list().then(
-      function(data){
-        var arrayIssues = [];
-        var arrayversions = [];
-         angular.forEach(data.issues, function(value) {
-           angular.forEach(value, function(value,key) {
-             arrayIssues.push(value);
-            })
-         })
-         angular.forEach(data.versions, function(value) {
-           angular.forEach(value, function(value,key) {
-             arrayversions.push(value);
-            })
-         })
-        $scope.versions = arrayversions;
-        $scope.issues = arrayIssues;
-        $scope.allIssues = arrayIssues;
-        console.log( "Array issues" + $scope.allIssues);
-      }
-    );
-    $scope.getIssues = function(version){
-      var array_version_id = []
-      angular.forEach($scope.allIssues,function(value){
-        array_version_id.push(value.fixed_version_id)
-      })
-      var indexOfVersion  = array_version_id.indexOf(version.id)
-      console.log( "Request data" + array_version_id  )
-      if (indexOfVersion >= 0){
-        var arrayIssues = [];
-        angular.forEach($scope.allIssues, function(value) {
-          if(value.fixed_version_id == version.id){
-            arrayIssues.push(value);
-          }
-         })
-        $scope.issues = arrayIssues;
-      }else{
-        ListIssues.getIssues(version.id).then(
-          function(data){
-            var arrayIssues = [];
-            console.log( "You clicked a paragraph!" + data )
-            angular.forEach(data, function(value) {
-              angular.forEach(value, function(value,key) {
-                angular.forEach(value, function(value,key) {
-                  arrayIssues.push(value);
-                  $scope.allIssues.push(value);
-                })
-              })
-            })
-            $scope.issues = arrayIssues;
-          }
-        )
-        console.log( "Array all issues" + $scope.allIssues);
-      }
-      $scope.selected = version;
-    }
-    $scope.isActive = function(version) {
-      return $scope.selected === version;
-    };
-    var $ = jQuery.noConflict();
-    
-  });
-  
-  
-  scrum2b.service('ListIssues', function($http, $q){
-    function getIssues(version_id){
-       var request = $http({
-        method: "post",
-        url: "get_issues_version",
-        params: {
-          action: "get"
-        },
-        data: {
-          project_id: "<%= @project.id %>",
-          version_id: version_id,
-        },
-      });
-      return( request.then( handleSuccess, handleError ) );
-    }
-    function getData(callback){
-        var request = $http({
-        method: "post",
-        url: "get_data",
-        params: {
-          action: "get"
-        },
-        data: {
-          project_id: "<%= @project.id %>"
-        },
-      });
-      return( request.then( handleSuccess, handleError ) );
-    }
-
-    return {
-      list: getData,
-      getIssues: getIssues,
-    }
-    function handleError ( response ){
-      if (
-          ! angular.isObject( response.data ) ||
-          ! response.data.message
-        ) {
-        return ( $q.reject("false") );
-      };
-
-      return ( $q.reject( response.data.message ) );
-    }
-
-    function  handleSuccess( response ){
-      return ( response.data );
-    }
-  });
-
-</script>
-
-<style type="text/css">
-
-  
-</style>
-
+<%= render :partial => "s2b_issues/angular" %>
 <div ng-app="scrum2b" >
 	<div class="content full_mode aaa" ng-controller="BoardsCtrl">
 	  <div  class="filter" >
@@ -151,7 +28,7 @@
 	            <% if User.current.logged? %>
 	             <option value="me" <% if session[:params_select_member] && session[:params_select_member] == "me" %><%= selected="selected" %><% end %>><%= l(:label_select_me)%></option>
 	            <% end %>
-	            <option ng-repeat="member in members" value=" {{ member.id }}">{{ member.name }}</option>
+	            <option ng-repeat="member in members" value=" {{ member.id }}">{{ member.firstname }}</option>
 	          </select>
 	        </li>
 	        <li>
@@ -170,4 +47,12 @@
     </div><!--accordion-->
 	</div><!--end content-->
 </div>
-<%= render :partial => "s2b_issues/jquery" %>
+<script>
+  $("body").on('click', '.icon_add_issue', function(){
+    $(this).parent().parent().find('.add_new_issue').show();
+  });
+  
+  $("body").on('click', '.cancel_issue',function(){
+    $(this).parent().parent().parent().parent().parent().parent().hide();
+  });
+</script>
