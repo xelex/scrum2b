@@ -1,14 +1,13 @@
 <script type="text/javascript">
 $(document).ready(function(){
-  
+
   check_height_max();
 
-
-  $('body').live('click','.status_sprint', function(){
-    
+  $('body').on('click','.status_sprint', function(){
+    alert(2); 
   });
 
-  $(".title_sprint").live('click',function(){
+  $('body').on('click','.title_sprint', function(){
     if ( $(this).hasClass("title_sprint_active") ) {
       $(this).removeClass("title_sprint_active");
       $(this).parent().find('.sprint').removeClass("active");
@@ -18,13 +17,8 @@ $(document).ready(function(){
       $(this).addClass("title_sprint_active");
       $(this).parent().find('.sprint').addClass("active");
     };
-  });
-  
-  $('.title_sprint').live('click',function(){
-    $('.sprint').removeClass('sprint-active');
-    $(this).next().addClass('sprint-active');
     check_height_max();
-  })
+  });
 
   //progess issue
   $( ".slider-vertical" ).slider({
@@ -129,8 +123,8 @@ $(document).ready(function(){
     $('.content').addClass('full_mode');
     $('.content').find('.s2b_column_4').removeClass("s2b_column_5");
   });
-
-  $( "#sortable1, #sortable2, #sortable3, #sortable4, #sortable_backlog " ).sortable({
+3
+  $( "#sortable1, #sortable2, #sortable3, #sortable4, #sortable_backlog, #sortabletest " ).sortable({
     connectWith: ".connectedSortable"
   }).disableSelection();
 
@@ -163,10 +157,10 @@ $(document).ready(function(){
   
   function check_height_max(){
     $(".sprint-active .check_height").css("height","auto");
-    var height1 = $(".sprint-active #sortable1").height();
-    var height2 = $(".sprint-active #sortable2").height();
-    var height3 = $(".sprint-active #sortable3").height();
-    var height4 = $(".sprint-active #sortable4").height();
+    var height1 = $(".active #sortable1").height();
+    var height2 = $(".active #sortable2").height();
+    var height3 = $(".active #sortable3").height();
+    var height4 = $(".active #sortable4").height();
     var array_height = [height1, height2, height3, height4];
     var max_height = Math.max.apply(Math, array_height);
     $(".sprint-active .check_height").css("height",max_height);
