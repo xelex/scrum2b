@@ -1,4 +1,5 @@
-<div class="issue ui-state-default small_mode" ng-repeat="issue in issues" >
+<div ng-repeat="issue in issues">
+<div class="issue ui-state-default small_mode"  >
   <div class="title_issue">
     <a href="#">{{ issue.subject }}</a>
     <span class="icon_config" ><i class="fa fa-cog"></i></span> 
@@ -7,10 +8,13 @@
   <div class="setting hide">
     <ul>
       <li>
+        <a href="" ng-click="deleteIssue(issue)" >Delete</a>
+      </li>
+      <li>
         <a href="">View</a>
       </li>
       <li>
-        <a href="">Edit</a>
+        <a href="" ng-click="editIssue(issue)" class="edit_issue">Edit {{ issue.id }}</a>
       </li>
       <li>
         <a href="">Change sprint</a>
@@ -93,4 +97,8 @@
     </div><!--end comment-->
 
   </div><!--end detail issue-->
+  
 </div><!-- end issue--> 
+  <!-- from edit issue -->
+  <%= render :partial => "s2b_issues/edit_issue" %>
+</div>

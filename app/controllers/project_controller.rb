@@ -66,6 +66,7 @@ class ProjectController < ApplicationController
     end
     return @viewable_for_project
   end
+  
   def check_permission(permission_type = :view)
     redirect_to :back if permission_type == :view && !viewable_for_project?
     redirect_to :back if permission_type == :edit && !editable_for_project?

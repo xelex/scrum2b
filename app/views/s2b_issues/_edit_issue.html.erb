@@ -1,0 +1,57 @@
+<div class="add_new_issue from_edit_issue hide">
+	<form ng-submit="editIssue()" ng-controller="BoardsCtrl" name="issueForm">
+		<input type="hidden" ng-init="issue.id=issue.id" >
+		<table >
+			<tr>
+				<td colspan="2"><input type="text" ng-model="issue.subject"  class="title_issue" placeholder="Enter the issue subject..."></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<textarea ng-model="issue.description" class="issue_description " placeholder="Enter the issue subject..."></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span>Tracker:</span>
+					<select class="value_content" ng-model="issue.tracker_id">
+						<option ng-repeat="tracker in trackers" value="{{tracker.id}}" selected="tracker.id==issue.tracker_id">{{tracker.name}}</option>
+					</select>
+				</td>
+				<td>
+					<span>Priority:</span>
+					<select class="value_content" ng-model="issue.priority_id">
+						<option ng-repeat="priority in priorities" value="{{priority.id}}" selected="priority.id==issue.priority_id">{{priority.name}}</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span>Assign:</span>
+					<select class="value_content" ng-model="issue.assigned_to_id"">
+						<option ng-repeat="member in members" value="{{member.id}}" selected="member.id==issue.assigned_to_id">{{member.firstname}}</option>
+					</select>
+				</td>
+				<td>
+					<span>Est. Hour:</span>
+					<input type="text" ng-model="issue.estimated_hours" class="time">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span>Start:</span>
+					<input type="text" ng-model="issue.start_date" class="begin">
+				</td>
+				<td>
+					<span>Due to:</span>
+					<input type="text" ng-model="issue.due_date" class="end">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" class="submit_issue" value="Submit	">
+					<button type="button" class="cancel_issue" ng-click="issueForm.issue.$rollbackViewValue();issue=issue">Cancel</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div><!--end add new issue -->

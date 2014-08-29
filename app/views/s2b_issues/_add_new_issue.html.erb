@@ -1,84 +1,54 @@
 <div class="add_new_issue hide">
-	<form>
+	<form ng-submit="addIssue()" ng-controller="BoardsCtrl">
+	  <input type="hidden" ng-init="issue.project_id=<%= @project.id %>" >
+	  <input type="hidden" ng-init="issue.author_id=<%= User.current.id %>" >
+	  <input type="hidden" ng-init="issue.fixed_version_id=version.id" >
+	  <input type="hidden" ng-init="versionActive=version" >
+	  <label style="color: red">{{errorAddNew}}</label>
 		<table >
 			<tr>
-				<td colspan="2"><input type="text" name="title_issue" class="title_issue" placeholder="Enter the issue subject..."></td>
+				<td colspan="2"><input type="text" ng-model="issue.subject"  class="title_issue" placeholder="Enter the issue subject..."></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<textarea name="description" class="issue_description " placeholder="Enter the issue subject..."></textarea>
+					<textarea ng-model="issue.description" class="issue_description " placeholder="Enter the issue subject..."></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<span>Type:</span>
-					<select class="value_content" name="">
-						<option value="1">Bug</option>
-						<option value="2">Feature</option>
-						<option value="3">Support</option>
+					<span>Tracker:</span>
+					<select class="value_content" ng-model="issue.tracker_id" ng-options="tracker.id as tracker.name for tracker in trackers  ">
 					</select>
 				</td>
 				<td>
 					<span>Priority:</span>
-					<select class="value_content">
-						<option value="1">Low</option>
-						<option value="2">Normal</option>
-						<option value="3">High</option>
-						<option value="3">Urgent</option>
-						<option value="3">Immediate</option>
-					</select>
+					<select class="value_content" ng-model="issue.priority_id" ng-options="priority.id as priority.name for priority in priorities"></select>
 				</td>
 			</tr>
 			<tr>
-				<!-- <td class="assign_up">
-					<div class="assign">
-						<%= image_tag('avata.png', :plugin => 'scrum2b') %>
-						<span>Quang Thai</span>
-						<%= image_tag('sans_down.png', :plugin => 'scrum2b') %>
-					</div>
-					<div class="select_assign hide">
-						<ul>
-							<li>
-								<%= image_tag('avata.png', :plugin => 'scrum2b') %>
-								<span>Quang Thai</span>
-							</li>
-							<li>
-								<%= image_tag('avata.png', :plugin => 'scrum2b') %>
-								<span>Quang Thai</span>
-							</li>
-							<li>
-								<%= image_tag('avata.png', :plugin => 'scrum2b') %>
-								<span>Quang Thai</span>
-							</li>
-						</ul>
-					</div>
-				</td> -->
 				<td>
 					<span>Assign:</span>
-					<select class="value_content">
-						<option value="1">Anh tuan</option>
-						<option value="2">thanh gian</option>
-						<option value="3">Viet Hung</option>
+					<select class="value_content" ng-model="issue.assigned_to_id" ng-options="member.id as member.firstname for member in members">
 					</select>
 				</td>
 				<td>
 					<span>Est. Hour:</span>
-					<input type="text" class="time">
+					<input type="text" ng-model="issue.estimated_hours" class="time">
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<span>Start:</span>
-					<input type="text" class="begin">
+					<input type="text" ng-model="issue.start_date" class="begin">
 				</td>
 				<td>
 					<span>Due to:</span>
-					<input type="text" class="end">
+					<input type="text" ng-model="issue.due_date" class="end">
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<button type="button" class="submit_issue">Add</button>
+					<input type="submit" class="submit_issue" value="add">
 					<button type="button" class="cancel_issue">Cancel</button>
 				</td>
 			</tr>

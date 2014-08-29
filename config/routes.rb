@@ -2,8 +2,13 @@
 # See: http://guides.rubyonrails.org/routing.html
 get  's2b_issues/get_data' => 's2b_issues#get_data'
 post  's2b_issues/get_data' => 's2b_issues#get_data'
+get  's2b_issues/destroy' => 's2b_issues#destroy'
+post  's2b_issues/destroy' => 's2b_issues#destroy'
+get  's2b_issues/update' => 's2b_issues#update'
+post  's2b_issues/update' => 's2b_issues#update'
 post  's2b_issues/get_issues_version' => 's2b_issues#get_issues_version'
 get  's2b_issues/get_issues_version' => 's2b_issues#get_issues_version'
+post  's2b_issues/create' => 's2b_issues#create'
 
 post 's2b_issues/index' => 's2b_issues#index'
 get  's2b_issues/index' => 's2b_issues#index'

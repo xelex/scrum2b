@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
-
+  
   check_height_max();
 
   $('body').on('click','.status_sprint', function(){
@@ -8,6 +8,7 @@ $(document).ready(function(){
   });
 
   $('body').on('click','.title_sprint', function(){
+  $(".title_sprint").live('click',function(){
     if ( $(this).hasClass("title_sprint_active") ) {
       $(this).removeClass("title_sprint_active");
       $(this).parent().find('.sprint').removeClass("active");
@@ -123,7 +124,7 @@ $(document).ready(function(){
     $('.content').addClass('full_mode');
     $('.content').find('.s2b_column_4').removeClass("s2b_column_5");
   });
-3
+
   $( "#sortable1, #sortable2, #sortable3, #sortable4, #sortable_backlog, #sortabletest " ).sortable({
     connectWith: ".connectedSortable"
   }).disableSelection();
@@ -196,15 +197,7 @@ $(document).ready(function(){
     $('.add_new_issue').hide();
     check_height_max();
   });
-
-  $(".icon_add_issue").live("click", function(){
-    $(this).parent().parent().find('.add_new_issue').show();
-  });
   
-  $(".cancel_issue").live('click',function(){
-    $(this).parent().parent().parent().parent().parent().parent().hide();
-  });
-
   $(function() {
     $( ".add_new_issue .begin, .add_new_issue .end " ).datepicker();
   });

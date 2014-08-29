@@ -1,0 +1,245 @@
+<script>
+  var scrum2b = angular.module('scrum2b', []);
+  scrum2b.controller('BoardsCtrl', function ($scope, ListIssues){
+    ListIssues.list().then(
+      function(data){
+        var arrayIssues = [];
+        var arrayVersions = [];
+        var arrayStatus = [];
+        var arrayTracker = [];
+        var arrayPriority = [];
+        var arrayMembers = [];
+         angular.forEach(data.issues, function(value) {
+           angular.forEach(value, function(value,key) {
+             arrayIssues.push(value);
+            })
+         })
+         angular.forEach(data.versions, function(value) {
+           angular.forEach(value, function(value,key) {
+             arrayVersions.push(value);
+            })
+         })
+         angular.forEach(data.status, function(value) {
+           angular.forEach(value, function(value,key) {
+             arrayStatus.push(value);
+            })
+         })
+         angular.forEach(data.tracker, function(value) {
+           angular.forEach(value, function(value,key) {
+             arrayTracker.push(value);
+            })
+         })
+         angular.forEach(data.priority, function(value) {
+           angular.forEach(value, function(value,key) {
+             arrayPriority.push(value);
+            })
+         })
+         angular.forEach(data.members, function(value) {
+           angular.forEach(value, function(value,key) {
+             arrayMembers.push(value);
+            })
+         })
+        $scope.versions = arrayVersions;
+        $scope.issues = arrayIssues;
+        $scope.priorities = arrayPriority;
+        $scope.trackers = arrayTracker;
+        $scope.status = arrayStatus;
+        $scope.allIssues = arrayIssues;
+        $scope.members = arrayMembers;
+        $scope.selected = arrayVersions[0]
+        console.log( "first member "+ $scope.members[0])
+      }
+    );
+    $scope.getIssues = function(version){
+      var array_version_id = []
+      angular.forEach($scope.allIssues,function(value){
+        array_version_id.push(value.fixed_version_id)
+      })
+      var indexOfVersion  = array_version_id.indexOf(version.id)
+      if (indexOfVersion >= 0){
+        var arrayIssues = [];
+        angular.forEach($scope.allIssues, function(value) {
+          if(value.fixed_version_id == version.id){
+            arrayIssues.push(value);
+          }
+         })
+        $scope.issues = arrayIssues;
+      }else{
+        ListIssues.getIssues(version.id).then(
+          function(data){
+            var arrayIssues = [];
+            angular.forEach(data, function(value) {
+              angular.forEach(value, function(value,key) {
+                angular.forEach(value, function(value,key) {
+                  arrayIssues.push(value);
+                  $scope.allIssues.push(value);
+                })
+              })
+            })
+            $scope.issues = arrayIssues;
+          }
+        )
+      }
+      if($scope.selected == version){
+        $scope.selected = !version;
+      }else{
+        $scope.selected = version;
+      }
+    }
+    
+    $scope.summitIssue = function(){
+      // alert (issue.id)
+      // if (issue.id === nil) {
+      //   alert("vao them")
+      // }else{
+      //   alert("vao sua")
+      // };
+    };
+
+    $scope.addIssue = function(){
+      if($scope.issue.subject){
+        ListIssues.addIssue($scope.issue).then(
+          function(data){
+            if(data.result == 'create_success'){
+              //chay lai function load data
+            }
+          }
+        );
+        $('.add_new_issue').hide();
+      }else{
+        $scope.errorAddNew = "Subject issue not blank!"
+      }
+    };
+
+    $scope.deleteIssue = function(issue) {
+      ListIssues.deleteIssue(issue).then(
+         function(data){
+          if (data.result == "success") {
+            //chay lai function load data
+          };
+         }
+      );
+    };
+
+    $scope.editIssue = function() {
+      console.log ("params " + $scope.issue.assigned_to_id)
+      ListIssues.editIssue($scope.issue).then(
+        function(data){
+          if (data.result == "eidt_success") {
+            //chay lai function load data
+          }else{
+            alert(data.result)
+          }
+        }
+      );
+    };
+    
+    $scope.isActiveVersion = function(version) {
+      return $scope.selected === version;
+    };
+    
+    function loadIssuesVersion(version){
+      var arrayIssues = []
+      angular.forEach($scope.allIssues, function(value) {
+        if(value.fixed_version_id == version.id){
+          arrayIssues.push(value);
+        }
+      })
+      $scope.issues = arrayIssues
+    }
+  });
+  
+  scrum2b.service('ListIssues', function($http, $q){
+    function getIssues(version_id){
+       var request = $http({
+        method: "post",
+        url: "get_issues_version",
+        params: {
+          action: "get"
+        },
+        data: {
+          project_id: "<%= @project.id %>",
+          version_id: version_id,
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+    
+    function getData(callback){
+        var request = $http({
+        method: "post",
+        url: "get_data",
+        params: {
+          action: "get"
+        },
+        data: {
+          project_id: "<%= @project.id %>"
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+    
+    function addIssue(issue){
+      var request = $http({
+        method: "post",
+        url: "create",
+        params: {
+          action: "get"
+        },
+        data: {
+          issue: issue,
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+    
+    function deleteIssue(issue){
+      var request = $http({
+        method: "post",
+        url: "destroy",
+        params: {
+          id: issue.id
+        },
+        data: {
+          issue: issue,
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+
+    function editIssue(issue){
+      var request = $http({
+        method: "post",
+        url: "update",
+        data: {
+          issue: issue,
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+
+    return {
+      list: getData,
+      getIssues: getIssues,
+      addIssue: addIssue,
+      deleteIssue: deleteIssue,
+      editIssue: editIssue,
+    }
+    
+    function handleError ( response ){
+      if (
+          ! angular.isObject( response.data ) ||
+          ! response.data.message
+        ) {
+        return ( $q.reject("false") );
+      };
+
+      return ( $q.reject( response.data.message ) );
+    }
+
+    function  handleSuccess( response ){
+      return ( response.data );
+    }
+  });
+
+</script>
