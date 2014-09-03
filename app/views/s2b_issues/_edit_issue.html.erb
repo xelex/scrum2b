@@ -1,4 +1,4 @@
-<div class="add_new_issue from_edit_issue hide">
+<div class="from_add_edit_issue from_edit_issue hide">
 	<form ng-submit="editIssue()" ng-controller="BoardsCtrl" name="issueForm">
 		<input type="hidden" ng-init="issue.id=issue.id" >
 		<table >
@@ -27,7 +27,7 @@
 			<tr>
 				<td>
 					<span>Assign:</span>
-					<select class="value_content" ng-model="issue.assigned_to_id"">
+					<select class="value_content" ng-model="issue.assigned_to_id">
 						<option ng-repeat="member in members" value="{{member.id}}" selected="member.id==issue.assigned_to_id">{{member.firstname}}</option>
 					</select>
 				</td>

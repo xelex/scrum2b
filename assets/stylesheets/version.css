@@ -167,26 +167,26 @@
   .issue_closed .content_issue, .issue_closed .detail_issue { display: none; }
   .issue_closed .issue { }
 
-  .add_new_issue { border: 1px solid #cccccc; background: #f6f6f6; padding: 5px 5px; font-size: 12px; }
-  .add_new_issue table span { font-size: 12px; line-height: 20px; }
-  .add_new_issue table { width: 100%; }
-  .add_new_issue table tr { margin: 2px 0px; }
-  .add_new_issue table tr td { width: 50%; }
-  .add_new_issue .title_issue { width: 100%; padding-right: 0px;}
-  .add_new_issue .issue_description { width: 99%;height: 80px; font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif; }
-  .add_new_issue .end, .add_new_issue .begin, .add_new_issue .time { width: 70px; float: right; }
-  .add_new_issue .value_content { float: right; width: 73px; }
-  .add_new_issue .assign_up {position: relative;}
-  .add_new_issue .assign {border: 1px solid; height: 33px; padding-left: 5px}
-  .add_new_issue .assign img {height: 25px; width: 25px;}
-  .add_new_issue .assign .sans_down { height: 20px;width: 10px; float: right; display: none; margin-top: 8px;}
-  .add_new_issue .assign:hover .sans_down { display: block;}
+  .from_add_edit_issue { border: 1px solid #cccccc; background: #f6f6f6; padding: 5px 5px; font-size: 12px; }
+  .from_add_edit_issue table span { font-size: 12px; line-height: 20px; }
+  .from_add_edit_issue table { width: 100%; }
+  .from_add_edit_issue table tr { margin: 2px 0px; }
+  .from_add_edit_issue table tr td { width: 50%; }
+  .from_add_edit_issue .title_issue { width: 100%; padding-right: 0px;}
+  .from_add_edit_issue .issue_description { width: 99%;height: 80px; font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif; }
+  .from_add_edit_issue .end, .from_add_edit_issue .begin, .from_add_edit_issue .time { width: 70px; float: right; }
+  .from_add_edit_issue .value_content { float: right; width: 73px; }
+  .from_add_edit_issue .assign_up {position: relative;}
+  .from_add_edit_issue .assign {border: 1px solid; height: 33px; padding-left: 5px}
+  .from_add_edit_issue .assign img {height: 25px; width: 25px;}
+  .from_add_edit_issue .assign .sans_down { height: 20px;width: 10px; float: right; display: none; margin-top: 8px;}
+  .from_add_edit_issue .assign:hover .sans_down { display: block;}
 
-  .add_new_issue .select_assign {border: 1px solid; background: #C6C6C6; position: absolute; z-index: 100; width: 151px; }
-  .add_new_issue .select_assign img {height: 25px; width: 25px;}
-  .add_new_issue .select_assign ul { list-style: none; padding-left: 0px; margin: 0px;}
-  .add_new_issue .select_assign ul li {padding-left: 5px;}
-  .add_new_issue .select_assign ul li:hover {background: #666 }
+  .from_add_edit_issue .select_assign {border: 1px solid; background: #C6C6C6; position: absolute; z-index: 100; width: 151px; }
+  .from_add_edit_issue .select_assign img {height: 25px; width: 25px;}
+  .from_add_edit_issue .select_assign ul { list-style: none; padding-left: 0px; margin: 0px;}
+  .from_add_edit_issue .select_assign ul li {padding-left: 5px;}
+  .from_add_edit_issue .select_assign ul li:hover {background: #666 }
 
   .absolute_backlog { position: absolute;}
   .fixed_backlog { position: fixed; top: 0px;}

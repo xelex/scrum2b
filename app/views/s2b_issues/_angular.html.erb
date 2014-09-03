@@ -147,6 +147,27 @@
       })
       $scope.issues = arrayIssues
     }
+
+    var sortableEle;
+     
+    $scope.dragStart = function(e, ui) {
+      ui.item.data('start', ui.item.index());
+    }
+    $scope.dragEnd = function(e, ui) {
+      var start = ui.item.data('start'),
+        end = ui.item.index();
+      
+      $scope.sortableArray.splice(end, 0, 
+        $scope.sortableArray.splice(start, 1)[0]);
+      
+      $scope.$apply();
+    }
+        
+    sortableEle = $('.connectedSortable').sortable({
+      start: $scope.dragStart,
+      update: $scope.dragEnd
+    });
+
   });
   
   scrum2b.service('ListIssues', function($http, $q){
