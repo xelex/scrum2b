@@ -1,5 +1,5 @@
 <div class="add_new_issue from_add_edit_issue hide">
-	<form ng-submit="addIssue()" ng-controller="BoardsCtrl">
+	<form ng-submit="addIssue()">
 	  <input type="hidden" ng-init="issue.project_id=<%= @project.id %>" >
 	  <input type="hidden" ng-init="issue.author_id=<%= User.current.id %>" >
 	  <input type="hidden" ng-init="issue.fixed_version_id=version.id" >

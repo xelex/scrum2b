@@ -3,6 +3,7 @@
   scrum2b.controller('BoardsCtrl', function ($scope, ListIssues){
     ListIssues.list().then(
       function(data){
+        var arrayVersionLoaded = [];
         var arrayIssues = [];
         var arrayVersions = [];
         var arrayStatus = [];
@@ -47,15 +48,24 @@
         $scope.allIssues = arrayIssues;
         $scope.members = arrayMembers;
         $scope.selected = arrayVersions[0]
-        console.log( "first member "+ $scope.members[0])
+        arrayVersionLoaded.push(arrayVersions[0].id)
+        $scope.versionsLoaded = arrayVersionLoaded
       }
     );
+    
+    var sortableEle;
+    $scope.dragStart = function(e, ui) {
+    }
+    $scope.dragEnd = function(e, ui) {
+    }
+        
+    sortableEle = $('.connectedSortable').sortable({
+        start: $scope.dragStart,
+        update: $scope.dragEnd
+    });
+    
     $scope.getIssues = function(version){
-      var array_version_id = []
-      angular.forEach($scope.allIssues,function(value){
-        array_version_id.push(value.fixed_version_id)
-      })
-      var indexOfVersion  = array_version_id.indexOf(version.id)
+      var indexOfVersion  = $scope.versionsLoaded.indexOf(version.id)
       if (indexOfVersion >= 0){
         var arrayIssues = [];
         angular.forEach($scope.allIssues, function(value) {
@@ -65,6 +75,7 @@
          })
         $scope.issues = arrayIssues;
       }else{
+        $scope.versionsLoaded.push(version.id)
         ListIssues.getIssues(version.id).then(
           function(data){
             var arrayIssues = [];
@@ -101,7 +112,10 @@
         ListIssues.addIssue($scope.issue).then(
           function(data){
             if(data.result == 'create_success'){
-              //chay lai function load data
+              console.log ("New issue "+ data.issue)
+              $scope.issues.push(data.issue)
+              $scope.allIssues.push(data.issue)
+              console.log ("Array issues "+ $scope.issues)
             }
           }
         );
@@ -115,7 +129,7 @@
       ListIssues.deleteIssue(issue).then(
          function(data){
           if (data.result == "success") {
-            //chay lai function load data
+            $scope.allIssues.splice($scope.allIssues.indexOf(issue), 1);
           };
          }
       );

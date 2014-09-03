@@ -1,3 +1,4 @@
+
 /**
  * @license AngularJS v1.3.0-beta.17
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -32,7 +33,6 @@
  * @param {string} module The namespace to use for the new minErr instance.
  * @returns {function(code:string, template:string, ...templateArgs): Error} minErr instance
  */
-
 function minErr(module) {
   return function () {
     var code = arguments[0],

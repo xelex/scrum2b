@@ -18,20 +18,19 @@ class S2bIssuesController < ProjectController
   end
   
   def get_issues_version
-
+    logger.info "Params version id  #{params[:version_id]}"
     version = Version.find(params[:version_id])
     @issues = version.fixed_issues # <- not too useful
-    logger.info "LIST ISSUES  #{@issues}"
-    render :json => {:issues => @issues, :versions => @versions, :issues => @issues, :tracker => @tracker, :priority => @priority, :status => @status, :members => @members}
+    render :json => {:issues => @issues}
   end
   
   def create
     #Creat new issue
     logger.info "params issue #{params[:issue]}"
-    newissue = Issue.new(params[:issue].merge(:status_id => DEFAULT_STATUS_IDS['status_no_start']))
-    if newissue.save
+    @issue = Issue.new(params[:issue].merge(:status_id => DEFAULT_STATUS_IDS['status_no_start']))
+    if @issue.save
       load_data
-      render :json => {:result => "create_success"}
+      render :json => {:result => "create_success", :issue => @issue}
     else
       render :json => {:result => @issue.errors.full_messages}
     end
@@ -50,8 +49,8 @@ class S2bIssuesController < ProjectController
     logger.info "TRACKer id #{params[:issue][:tracker_id]}"
     issue = Issue.find(params[:issue][:id])
     if issue.update_attributes(:subject => params[:issue][:subject], :description => params[:issue][:description], :estimated_hours => params[:issue][:estimated_hours],
-                                :priority_id => params[:issue][:priority_id], :assigned_to_id => params[:issue][:assigned_to_id],
-                                :start_date => params[:issue][:start_date], :due_date => params[:issue][:due_date],:tracker_id => params[:issue][:tracker_id])
+                               :priority_id => params[:issue][:priority_id], :assigned_to_id => params[:issue][:assigned_to_id],
+                               :start_date => params[:issue][:start_date], :due_date => params[:issue][:due_date],:tracker_id => params[:issue][:tracker_id])
       load_data
       render :json => {:result => "eidt_success", :versions => @versions, :issues => @issues, :tracker => @tracker, :priority => @priority, :status => @status, :members => @members}
     else
