@@ -46,6 +46,7 @@
   $("body").on('click', '.edit_issue', function(){
     $(this).parent().parent().parent().parent().parent().find( ".from_edit_issue " ).show();
     $(this).parent().parent().parent().parent().hide();
+    check_height_max();
   });
 
   $("body").on('click', '.icon_down', function(){

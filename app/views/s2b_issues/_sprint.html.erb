@@ -9,7 +9,8 @@
 	          <span class="icon_add_issue"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <!-- add new issue -->
-	        <%= render :partial => "/s2b_issues/add_new_issue" %>
+	        <div></div>
+	        <%= render :partial => "/s2b_issues/add_new_issue" %> 
 	        <div class="connectedSortable check_height" id="sortable1">
 	          <div ng-repeat="issue in issuesNew">
 	        	  <%= render :partial => "/s2b_issues/issue" %>

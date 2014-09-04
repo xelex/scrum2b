@@ -26,7 +26,7 @@
   .sprint_1, .sprint_2, .sprint_3, .sprint_4 {height: auto !important; /*padding-bottom: 50px !important;*/}
   .backlog {min-height: 50px; z-index: 30; position: absolute; width: 25%; border: 1px solid #999;}
 
-  .backlog span {font-family: Tahoma,Verdana,Arial,sans-serif; color: #ebebeb; font-size: 18px;}
+  .backlog span {font-family: Tahoma,Verdana,Arial,sans-serif; font-size: 18px;}
   .backlog .icon_add_issue img { float: right; }
   .backlog #sortable_backlog { overflow: auto; height: 450px !important; min-height: 450px !important; max-height: 450px !important; }
   .title_backlog {text-align: center; height: 30px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a6752d), to(#b88a46)); margin-top: 0px; margin-bottom: 0px;}
@@ -114,6 +114,7 @@
   .setting ul { list-style: none; margin: 0px; padding: 5px; border: 1px solid; }
   .setting ul li { font-size: 14px; padding: 3px 0px; }
   .setting ul li:hover { background: #555; }
+  .setting ul li a {display: block;}
 
   .content_issue { position: relative; margin-top: 7px;}
   .content_issue .select_progess_issue { position: absolute; border: 1px solid; top: 21px; right: 0px; width: 51px; padding: 0px; z-index: 300;}
@@ -167,7 +168,8 @@
   .issue_closed .content_issue, .issue_closed .detail_issue { display: none; }
   .issue_closed .issue { }
 
-  .from_add_edit_issue { border: 1px solid #cccccc; background: #f6f6f6; padding: 5px 5px; color: #54626d !important; font-size: 12px; }
+
+  .from_add_edit_issue { border: 1px solid #cccccc; background: #f6f6f6; padding: 5px 5px; font-size: 12px; color: #54626d !important; }
   .from_add_edit_issue table span { font-size: 12px; line-height: 20px; }
   .from_add_edit_issue table { width: 100%; }
   .from_add_edit_issue table tr { margin: 2px 0px; }

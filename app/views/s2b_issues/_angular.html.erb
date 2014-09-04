@@ -1,6 +1,8 @@
 <script>
   var scrum2b = angular.module('scrum2b', []);
+
   scrum2b.controller('BoardsCtrl', function ($scope, ListIssues){
+
     ListIssues.list().then(
       function(data){
         var arrayVersionLoaded = [];
@@ -55,21 +57,7 @@
         $scope.filterStatusIssues($scope.issues)
       }
     );
-    
-    var sortableEle;
-          
-    $scope.dragStart = function(e, ui) {
-       
-    }
-    $scope.dragEnd = function(e, ui) {
-      
-    }
-        
-    sortableEle = $('.connectedSortable').sortable({
-        start: $scope.dragStart,
-        update: $scope.dragEnd
-    });
-    
+
     $scope.getIssues = function(version){
       console.log("array version loaded "+ $scope.versionsLoaded)
       var indexOfVersion  = $scope.versionsLoaded.indexOf(version.id)
@@ -190,7 +178,38 @@
       $scope.issuesClose = arrayIssuesClose
       $scope.issuesBacklog = arrayIssuesBacklog
     }
+
+    // -var sortableEle;
+  
+    // $scope.dragStart = function(e, ui) {
+       
+    // }
+    // $scope.dragEnd = function(e, ui) {
+        
+    // }
+        
+    // sortableEle = $('.connectedSortable').sortable({
+    //     start: $scope.dragStart,
+    //     update: $scope.dragEnd
+    // });
     
+  });
+
+  
+
+  // date picker
+  scrum2b.directive('datepicker', function() {
+    return function(scope, element, attrs) {
+      element.datepicker({
+        inline: true,
+        dateFormat: 'yy-mm-dd',
+        onSelect: function(dateText) {
+          var modelPath = $(this).attr('ng-model');
+          putObject(modelPath, scope, dateText);
+          scope.$apply();
+        }
+      });
+    }
   });
   
   scrum2b.service('ListIssues', function($http, $q){
