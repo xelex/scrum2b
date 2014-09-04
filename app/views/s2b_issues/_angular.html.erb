@@ -10,6 +10,7 @@
         var arrayTracker = [];
         var arrayPriority = [];
         var arrayMembers = [];
+        $scope.statusIds = data.status_ids
          angular.forEach(data.issues, function(value) {
            angular.forEach(value, function(value,key) {
              arrayIssues.push(value);
@@ -40,6 +41,7 @@
              arrayMembers.push(value);
             })
          })
+
         $scope.versions = arrayVersions;
         $scope.issues = arrayIssues;
         $scope.priorities = arrayPriority;
@@ -50,6 +52,7 @@
         $scope.selected = arrayVersions[0]
         arrayVersionLoaded.push(arrayVersions[0].id)
         $scope.versionsLoaded = arrayVersionLoaded
+        $scope.filterStatusIssues($scope.issues)
       }
     );
     
@@ -65,8 +68,10 @@
     });
     
     $scope.getIssues = function(version){
+      console.log("array version loaded "+ $scope.versionsLoaded)
       var indexOfVersion  = $scope.versionsLoaded.indexOf(version.id)
       if (indexOfVersion >= 0){
+        console.log("ko nhay vao aip ")
         var arrayIssues = [];
         angular.forEach($scope.allIssues, function(value) {
           if(value.fixed_version_id == version.id){
@@ -74,10 +79,13 @@
           }
          })
         $scope.issues = arrayIssues;
+        $scope.filterStatusIssues($scope.issues)
       }else{
+        console.log("nhay vao aip ")
         $scope.versionsLoaded.push(version.id)
         ListIssues.getIssues(version.id).then(
           function(data){
+            console.log("data tra ve " + data)
             var arrayIssues = [];
             angular.forEach(data, function(value) {
               angular.forEach(value, function(value,key) {
@@ -88,6 +96,7 @@
               })
             })
             $scope.issues = arrayIssues;
+            $scope.filterStatusIssues($scope.issues)
           }
         )
       }
@@ -112,7 +121,6 @@
         ListIssues.addIssue($scope.issue).then(
           function(data){
             if(data.result == 'create_success'){
-              console.log ("New issue "+ data.issue)
               $scope.issues.push(data.issue)
               $scope.allIssues.push(data.issue)
               console.log ("Array issues "+ $scope.issues)
@@ -130,6 +138,8 @@
          function(data){
           if (data.result == "success") {
             $scope.allIssues.splice($scope.allIssues.indexOf(issue), 1);
+            $scope.issues.splice($scope.allIssues.indexOf(issue), 1);
+            $scope.filterStatusIssues($scope.issues)
           };
          }
       );
@@ -152,36 +162,32 @@
       return $scope.selected === version;
     };
     
-    function loadIssuesVersion(version){
-      var arrayIssues = []
-      angular.forEach($scope.allIssues, function(value) {
-        if(value.fixed_version_id == version.id){
-          arrayIssues.push(value);
+    $scope.filterStatusIssues = function(issues) {
+      var arrayIssuesNew = [];
+      var arrayIssuesInProgess = [];
+      var arrayIssuesResolved = [];
+      var arrayIssuesClose = [];
+      var arrayIssuesBacklog = [];
+      angular.forEach(issues, function(value) {
+        if ($scope.statusIds.status_no_start == value.status_id){
+          arrayIssuesNew.push(value)
+        }else if($scope.statusIds.status_inprogress == value.status_id){
+          arrayIssuesInProgess.push(value)
+        }else if($scope.statusIds.status_completed == value.status_id ){
+          arrayIssuesResolved.push(value)
+        }else if($scope.statusIds.status_closed == value.status_id ){
+          arrayIssuesClose.push(value)
+        }else{
+          arrayIssuesBacklog.push(value)
         }
       })
-      $scope.issues = arrayIssues
+      $scope.issuesNew = arrayIssuesNew
+      $scope.issuesInProgess = arrayIssuesInProgess
+      $scope.issuesResolved = arrayIssuesResolved
+      $scope.issuesClose = arrayIssuesClose
+      $scope.issuesBacklog = arrayIssuesBacklog
     }
-
-    var sortableEle;
-     
-    $scope.dragStart = function(e, ui) {
-      ui.item.data('start', ui.item.index());
-    }
-    $scope.dragEnd = function(e, ui) {
-      var start = ui.item.data('start'),
-        end = ui.item.index();
-      
-      $scope.sortableArray.splice(end, 0, 
-        $scope.sortableArray.splice(start, 1)[0]);
-      
-      $scope.$apply();
-    }
-        
-    sortableEle = $('.connectedSortable').sortable({
-      start: $scope.dragStart,
-      update: $scope.dragEnd
-    });
-
+    
   });
   
   scrum2b.service('ListIssues', function($http, $q){

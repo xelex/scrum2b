@@ -10,11 +10,15 @@ class S2bIssuesController < ProjectController
     # issues.each do |is|
       # is.destroy
     # end
+    # issues = Issue.last
+    # issues.update_attributes(:status_id => 3)
   end
-
+  
   def get_data
     load_data
-    render :json => {:versions => @versions, :issues => @issues, :tracker => @tracker, :priority => @priority, :status => @status, :members => @members}
+    @issues = opened_versions_list.first.fixed_issues
+    logger.info "Issues first version #{@issues}"
+    render :json => {:versions => @versions, :issues => @issues, :tracker => @tracker, :priority => @priority, :status => @status, :members => @members, :status_ids => DEFAULT_STATUS_IDS}
   end
   
   def get_issues_version
@@ -27,11 +31,12 @@ class S2bIssuesController < ProjectController
   def create
     #Creat new issue
     logger.info "params issue #{params[:issue]}"
-    @issue = Issue.new(params[:issue].merge(:status_id => DEFAULT_STATUS_IDS['status_no_start']))
+    @issue = Issue.new(params[:issue])
     if @issue.save
-      load_data
+      logger.info "add thanh cong}"
       render :json => {:result => "create_success", :issue => @issue}
     else
+      logger.info "ADD that bai}"
       render :json => {:result => @issue.errors.full_messages}
     end
   end
@@ -60,7 +65,6 @@ class S2bIssuesController < ProjectController
   
   def load_data
     @versions =  opened_versions_list
-    @issues = opened_versions_list.first.fixed_issues # <- not too useful
     @priority = IssuePriority.all
     @tracker = Tracker.all
     @status = IssueStatus.where("id IN (?)" , DEFAULT_STATUS_IDS['status_no_start'])

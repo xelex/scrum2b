@@ -1,4 +1,3 @@
-<div ng-repeat="issue in issues">
 <div class="issue ui-state-default small_mode"  >
   <div class="title_issue">
     <a href="#">{{ issue.subject }}</a>
@@ -99,6 +98,5 @@
   </div><!--end detail issue-->
   
 </div><!-- end issue--> 
-  <!-- from edit issue -->
-  <%= render :partial => "s2b_issues/edit_issue" %>
-</div>
+<!-- from edit issue -->
+<%= render :partial => "s2b_issues/edit_issue" %>
