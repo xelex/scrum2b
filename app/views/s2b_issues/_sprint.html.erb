@@ -1,5 +1,5 @@
 <div ng-repeat="version in versions" >
-	<h3 class="title_sprint" ng-class="{'title_sprint_active': isActiveVersion(version)}" ng-click="getIssues(version)" > {{version.name}} </h3>	
+	<h3 class="title_sprint" ng-class="{'title_sprint_active': isActiveVersion(version)}" ng-click="getIssues(version)" > {{version.name}}</h3>	
 	<div class="sprint_1 sprint sprint-active clearfix" ng-class="{'active': isActiveVersion(version)}">
 	  <div class="s2b_column_4 hide_backlog ">
 	    <div class="padding_5 ">
@@ -9,8 +9,10 @@
 	          <span class="icon_add_issue"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <!-- add new issue -->
+	        
 	        <div></div>
 	        <%= render :partial => "/s2b_issues/add_new_issue" %> 
+
 	        <div class="connectedSortable check_height" id="sortable1">
 	          <div ng-repeat="issue in issuesNew">
 	        	  <%= render :partial => "/s2b_issues/issue" %>

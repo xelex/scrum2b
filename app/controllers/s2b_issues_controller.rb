@@ -17,7 +17,6 @@ class S2bIssuesController < ProjectController
   def get_data
     load_data
     @issues = opened_versions_list.first.fixed_issues
-    logger.info "Issues first version #{@issues}"
     render :json => {:versions => @versions, :issues => @issues, :tracker => @tracker, :priority => @priority, :status => @status, :members => @members, :status_ids => DEFAULT_STATUS_IDS}
   end
   
@@ -33,10 +32,8 @@ class S2bIssuesController < ProjectController
     logger.info "params issue #{params[:issue]}"
     @issue = Issue.new(params[:issue])
     if @issue.save
-      logger.info "add thanh cong}"
       render :json => {:result => "create_success", :issue => @issue}
     else
-      logger.info "ADD that bai}"
       render :json => {:result => @issue.errors.full_messages}
     end
   end
@@ -52,12 +49,11 @@ class S2bIssuesController < ProjectController
 
   def update
     logger.info "TRACKer id #{params[:issue][:tracker_id]}"
-    issue = Issue.find(params[:issue][:id])
-    if issue.update_attributes(:subject => params[:issue][:subject], :description => params[:issue][:description], :estimated_hours => params[:issue][:estimated_hours],
-                               :priority_id => params[:issue][:priority_id], :assigned_to_id => params[:issue][:assigned_to_id],
-                               :start_date => params[:issue][:start_date], :due_date => params[:issue][:due_date],:tracker_id => params[:issue][:tracker_id])
-      load_data
-      render :json => {:result => "eidt_success", :versions => @versions, :issues => @issues, :tracker => @tracker, :priority => @priority, :status => @status, :members => @members}
+    @issue = Issue.find(params[:issue][:id])
+    if @issue.update_attributes(:subject => params[:issue][:subject], :description => params[:issue][:description], :estimated_hours => params[:issue][:estimated_hours],
+                                :priority_id => params[:issue][:priority_id], :assigned_to_id => params[:issue][:assigned_to_id],
+                                :start_date => params[:issue][:start_date], :due_date => params[:issue][:due_date],:tracker_id => params[:issue][:tracker_id])
+      render :json => {:result => "eidt_success",:issue => @issue}
     else
       render :json => {:result => @issue.errors.full_messages}
     end
