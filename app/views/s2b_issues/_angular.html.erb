@@ -53,6 +53,7 @@
         arrayVersionLoaded.push(arrayVersions[0].id)
         $scope.versionsLoaded = arrayVersionLoaded
         $scope.filterStatusIssues($scope.issues)
+        console.log("array new status " + data.status_ids.status_no_start)
       }
     );
     
@@ -74,7 +75,6 @@
       console.log("array version loaded "+ $scope.versionsLoaded)
       var indexOfVersion  = $scope.versionsLoaded.indexOf(version.id)
       if (indexOfVersion >= 0){
-        console.log("ko nhay vao aip ")
         var arrayIssues = [];
         angular.forEach($scope.allIssues, function(value) {
           if(value.fixed_version_id == version.id){
@@ -84,11 +84,9 @@
         $scope.issues = arrayIssues;
         $scope.filterStatusIssues($scope.issues)
       }else{
-        console.log("nhay vao aip ")
         $scope.versionsLoaded.push(version.id)
         ListIssues.getIssues(version.id).then(
           function(data){
-            console.log("data tra ve " + data)
             var arrayIssues = [];
             angular.forEach(data, function(value) {
               angular.forEach(value, function(value,key) {
@@ -126,7 +124,6 @@
             if(data.result == 'create_success'){
               $scope.issues.push(data.issue)
               $scope.allIssues.push(data.issue)
-              console.log ("Array issues "+ $scope.issues)
             }
           }
         );
@@ -148,8 +145,8 @@
       );
     };
 
-    $scope.editIssue = function() {
-      console.log ("params " + $scope.issue.assigned_to_id)
+    $scope.editIssue = function(){
+      console.log ("params edit issue " + $scope.issue)
       ListIssues.editIssue($scope.issue).then(
         function(data){
           if (data.result == "eidt_success") {

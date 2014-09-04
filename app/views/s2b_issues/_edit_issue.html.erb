@@ -1,9 +1,9 @@
 <div class="from_add_edit_issue from_edit_issue hide">
-	<form ng-submit="editIssue()" name="issueForm">
+	<form ng-submit="editIssue()">
 		<input type="hidden" ng-init="issue.id=issue.id" >
 		<table >
 			<tr>
-				<td colspan="2"><input type="text" ng-model="issue.subject"  class="title_issue" placeholder="Enter the issue subject..."></td>
+				<td colspan="2"><input type="text" ng-model="issue.subject"  class="title_issue"></td>
 			</tr>
 			<tr>
 				<td colspan="2">
