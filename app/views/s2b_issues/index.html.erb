@@ -51,35 +51,5 @@
   </div><!--end content-->
 </div>
 
-<script>
-  
-  $("body").on('click', '.icon_add_issue', function(){
-    $(this).parent().parent().find('.add_new_issue').show();
-  });
-  
-  $("body").on('click', '.cancel_issue',function(){
-    $(this).parent().parent().parent().parent().parent().parent().hide();
-  });
-
-  $("body").on('click', document , function(e){
-    $('.setting').hide();
-    e.stopPropagation();
-  });
-
-  $("body").on('click', '.setting' , function(e){
-    $(this).show();
-  });
-
-  $("body").on('click', '.icon_config' , function(e){
-    $('.setting').hide();
-    $(this).parent().parent().find(".setting").toggle();
-    e.stopPropagation();
-  });
-  
-  $("body").on('click', '.edit_issue', function(){
-    $(this).parent().parent().parent().parent().parent().find( ".from_edit_issue " ).show();
-    $(this).parent().parent().parent().parent().hide();
-  });
-
-
-</script>
+<!-- jquery -->
+<%= render :partial => "s2b_issues/jquery" %>
