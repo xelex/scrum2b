@@ -1,102 +1,102 @@
-<div class="issue ui-state-default small_mode"  >
-  <div class="title_issue">
-    <a href="#">{{ issue.subject }}</a>
-    <span class="icon_config" ><i class="fa fa-cog"></i></span> 
 
-  </div><!--end title issue -->
-  <div class="setting hide">
+<div class="title_issue">
+  <a href="#">{{ issue.subject }}</a>
+  <span class="icon_config" ><i class="fa fa-cog"></i></span> 
+
+</div><!--end title issue -->
+<div class="setting hide">
+  <ul>
+    <li>
+      <a href="" ng-click="deleteIssue(issue)" >Delete</a>
+    </li>
+    <li>
+      <a href="">View</a>
+    </li>
+    <li>
+      <a href="" ng-click="editIssue(issue)" class="edit_issue">Edit</a>
+    </li>
+    <li>
+      <a href="">Change sprint</a>
+    </li>
+    <li>
+      <a href="">Change status</a>
+    </li>
+  </ul>
+</div>
+<div class="content_issue">
+  <a href="#" class="avata" title="Quang Thai"><%= image_tag('avata.png', :plugin => 'scrum2b') %></a>
+  <div class="progress_issue">
+    <div class="value_progess">
+      <span><input type="text" class="amount" readonly value="20" >%</span>
+      <i class="fa fa-caret-down"></i>
+    </div>
+    <div class="select_progess_issue hide">
+      <div class="triangle"></div>
+      <div class="slider-vertical" style="height:100px;"></div>
+    </div>
+    <br>
+    <span class="icon_down"><i issue="123" class="fa fa-angle-double-down fa-lg"></i></span>
+  </div>
+</div><!--end content issue-->
+<div class="detail_issue">
+  <div class="detail">
+    <p>
+      Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+      purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
+      velit, faucibus interdum tellus libero ac justo....
+    </p>
+  </div>
+  <div class="file_comment">
     <ul>
       <li>
-        <a href="" ng-click="deleteIssue(issue)" >Delete</a>
+        <span class="open_file">File</span>
       </li>
       <li>
-        <a href="">View</a>
-      </li>
-      <li>
-        <a href="" ng-click="editIssue(issue)" class="edit_issue">Edit</a>
-      </li>
-      <li>
-        <a href="">Change sprint</a>
-      </li>
-      <li>
-        <a href="">Change status</a>
+        <span class="open_comment">Comment</span>
       </li>
     </ul>
+    <span class="icon_top "><i class="fa fa-angle-double-up fa-lg"></i></span>
   </div>
-  <div class="content_issue">
-    <a href="#" class="avata" title="Quang Thai"><%= image_tag('avata.png', :plugin => 'scrum2b') %></a>
-    <div class="progress_issue">
-      <div class="value_progess">
-        <span><input type="text" class="amount" readonly value="20" >%</span>
-        <i class="fa fa-caret-down"></i>
-      </div>
-      <div class="select_progess_issue hide">
-        <div class="triangle"></div>
-        <div class="slider-vertical" style="height:100px;"></div>
-      </div>
-      <br>
-      <span class="icon_down"><i issue="123" class="fa fa-angle-double-down fa-lg"></i></span>
-    </div>
-  </div><!--end content issue-->
-  <div class="detail_issue">
-    <div class="detail">
-      <p>
-        Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-        purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-        velit, faucibus interdum tellus libero ac justo....
-      </p>
-    </div>
-    <div class="file_comment">
-      <ul>
-        <li>
-          <span class="open_file">File</span>
-        </li>
-        <li>
-          <span class="open_comment">Comment</span>
-        </li>
-      </ul>
-      <span class="icon_top "><i class="fa fa-angle-double-up fa-lg"></i></span>
-    </div>
 
-    <div class="file">
-      <p>File</p>
-      <span class="view_file">View more comments</span>
-      <ul>
-        <li>
-          <a href="" class="icon_file"><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></a>
-          <span>Comment Comment Comment Comment </span>
-        </li>
-        <li>
-          <a href="" class="icon_file"><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></a>
-          <span>Donec et ante. Phasellus eu ligula.</span>
-        </li>
-        <li>
-          <a href="" class="icon_file"><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></a>
-          <span>Donec et ante. Phasellus eu ligula.</span>
-        </li>
-      </ul>
-    </div><!--end file-->
-    <div class="comment">
-      <p>Comment</p>
-      <span class="view_comment">View more comments</span>
-      <ul>
-        <li>
-          <a href="" class="avata"><%= image_tag('avata.png', :plugin => 'scrum2b') %></a>
-          <span>Comment Comment Comment Comment </span>
-        </li>
-        <li>
-          <a href="" class="avata"><%= image_tag('avata.png', :plugin => 'scrum2b') %></a>
-          <span>Donec et ante. Phasellus eu ligula.</span>
-        </li>
-        <li>
-          <a href="" class="avata"><%= image_tag('avata.png', :plugin => 'scrum2b') %></a>
-          <span>Donec et ante. Phasellus eu ligula.</span>
-        </li>
-      </ul>
-    </div><!--end comment-->
+  <div class="file">
+    <p>File</p>
+    <span class="view_file">View more comments</span>
+    <ul>
+      <li>
+        <a href="" class="icon_file"><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></a>
+        <span>Comment Comment Comment Comment </span>
+      </li>
+      <li>
+        <a href="" class="icon_file"><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></a>
+        <span>Donec et ante. Phasellus eu ligula.</span>
+      </li>
+      <li>
+        <a href="" class="icon_file"><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></a>
+        <span>Donec et ante. Phasellus eu ligula.</span>
+      </li>
+    </ul>
+  </div><!--end file-->
+  <div class="comment">
+    <p>Comment</p>
+    <span class="view_comment">View more comments</span>
+    <ul>
+      <li>
+        <a href="" class="avata"><%= image_tag('avata.png', :plugin => 'scrum2b') %></a>
+        <span>Comment Comment Comment Comment </span>
+      </li>
+      <li>
+        <a href="" class="avata"><%= image_tag('avata.png', :plugin => 'scrum2b') %></a>
+        <span>Donec et ante. Phasellus eu ligula.</span>
+      </li>
+      <li>
+        <a href="" class="avata"><%= image_tag('avata.png', :plugin => 'scrum2b') %></a>
+        <span>Donec et ante. Phasellus eu ligula.</span>
+      </li>
+    </ul>
+  </div><!--end comment-->
 
-  </div><!--end detail issue-->
+</div><!--end detail issue-->
   
-</div><!-- end issue--> 
+
 <!-- from edit issue -->
 <%= render :partial => "s2b_issues/edit_issue" %>

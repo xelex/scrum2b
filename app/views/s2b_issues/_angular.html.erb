@@ -175,38 +175,72 @@
       $scope.issuesClose = arrayIssuesClose
       $scope.issuesBacklog = arrayIssuesBacklog
     }
-
-    // -var sortableEle;
-  
-    // $scope.dragStart = function(e, ui) {
-       
-    // }
-    // $scope.dragEnd = function(e, ui) {
-        
-    // }
-        
-    // sortableEle = $('.connectedSortable').sortable({
-    //     start: $scope.dragStart,
-    //     update: $scope.dragEnd
-    // });
-    
   });
 
-  
+  scrum2b.directive('sortable', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, elm, attrs) {
+        var jqueryElm = $(elm[0]);
+        $(jqueryElm).sortable({
+          connectWith: ".connectedSortable"
+        }).disableSelection()
 
-  // date picker
-  scrum2b.directive('datepicker', function() {
-    return function(scope, element, attrs) {
-      element.datepicker({
-        inline: true,
-        dateFormat: 'yy-mm-dd',
-        onSelect: function(dateText) {
-          var modelPath = $(this).attr('ng-model');
-          putObject(modelPath, scope, dateText);
-          scope.$apply();
+        $(jqueryElm).on( "sortout", function( event, ui ) { 
+          $('.content').find('.hide_backlog').find('.content_issue').show();
+        });
+
+        $(jqueryElm).on( "sortover", function( event, ui ) {
+          $(this).addClass('background_sortover');
+          $('.ui-sortable-helper').addClass('move_issue');
+          a = $(this).attr('class');
+          if ($('.location_start_issue').length == 0 ) {
+            $("<div class='location_start_issue'></div>").insertAfter(".move_issue");
+          };
+          check_height_max_angular();
+        });
+
+        $(jqueryElm).on( "sortout", function( event, ui ) {
+          $(this).removeClass("background_sortover");
+        });
+
+        $(jqueryElm).on( "sortstop", function( event, ui ) {
+           $( ".location_start_issue" ).remove();
+          check_height_max_angular();
+        });
+      
+        $(jqueryElm).on( "sortbeforestop", function( event, ui ) {
+          $('.move_issue').removeClass('move_issue');
+        });
+
+        function check_height_max_angular(){
+          $(".sprint-active .check_height").css("height","auto");
+          var height1 = $(".active #sortable1").height();
+          var height2 = $(".active #sortable2").height();
+          var height3 = $(".active #sortable3").height();
+          var height4 = $(".active #sortable4").height();
+          var array_height = [height1, height2, height3, height4];
+          var max_height = Math.max.apply(Math, array_height);
+          $(".sprint-active .check_height").css("height",max_height);
         }
-      });
-    }
+      }
+    };
+  })
+
+  scrum2b.directive('datepicker', function () {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+         link: function (scope, element, attrs, ngModelCtrl) {
+            element.datepicker({
+                dateFormat: 'yy-mm-dd',
+                onSelect: function (date) {
+                    scope.date = date;
+                    scope.$apply();
+                }
+            });
+        }
+    };
   });
   
   scrum2b.service('ListIssues', function($http, $q){
