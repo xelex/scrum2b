@@ -224,12 +224,13 @@
       
         $(jqueryElm).on( "sortbeforestop", function( event, ui ) {
           var issueID = $('.move_issue').attr('issue-id');
-          var statusID = $('.move_issue').parent().attr('status');
+          var statusID = $('.move_issue').parent().attr('status-id');
+          var versionID = $('.move_issue').parent().attr('version-id');
           $('.move_issue').removeClass('move_issue');
-          updateStatus(issueID,statusID)          
+          updateStatus(issueID,statusID,versionID)          
         });
 
-        function updateStatus(id,status_id){
+        function updateStatus(id, status_id, version_id){
           var request = $http({
             method: "post",
             url: "update_status",
@@ -239,6 +240,7 @@
             data: {
               id: id,
               status_id : status_id,
+              fixed_version_id : version_id,
               project_id: "<%= @project.id %>"
             },
           });

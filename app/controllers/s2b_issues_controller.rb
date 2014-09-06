@@ -69,7 +69,7 @@ class S2bIssuesController < ProjectController
   def update_status
     logger.info "update status #{params}"
     @issue = Issue.find(params[:id])
-    if @issue.update_attributes(:status_id => params[:status_id])
+    if @issue.update_attributes(:status_id => params[:status_id], :fixed_version_id => params[:fixed_version_id])
       render :json => {:result => "update_success",:issue => @issue}
     else
       render :json => {:result => @issue.errors.full_messages}

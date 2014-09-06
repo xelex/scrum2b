@@ -8,12 +8,10 @@
     
     <%= render :partial => "s2b_issues/add_new_issue" %>
 
-    <div class="connectedSortable" id="sortable_backlog" sortable >
-        
-        <div class="issue ui-state-default small_mode" ng-repeat="issue in issuesBacklog" >
-          <%= render :partial => "/s2b_issues/issue" %>
-        </div>
-
+    <div class="connectedSortable" status-id="{{statusIds.status_no_start}}" version-id="" id="sortable_backlog" sortable >
+      <div class="issue ui-state-default small_mode" issue-id="{{issue.id}}" ng-repeat="issue in issuesBacklog" >
+        <%= render :partial => "/s2b_issues/issue" %>
+      </div>
     </div><!--end connectedSortable-->
   </div>
 </div><!--end backlog-->
