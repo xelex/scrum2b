@@ -12,18 +12,13 @@ $(document).ready(function(){
     $(".sprint-active .check_height").css("height",max_height);
   }
 
-  $("body").on('click', '.test', function(){
-    var a = $(this).parent().parent().parent().find('.begin').val();
-    alert(a);
-    var b = $(this).parent().parent().parent().find('.end').val();
-    alert(b);
-  });
-
   $("body").on('click', '.title_sprint', function(){
     check_height_max();
   });
 
   $("body").on('click', '.icon_add_issue', function(){
+    $('.add_new_issue').hide();
+    $('.add_new_issue form').trigger("reset");
     $(this).parent().parent().find('.add_new_issue').show();
     var form = $(this).parent().parent().find('.add_new_issue').find('form');
     var status_id = $(this).attr('status_id');
@@ -36,8 +31,9 @@ $(document).ready(function(){
   //   $(this).parent().next().append( html_new_question );
   // });
   
-  $("body").on('click', '.cancel_issue',function(){
+  $("body").on('click', '.cancel_add_issue',function(){
     $(this).parent().parent().parent().parent().parent().parent().hide();
+    $(this).parent().parent().parent().parent().parent().parent().find('form').trigger("reset");
   });
 
   $("body").on('click', document , function(e){
@@ -56,10 +52,15 @@ $(document).ready(function(){
   });
   
   $("body").on('click', '.edit_issue', function(){
-
-    $(this).parent().parent().parent().parent().parent().find(".from_edit_issue").show();
+    var id = $(this).attr("issue_id");
+    $(".from_edit_issue_" + id).show();
     //$(this).parent().parent().parent().parent().hide();
     check_height_max();
+  });
+  
+  $("body").on('click', '.cancel_edit_issue',function(){
+    var id = $(this).attr("issue_id");
+    $(".from_edit_issue_" + id).hide();
   });
 
   $("body").on('click', '.icon_down', function(){

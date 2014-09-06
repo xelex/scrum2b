@@ -1,4 +1,4 @@
-<div class="from_add_edit_issue from_edit_issue hide">
+<div class="from_add_edit_issue from_edit_issue from_edit_issue_{{issue.id}} hide">
 	<form ng-submit="editIssue()">
 		<input type="hidden" ng-init="issue.id=issue.id" >
 		<table >
@@ -14,13 +14,13 @@
 				<td>
 					<span>Tracker:</span>
 					<select class="value_content" ng-model="issue.tracker_id">
-						<option ng-repeat="tracker in trackers" value="{{tracker.id}}" selected="tracker.id==issue.tracker_id">{{tracker.name}}</option>
+						<option ng-repeat="tracker in trackers" value="{{tracker.id}}" ng-selected="tracker.id==issue.tracker_id">{{tracker.name}}</option>
 					</select>
 				</td>
 				<td>
 					<span>Priority:</span>
 					<select class="value_content" ng-model="issue.priority_id">
-						<option ng-repeat="priority in priorities" value="{{priority.id}}" selected="priority.id==issue.priority_id">{{priority.name}}</option>
+						<option ng-repeat="priority in priorities" value="{{priority.id}}" ng-selected="priority.id==issue.priority_id">{{priority.name}}</option>
 					</select>
 				</td>
 			</tr>
@@ -28,7 +28,7 @@
 				<td>
 					<span>Assign:</span>
 					<select class="value_content" ng-model="issue.assigned_to_id">
-						<option ng-repeat="member in members" value="{{member.id}}" selected="member.id==issue.assigned_to_id">{{member.firstname}} {{member.lastname}}</option>
+						<option ng-repeat="member in members" value="{{member.id}}" ng-selected="member.id==issue.assigned_to_id">{{member.firstname}} {{member.lastname}}</option>
 					</select>
 				</td>
 				<td>
@@ -38,18 +38,18 @@
 			</tr>
 			<tr>
 				<td>
-					<span>Start:</span>
-					<input type="text" datepicker ng-model="issue.start_date" class="begin">
+					<span>Start: </span>
+					<input type="date" ng-model="issue.start_date" class="begin">
 				</td>
 				<td >
 					<span>Due to:</span>
-					<input type="text" datepicker ng-model="issue.due_date" class="end">
+					<input type="date" ng-model="issue.due_date" class="end">
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
 					<input type="submit" class="submit_issue" value="Submit	">
-					<button type="button" class="cancel_issue">Cancel</button>
+					<button type="button" class="cancel_edit_issue" issue_id='{{issue.id}}'>Cancel</button>
 				</td>
 			</tr>
 		</table>

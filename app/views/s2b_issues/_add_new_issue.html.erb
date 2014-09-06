@@ -2,7 +2,6 @@
 	<form ng-submit="addIssue()" class="form_add_new_issue">
 	  <input type="hidden" ng-init="newissue.project_id=<%= @project.id %>" >
 	  <input type="hidden" ng-init="newissue.author_id=<%= User.current.id %>" >
-	  {{paramsStatusId}}
 		<table >
 			<tr>
 				<td colspan="2"><input type="text" ng-model="newissue.subject"  class="title_issue" placeholder="Enter the issue subject..." required></td>
@@ -39,18 +38,17 @@
 			<tr>
 				<td>
 					<span>Start:</span>
-					<input type="text" datepicker ng-model="issue.start_date" class="begin" >
+					<input type="date" ng-model="newissue.start_date" class="begin" >
 				</td>
 				<td>
 					<span>Due to:</span>
-					<input type="text" datepicker ng-model="issue.due_date" class="end" >
+					<input type="date" ng-model="newissue.due_date" class="end" >
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="submit" class="submit_issue" value="add">
-					<button type="button" class="cancel_issue">Cancel</button>
-					<input type="button" class="test" value="test">
+					<input type="submit" class="submit_issue" value="Add">
+					<button type="button" class="cancel_add_issue">Cancel</button>
 				</td>
 			</tr>
 		</table>
