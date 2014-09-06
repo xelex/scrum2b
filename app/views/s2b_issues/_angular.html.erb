@@ -13,6 +13,7 @@
         var arrayTracker = [];
         var arrayPriority = [];
         var arrayMembers = [];
+        $scope.paramsStatusId = '';
         $scope.statusIds = data.status_ids
           angular.forEach(data.issues, function(value) {
             angular.forEach(value, function(value,key) {
@@ -59,13 +60,11 @@
         $scope.allIssues = arrayIssues;
         $scope.members = arrayMembers;
 
-        $scope.selected = arrayVersions[0]
+        $scope.versionSelected = arrayVersions[0]
         arrayVersionLoaded.push(arrayVersions[0].id)
         $scope.versionsLoaded = arrayVersionLoaded
         $scope.filterStatusIssues($scope.issues)
-        
-        console.log(arrayMembers)
-        console.log("array new status " + data.status_ids.status_no_start)
+        console.log("array new status " + data.status_ids)
       }
     );
 
@@ -99,10 +98,10 @@
           }
         )
       }
-      if($scope.selected == version){
-        $scope.selected = !version;
+      if($scope.versionSelected == version){
+        $scope.versionSelected = !version;
       }else{
-        $scope.selected = version;
+        $scope.versionSelected = version;
       }
     }
     
@@ -114,29 +113,36 @@
       //   alert("vao sua")
       // };
     };
-
+    
+    $scope.setStatus = function(status){
+      $scope.paramsStatusId = status
+    }
+    
     $scope.addIssue = function(){
-      if($scope.issue.subject){
-        ListIssues.addIssue($scope.issue).then(
-          function(data){
-            if(data.result == 'create_success'){
-              $scope.issues.push(data.issue)
-              $scope.allIssues.push(data.issue)
-            }
+      $scope.newissue.status_id = $scope.paramsStatusId
+      $scope.newissue.fixed_version_id = $scope.versionSelected.id 
+      ListIssues.addIssue($scope.newissue).then(
+        function(data){
+          if(data.result == 'create_success'){
+            console.log ("da tao thanh cong ")
+            angular.forEach(data.issue, function(value) {
+              console.log ("new issue " + value.subject)
+              $scope.issues.push(value)
+              $scope.filterStatusIssues($scope.issues)
+            })
           }
-        );
-        $('.add_new_issue').hide();
-      }else{
-        $scope.errorAddNew = "Subject issue not blank!"
-      }
+        }
+      );
+      $('.add_new_issue').hide();
+      $('.form_add_new_issue').trigger("reset");
     };
 
     $scope.deleteIssue = function(issue) {
       ListIssues.deleteIssue(issue).then(
          function(data){
           if (data.result == "success") {
-            $scope.allIssues.splice($scope.allIssues.indexOf(issue), 1);
-            $scope.issues.splice($scope.allIssues.indexOf(issue), 1);
+            console.log ("xoa thanh cong ")
+            $scope.issues.splice($scope.issues.indexOf(issue), 1);
             $scope.filterStatusIssues($scope.issues)
           };
          }
@@ -144,20 +150,20 @@
     };
 
     $scope.editIssue = function(){
-      console.log ("params edit issue " + $scope.issue)
-      ListIssues.editIssue($scope.issue).then(
-        function(data){
-          if (data.result == "eidt_success") {
-            //chay lai function load data
-          }else{
-            alert(data.result)
-          }
-        }
-      );
+      console.log ("params edit issue " + $scope.issue.subject)
+      // ListIssues.editIssue($scope.issue).then(
+        // function(data){
+          // if (data.result == "eidt_success") {
+            // //chay lai function load data
+          // }else{
+            // alert(data.result)
+          // }
+        // }
+      // );
     };
-    
+
     $scope.isActiveVersion = function(version) {
-      return $scope.selected === version;
+      return $scope.versionSelected === version;
     };
     
     $scope.filterStatusIssues = function(issues) {
@@ -185,7 +191,7 @@
     }
   });
 
-  scrum2b.directive('sortable', function() {
+  scrum2b.directive('sortable', function($http) {
     return {
       restrict: 'A',
       link: function(scope, elm, attrs) {
@@ -211,16 +217,35 @@
         $(jqueryElm).on( "sortout", function( event, ui ) {
           $(this).removeClass("background_sortover");
         });
-
         $(jqueryElm).on( "sortstop", function( event, ui ) {
            $( ".location_start_issue" ).remove();
           check_height_max_angular();
         });
       
         $(jqueryElm).on( "sortbeforestop", function( event, ui ) {
+          var issueID = $('.move_issue').attr('issue-id');
+          var statusID = $('.move_issue').parent().attr('status');
           $('.move_issue').removeClass('move_issue');
+          updateStatus(issueID,statusID)          
         });
 
+        function updateStatus(id,status_id){
+          var request = $http({
+            method: "post",
+            url: "update_status",
+            params: {
+              action: "get"
+            },
+            data: {
+              id: id,
+              status_id : status_id,
+              project_id: "<%= @project.id %>"
+            },
+          });
+          function  handleSuccess( response ){
+            return ( response.data );
+          }
+        }
         function check_height_max_angular(){
           $(".sprint-active .check_height").css("height","auto");
           var height1 = $(".active #sortable1").height();
@@ -237,17 +262,17 @@
 
   scrum2b.directive('datepicker', function () {
     return {
-        restrict: 'A',
-        require: 'ngModel',
-         link: function (scope, element, attrs, ngModelCtrl) {
-            element.datepicker({
-                dateFormat: 'yy-mm-dd',
-                onSelect: function (date) {
-                    scope.date = date;
-                    scope.$apply();
-                }
-            });
-        }
+      restrict: 'A',
+      require: 'ngModel',
+      link: function (scope, element, attrs, ngModelCtrl) {
+        element.datepicker({
+          dateFormat: 'yy-mm-dd',
+          onSelect: function (date) {
+            scope.date = date;
+            scope.$apply();
+          }
+        });
+      }
     };
   });
   
@@ -320,12 +345,29 @@
       return( request.then( handleSuccess, handleError ) );
     }
 
+    function updateStatus(id,status_id){
+      console.log ("vao nhe ")
+      var request = $http({
+        method: "post",
+        url: "update_status",
+        params: {
+          
+        },
+        data: {
+          id: id,
+          status_id : status_id
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+
     return {
       list: getData,
       getIssues: getIssues,
       addIssue: addIssue,
       deleteIssue: deleteIssue,
       editIssue: editIssue,
+      updateStatus: updateStatus,
     }
     
     function handleError ( response ){

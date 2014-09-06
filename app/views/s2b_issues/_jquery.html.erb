@@ -25,6 +25,10 @@ $(document).ready(function(){
 
   $("body").on('click', '.icon_add_issue', function(){
     $(this).parent().parent().find('.add_new_issue').show();
+    var form = $(this).parent().parent().find('.add_new_issue').find('form');
+    var status_id = $(this).attr('status_id');
+    form.find('.status_id').attr('ng-init','newissue.status_id=new')
+    
   });
 
   // $("body").on('click', '.icon_add_issue', function(){
@@ -52,8 +56,9 @@ $(document).ready(function(){
   });
   
   $("body").on('click', '.edit_issue', function(){
-    $(this).parent().parent().parent().parent().parent().find( ".from_edit_issue" ).show();
-    $(this).parent().parent().parent().parent().hide();
+
+    $(this).parent().parent().parent().parent().parent().find(".from_edit_issue").show();
+    //$(this).parent().parent().parent().parent().hide();
     check_height_max();
   });
 

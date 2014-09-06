@@ -6,15 +6,13 @@
 	      <div class="border_status">
 	        <div class="status_sprint">
 	          <span>New Isuse</span>
-	          <span class="icon_add_issue"><i class="fa fa-plus-circle"></i>Add</span>
+	          <span class="icon_add_issue button" ng-click="setStatus(statusIds.status_no_start)"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <!-- add new issue -->
-
-	        <div></div>
 	        <%= render :partial => "/s2b_issues/add_new_issue" %> 
 
-	        <div class="connectedSortable check_height" id="sortable1" sortable >  
-          	<div class="issue isssue_{{issue.id}} ui-state-default small_mode" ng-repeat="issue in issuesNew" >
+	        <div class="connectedSortable check_height" status="{{statusIds.status_no_start}}" id="sortable1" sortable >  
+          	<div class="issue ui-state-default small_mode" issue-id="{{issue.id}}"  ng-repeat="issue in issuesNew" >
         	  	<%= render :partial => "/s2b_issues/issue" %>
         	  </div>
 	        </div><!--end connectedSortable-->
@@ -26,11 +24,11 @@
 	    	<div class="border_status">
 	        <div class="status_sprint">
 	          <span>In Progess</span>
-	          <span class="icon_add_issue"><i class="fa fa-plus-circle"></i>Add</span>
+	          <span class="icon_add_issue button" ng-click="setStatus(statusIds.status_inprogress)"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <%= render :partial => "/s2b_issues/add_new_issue" %>
-	        <div class="connectedSortable check_height" id="sortable2" sortable >
-	        	<div class="issue ui-state-default small_mode" ng-repeat="issue in issuesInProgess">
+	        <div class="connectedSortable check_height" status="{{statusIds.status_inprogress}}" id="sortable2" sortable >
+	        	<div class="issue ui-state-default small_mode" issue-id="{{issue.id}}" ng-repeat="issue in issuesInProgess">
               <%= render :partial => "/s2b_issues/issue" %>
             </div>
 	        </div><!--end connectedSortable-->  
@@ -43,8 +41,8 @@
 	        <div class="status_sprint">
 	          <span>Resolved</span>
 	        </div>
-	        <div class="connectedSortable check_height" id="sortable3" sortable >
-	          <div class="issue ui-state-default small_mode" ng-repeat="issue in issuesResolved">
+	        <div class="connectedSortable check_height" status="{{statusIds.status_completed}}" id="sortable3" sortable >
+	          <div class="issue ui-state-default small_mode" issue-id="{{issue.id}}" ng-repeat="issue in issuesResolved">
               <%= render :partial => "/s2b_issues/issue" %>
             </div>
 	        </div><!--end connectedSortable-->  
@@ -56,10 +54,10 @@
 	    	<div class="border_status">
 	      <div class="status_sprint">
 	        <span>Close</span>
-	        <span class="closed_issue"><i class="fa fa-minus-circle"></i>Hide</span> 
+	        <span class="closed_issue button"><i class="fa fa-minus-circle"></i>Hide</span> 
 	      </div>
-	      <div class="connectedSortable check_height" id="sortable4" sortable >
-	        <div class="issue ui-state-default small_mode" ng-repeat="issue in issuesClose">
+	      <div class="connectedSortable check_height" status="{{statusIds.status_closed}}" id="sortable4" sortable >
+	        <div class="issue ui-state-default small_mode" issue-id="{{issue.id}}" ng-repeat="issue in issuesClose">
               <%= render :partial => "/s2b_issues/issue" %>
             </div>
 	      </div><!--end connectedSortable-->  

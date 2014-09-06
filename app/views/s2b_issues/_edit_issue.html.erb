@@ -3,11 +3,11 @@
 		<input type="hidden" ng-init="issue.id=issue.id" >
 		<table >
 			<tr>
-				<td colspan="2"><input type="text" ng-model="issue.subject"  class="title_issue"></td>
+				<td colspan="2"><input type="text" ng-model="issue.subject"  class="title_issue" required ></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<textarea ng-model="issue.description" class="issue_description " placeholder="Enter the issue subject..."></textarea>
+					<textarea ng-model="issue.description" class="issue_description " placeholder="Enter the issue subject..."  ></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -28,7 +28,7 @@
 				<td>
 					<span>Assign:</span>
 					<select class="value_content" ng-model="issue.assigned_to_id">
-						<option ng-repeat="member in members" value="{{member.id}}" selected="member.id==issue.assigned_to_id">{{member.firstname}}</option>
+						<option ng-repeat="member in members" value="{{member.id}}" selected="member.id==issue.assigned_to_id">{{member.firstname}} {{member.lastname}}</option>
 					</select>
 				</td>
 				<td>
@@ -41,7 +41,7 @@
 					<span>Start:</span>
 					<input type="text" datepicker ng-model="issue.start_date" class="begin">
 				</td>
-				<td>
+				<td >
 					<span>Due to:</span>
 					<input type="text" datepicker ng-model="issue.due_date" class="end">
 				</td>
@@ -49,7 +49,7 @@
 			<tr>
 				<td colspan="2">
 					<input type="submit" class="submit_issue" value="Submit	">
-					<button type="button" class="cancel_issue" ng-click="issueForm.issue.$rollbackViewValue();issue=issue">Cancel</button>
+					<button type="button" class="cancel_issue">Cancel</button>
 				</td>
 			</tr>
 		</table>

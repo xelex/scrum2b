@@ -22,13 +22,24 @@
   .width_75 {width: 74.5%; float: right;}
   .width_33 {width: 33.33333% !important;}
   .border_status {border: 1px solid #9a9a9a;}
-
+  .button {
+    cursor: pointer;
+    float: right;
+    border: 1px;
+    line-height: 20px !important;
+    padding: 1px 4px;
+    margin: 3px 5px;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888));
+    font-size: 14px !important;
+    width: 50px !important;
+    text-align: center;
+  }
+  .button i { margin-right: 4px; }
   .sprint { display: none;}
   .sprint_1, .sprint_2, .sprint_3, .sprint_4 {height: auto !important; /*padding-bottom: 50px !important;*/}
   .backlog {min-height: 50px; z-index: 30; position: absolute; width: 25%; border: 1px solid #999;}
 
   .backlog span {font-family: Tahoma,Verdana,Arial,sans-serif; font-size: 18px;}
-  .backlog .icon_add_issue img { float: right; }
   .backlog #sortable_backlog { overflow: auto; height: 450px !important; min-height: 450px !important; max-height: 450px !important; }
   .title_backlog {text-align: center; height: 30px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a6752d), to(#b88a46)); margin-top: 0px; margin-bottom: 0px;}
   .title_backlog .span_backlog {line-height: 30px !important; }
@@ -44,13 +55,13 @@
   .filter .filter_right ul li select,.filter .filter_right ul li input  {border-radius: 2px; height: 20px;padding: 0 5px;border: none}
   {border-radius: 2px; height: 20px;padding: 0 5px}
 
-  .icon_backlog {cursor: pointer; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); line-height: 15px; padding: 5px 5px; margin: 0px 6px; display: block; width: 70px; margin: 5px; color: #ebebeb; font-size: 14px; font-weight: bold;}
+  .icon_backlog {cursor: pointer; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); line-height: 15px; padding: 5px 5px; margin: 0px 6px; display: block; width: 70px; margin: 5px; color: #ebebeb; font-size: 14px; font-weight: bold; text-align: center;}
   .icon_backlog i {margin-left: 4px;}
   .message { width: 30%; height: 100px; text-align: center; position: fixed; top: 10px; left: 440px; z-index: 1001;background: #C18888; opacity: 0.5;}
   .message span { position: fixed; top: 13px; z-index: 1010; left: 808px;  }
   .message span img {width: 20px; height: 20px; }
   .ui-accordion-content { padding-left: 0px !important; padding-right: 0px !important; }
-  .closed_backlog { cursor: pointer; width: 50px; text-align: right; float: left;line-height: 20px !important; padding: 1px 4px; margin: 4px 6px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important;}
+  .closed_backlog {  float: left !important;}
 
   .sprint_total { }
   .sprint {
@@ -78,10 +89,7 @@
 
   .status_sprint {height: 30px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a6752d), to(#b88a46)); }
   .status_sprint span { line-height: 30px; font-weight: bold; color: #ebebeb; margin-left: 10px; font-size: 16px;}
-  .icon_add_issue {cursor: pointer; float: right; border: 1px; line-height: 20px !important ; padding: 1px 4px; margin: 3px 5px;
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important; width: 50px !important; text-align: right;
-    }
-  .icon_add_issue i { margin-right: 4px; }
+  .icon_add_issue { }
   .title_issue { position: relative; padding-right: 20px;}
   .title_issue a{ line-height: 0px !important; color: #54626d !important; padding:}
   .title_issue .icon_config{ position: absolute; top: 0px; right: 0px; font-size: 18px;cursor: pointer;}
@@ -157,9 +165,6 @@
   .file .icon_file img { height: 30px; width: 30px; }
   .file ul li span { font-size: 12px; }
   .file .view_file { color: #598DC1; font-size: 12px; cursor: pointer; }
-
-  .closed_issue {cursor: pointer; width: 50px; text-align: right; float: right;line-height: 20px !important; padding: 1px 4px; margin: 3px 5px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important; }
-  .closed_issue i { margin-right: 4px; }
 
   .hide { display: none; }
   .open_sprint_closed { float: right;color: #ebebeb; font-weight: bold; margin-top: 5px; border: 1px; line-height: 20px !important; padding: 1px 4px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important; width: 45px !important; text-align: right;}

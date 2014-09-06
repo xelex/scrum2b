@@ -60,11 +60,21 @@ class S2bIssuesController < ProjectController
     if @issue.update_attributes(:subject => params[:issue][:subject], :description => params[:issue][:description], :estimated_hours => params[:issue][:estimated_hours],
                                 :priority_id => params[:issue][:priority_id], :assigned_to_id => params[:issue][:assigned_to_id],
                                 :start_date => params[:issue][:start_date], :due_date => params[:issue][:due_date],:tracker_id => params[:issue][:tracker_id])
-      render :json => {:result => "eidt_success",:issue => @issue}
+      render :json => {:result => "edit_success",:issue => @issue}
     else
       render :json => {:result => @issue.errors.full_messages}
     end
- end
+  end
+
+  def update_status
+    logger.info "update status #{params}"
+    @issue = Issue.find(params[:id])
+    if @issue.update_attributes(:status_id => params[:status_id])
+      render :json => {:result => "update_success",:issue => @issue}
+    else
+      render :json => {:result => @issue.errors.full_messages}
+    end
+  end
   
   def load_data
     @versions =  opened_versions_list

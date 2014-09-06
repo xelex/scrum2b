@@ -1,14 +1,11 @@
-<div class="add_new_issue from_add_edit_issue hide">
-	<form ng-submit="addIssue()" >
+<div class="add_new_issue from_add_edit_issue hide" >
+	<form ng-submit="addIssue()" class="form_add_new_issue">
 	  <input type="hidden" ng-init="newissue.project_id=<%= @project.id %>" >
 	  <input type="hidden" ng-init="newissue.author_id=<%= User.current.id %>" >
-	  <input type="hidden" ng-init="newissue.fixed_version_id=version.id" >
-	  <input type="hidden" ng-init="newissue.status_id=1" >
-	  <input type="hidden" ng-init="versionActive=version" >
-	  <label style="color: red">{{errorAddNew}}</label>
+	  {{paramsStatusId}}
 		<table >
 			<tr>
-				<td colspan="2"><input type="text" ng-model="newissue.subject"  class="title_issue" placeholder="Enter the issue subject..."></td>
+				<td colspan="2"><input type="text" ng-model="newissue.subject"  class="title_issue" placeholder="Enter the issue subject..." required></td>
 			</tr>
 			<tr>
 				<td colspan="2">
@@ -18,12 +15,14 @@
 			<tr>
 				<td>
 					<span>Tracker:</span>
-					<select class="value_content" ng-model="newissue.tracker_id" ng-options="tracker.id as tracker.name for tracker in trackers  ">
+					<select class="value_content" ng-model="newissue.tracker_id" ng-options="tracker.id as tracker.name for tracker in trackers" ng-init="newissue.tracker_id = trackers[0].id">
+					  
 					</select>
 				</td>
 				<td>
 					<span>Priority:</span>
-					<select class="value_content" ng-model="newissue.priority_id" ng-options="priority.id as priority.name for priority in priorities"></select>
+					<select class="value_content" ng-model="newissue.priority_id" ng-options="priority.id as priority.name for priority in priorities" ng-init="newissue.priority_id = priorities[0].id">
+					</select>
 				</td>
 			</tr>
 			<tr>
