@@ -18,6 +18,7 @@
   .s2b_column_4 { width: 26.66666666667%; float: left;}
   .s2b_column_5 { width: 31.97% !important; float: left;}
   .background_d {background: #7996a5 !important; color: #ebebeb}
+  .background_sortover { background: #B8CCCD !important; }
   .width_75 {width: 74.5%; float: right;}
   .width_33 {width: 33.33333% !important;}
   .border_status {border: 1px solid #9a9a9a;}
@@ -43,13 +44,13 @@
   .filter .filter_right ul li select,.filter .filter_right ul li input  {border-radius: 2px; height: 20px;padding: 0 5px;border: none}
   {border-radius: 2px; height: 20px;padding: 0 5px}
 
-  .icon_backlog {background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); line-height: 15px; padding: 5px 5px; margin: 0px 6px;    display: block; width: 60px; margin: 5px; color: #ebebeb; font-size: 14px; font-weight: bold;}
+  .icon_backlog {cursor: pointer; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); line-height: 15px; padding: 5px 5px; margin: 0px 6px;    display: block; width: 60px; margin: 5px; color: #ebebeb; font-size: 14px; font-weight: bold;}
   .icon_backlog i {margin-left: 4px;}
   .message { width: 30%; height: 100px; text-align: center; position: fixed; top: 10px; left: 440px; z-index: 1001;background: #C18888; opacity: 0.5;}
   .message span { position: fixed; top: 13px; z-index: 1010; left: 808px;  }
   .message span img {width: 20px; height: 20px; }
   .ui-accordion-content { padding-left: 0px !important; padding-right: 0px !important; }
-  .closed_backlog { width: 45px; text-align: right; float: left;line-height: 20px !important; padding: 1px 4px; margin: 4px 6px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important;}
+  .closed_backlog { cursor: pointer; width: 45px; text-align: right; float: left;line-height: 20px !important; padding: 1px 4px; margin: 4px 6px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important;}
   
 
   .sprint_total { }
@@ -78,7 +79,7 @@
 
   .status_sprint {height: 30px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a6752d), to(#b88a46)); }
   .status_sprint span { line-height: 30px; font-weight: bold; color: #ebebeb; margin-left: 10px; font-size: 16px;}
-  .icon_add_issue {float: right; border: 1px; line-height: 20px !important ; padding: 1px 4px; margin: 3px 5px;
+  .icon_add_issue {cursor: pointer; float: right; border: 1px; line-height: 20px !important ; padding: 1px 4px; margin: 3px 5px;
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important; width: 45px !important; text-align: right;
     }
   .icon_add_issue i { margin-right: 4px; }
@@ -158,7 +159,7 @@
   .file ul li span { font-size: 12px; }
   .file .view_file { color: #598DC1; font-size: 12px; cursor: pointer; }
 
-  .closed_issue {width: 45px; text-align: right; float: right;line-height: 20px !important; padding: 1px 4px; margin: 3px 5px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important; }
+  .closed_issue {cursor: pointer; width: 45px; text-align: right; float: right;line-height: 20px !important; padding: 1px 4px; margin: 3px 5px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important; }
   .closed_issue i { margin-right: 4px; }
 
   .hide { display: none; }
@@ -201,6 +202,7 @@
 
   .ui-sortable-placeholder { visibility: visible !important; }
 
-  .location_start_issue { height: 30px; background: #666; opacity: 0.5}
+  .location_start_issue { height: 70px; background: #666; opacity: 0.2}
+  .ui-sortable-placeholder {height: 10px !important; background: #666 !important; opacity: 0.5}
 
   .active {display: block;}
