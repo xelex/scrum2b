@@ -6,7 +6,7 @@
 	      <div class="border_status">
 	        <div class="status_sprint">
 	          <span>New Isuse</span>
-	          <span class="icon_add_issue button" ng-click="setStatus(statusIds.status_no_start)"><i class="fa fa-plus-circle"></i>Add</span>
+	          <span class="icon_add_issue button" ng-click="setParams(statusIds.status_no_start,version.id)"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <!-- add new issue -->
 	        <%= render :partial => "/s2b_issues/add_new_issue" %> 
@@ -24,7 +24,7 @@
 	    	<div class="border_status">
 	        <div class="status_sprint">
 	          <span>In Progess</span>
-	          <span class="icon_add_issue button" ng-click="setStatus(statusIds.status_inprogress)"><i class="fa fa-plus-circle"></i>Add</span>
+	          <span class="icon_add_issue button" ng-click="setParams(statusIds.status_inprogress,version.id)"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <%= render :partial => "/s2b_issues/add_new_issue" %>
 	        <div class="connectedSortable check_height" status="{{statusIds.status_inprogress}}" id="sortable2" sortable >

@@ -114,24 +114,30 @@
       // };
     };
     
-    $scope.setStatus = function(status){
-      $scope.paramsStatusId = status
+    $scope.setParams = function(status_id,version_id){
+      console.log ("version params "+ version_id)
+      $scope.paramsStatusId = status_id
+      $scope.paramsVersionId = version_id
     }
     
     $scope.addIssue = function(){
       $scope.newissue.start_date = $filter('date')($scope.newissue.start_date, "yyyy-MM-dd")
       $scope.newissue.due_date = $filter('date')($scope.newissue.due_date, "yyyy-MM-dd")
       $scope.newissue.status_id = $scope.paramsStatusId
-      $scope.newissue.fixed_version_id = $scope.versionSelected.id
+      $scope.newissue.fixed_version_id = $scope.paramsVersionId
+      console.log ("version  " + $scope.paramsVersionId)
       ListIssues.addIssue($scope.newissue).then(
         function(data){
           if(data.result == 'create_success'){
             console.log ("da tao thanh cong ")
             angular.forEach(data.issue, function(value) {
-              console.log ("new issue date" + value.start_date)
-              console.log ("is date" + angular.isString(value.start_date))
-              $scope.issues.push(value)
-              $scope.filterStatusIssues($scope.issues)
+              if(value.fixed_version_id == null){
+                $scope.issuesBacklog.push(value)
+              }else{
+                $scope.issues.push(value)
+                $scope.filterStatusIssues($scope.issues)
+              }
+              
             })
           }else{
             alert(data.result)
