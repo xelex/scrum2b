@@ -12,6 +12,11 @@ $(document).ready(function(){
     $(".sprint-active .check_height").css("height",max_height);
   }
 
+  $("body").on('click', '.test', function(){
+    var a = $(this).parent().parent().parent().find('.begin').val();
+    alert(a);
+  });
+
   $("body").on('click', '.title_sprint', function(){
     check_height_max();
   });
