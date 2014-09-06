@@ -15,6 +15,8 @@ $(document).ready(function(){
   $("body").on('click', '.test', function(){
     var a = $(this).parent().parent().parent().find('.begin').val();
     alert(a);
+    var b = $(this).parent().parent().parent().find('.end').val();
+    alert(b);
   });
 
   $("body").on('click', '.title_sprint', function(){
@@ -50,7 +52,7 @@ $(document).ready(function(){
   });
   
   $("body").on('click', '.edit_issue', function(){
-    $(this).parent().parent().parent().parent().parent().find( ".from_edit_issue " ).show();
+    $(this).parent().parent().parent().parent().parent().find( ".from_edit_issue" ).show();
     $(this).parent().parent().parent().parent().hide();
     check_height_max();
   });

@@ -7,54 +7,64 @@
       function(data){
         var arrayVersionLoaded = [];
         var arrayIssues = [];
+        var arrayIssuesBacklog = [];
         var arrayVersions = [];
         var arrayStatus = [];
         var arrayTracker = [];
         var arrayPriority = [];
         var arrayMembers = [];
         $scope.statusIds = data.status_ids
-         angular.forEach(data.issues, function(value) {
-           angular.forEach(value, function(value,key) {
-             arrayIssues.push(value);
+          angular.forEach(data.issues, function(value) {
+            angular.forEach(value, function(value,key) {
+              arrayIssues.push(value);
             })
-         })
-         angular.forEach(data.versions, function(value) {
-           angular.forEach(value, function(value,key) {
-             arrayVersions.push(value);
+          })
+          angular.forEach(data.issues_backlog, function(value) {
+            angular.forEach(value, function(value,key) {
+              arrayIssuesBacklog.push(value);
             })
-         })
-         angular.forEach(data.status, function(value) {
-           angular.forEach(value, function(value,key) {
-             arrayStatus.push(value);
+          })
+          angular.forEach(data.versions, function(value) {
+            angular.forEach(value, function(value,key) {
+              arrayVersions.push(value);
             })
-         })
-         angular.forEach(data.tracker, function(value) {
-           angular.forEach(value, function(value,key) {
-             arrayTracker.push(value);
+          })
+          angular.forEach(data.status, function(value) {
+            angular.forEach(value, function(value,key) {
+              arrayStatus.push(value);
             })
-         })
-         angular.forEach(data.priority, function(value) {
-           angular.forEach(value, function(value,key) {
-             arrayPriority.push(value);
+          })
+          angular.forEach(data.tracker, function(value) {
+            angular.forEach(value, function(value,key) {
+              arrayTracker.push(value);
             })
-         })
-         angular.forEach(data.members, function(value) {
-           angular.forEach(value, function(value,key) {
-             arrayMembers.push(value);
+          })
+          angular.forEach(data.priority, function(value) {
+            angular.forEach(value, function(value,key) {
+              arrayPriority.push(value);
             })
-         })
+          })
+          angular.forEach(data.members, function(value) {
+            angular.forEach(value, function(value,key) {
+              arrayMembers.push(value);
+            })
+          })
 
         $scope.versions = arrayVersions;
         $scope.issues = arrayIssues;
+        $scope.issuesBacklog = arrayIssuesBacklog
         $scope.priorities = arrayPriority;
         $scope.trackers = arrayTracker;
         $scope.status = arrayStatus;
         $scope.allIssues = arrayIssues;
         $scope.members = arrayMembers;
+
         $scope.selected = arrayVersions[0]
         arrayVersionLoaded.push(arrayVersions[0].id)
         $scope.versionsLoaded = arrayVersionLoaded
         $scope.filterStatusIssues($scope.issues)
+        
+        console.log(arrayMembers)
         console.log("array new status " + data.status_ids.status_no_start)
       }
     );
@@ -155,7 +165,6 @@
       var arrayIssuesInProgess = [];
       var arrayIssuesResolved = [];
       var arrayIssuesClose = [];
-      var arrayIssuesBacklog = [];
       angular.forEach(issues, function(value) {
         if ($scope.statusIds.status_no_start == value.status_id){
           arrayIssuesNew.push(value)
@@ -166,14 +175,13 @@
         }else if($scope.statusIds.status_closed == value.status_id ){
           arrayIssuesClose.push(value)
         }else{
-          arrayIssuesBacklog.push(value)
+
         }
       })
       $scope.issuesNew = arrayIssuesNew
       $scope.issuesInProgess = arrayIssuesInProgess
       $scope.issuesResolved = arrayIssuesResolved
       $scope.issuesClose = arrayIssuesClose
-      $scope.issuesBacklog = arrayIssuesBacklog
     }
   });
 

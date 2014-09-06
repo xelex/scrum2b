@@ -14,7 +14,7 @@
 	        <%= render :partial => "/s2b_issues/add_new_issue" %> 
 
 	        <div class="connectedSortable check_height" id="sortable1" sortable >  
-          	<div class="issue ui-state-default small_mode" ng-repeat="issue in issuesNew" >
+          	<div class="issue isssue_{{issue.id}} ui-state-default small_mode" ng-repeat="issue in issuesNew" >
         	  	<%= render :partial => "/s2b_issues/issue" %>
         	  </div>
 	        </div><!--end connectedSortable-->

@@ -17,12 +17,19 @@ class S2bIssuesController < ProjectController
   def get_data
     load_data
     @issues = opened_versions_list.first.fixed_issues
-    render :json => {:versions => @versions, :issues => @issues, :tracker => @tracker, :priority => @priority, :status => @status, :members => @members, :status_ids => DEFAULT_STATUS_IDS}
+    @issues_backlog = Issue.where(:fixed_version_id => nil).where("project_id IN (?)",@hierarchy_project_id)
+    render :json => {:versions => @versions, :issues => @issues, :issues_backlog => @issues_backlog, :tracker => @tracker, :priority => @priority, :status => @status, :members => @members, :status_ids => DEFAULT_STATUS_IDS}
   end
   
   def get_issues_version
     logger.info "Params version id  #{params[:version_id]}"
     version = Version.find(params[:version_id])
+    @issues = version.fixed_issues # <- not too useful
+    render :json => {:issues => @issues}
+  end
+
+  def get_issues_backlog
+    logger.info ""
     @issues = version.fixed_issues # <- not too useful
     render :json => {:issues => @issues}
   end
