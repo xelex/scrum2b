@@ -1,5 +1,5 @@
 <script>
-  var scrum2b = angular.module('scrum2b', []);
+  var scrum2b = angular.module('scrum2b', ["xeditable"]);
 
   scrum2b.controller('BoardsCtrl', function ($scope, ListIssues,$filter){
 
@@ -64,6 +64,7 @@
         arrayVersionLoaded.push(arrayVersions[0].id)
         $scope.versionsLoaded = arrayVersionLoaded
         $scope.filterStatusIssues($scope.issues)
+        $scope.dateBirth = new Date(2014, 3, 19);
         console.log("array new status " + data.status_ids)
       }
     );
@@ -159,18 +160,35 @@
         }
       );
     };
-
-    $scope.editIssue = function(){
-      console.log ("params edit issue " + $scope.issue)
-      // ListIssues.editIssue($scope.issue).then(
-        // function(data){
-          // if (data.result == "eidt_success") {
-            // //chay lai function load data
-          // }else{
-            // alert(data.result)
-          // }
-        // }
-      // );
+    
+    $scope.checkParamsEdit = function(data) {
+      console.log ("start " + $filter('date')(data.start_date, "yyyy-MM-dd"))
+      console.log ("end "+$filter('date')(data.due_date, "yyyy-MM-dd"))
+      if ($filter('date')(data.start_date, "yyyy-MM-dd") > $filter('date')(data.due_date, "yyyy-MM-dd")) {
+        $scope.errorDate =  "Due date must be greater than start date";
+        return "Due date must be greater than start date";
+      }
+    }; 
+    $scope.editIssue = function(issue){
+      $scope.errorDate = '';
+      console.log ("params edit issue " + issue.start_date)
+      issue.start_date = $filter('date')(issue.start_date, "yyyy-MM-dd")
+      issue.due_date = $filter('date')(issue.due_date, "yyyy-MM-dd")
+      ListIssues.editIssue(issue).then(
+        function(data){
+          if (data.result == "edit_success") {
+            console.log ("da tao thanh cong ")
+            angular.forEach(data.issue, function(value) {
+              console.log ("edit thanh cong " + value.start_date)
+            })
+            var id = issue.id
+            $(".from_edit_issue_" + id ).hide();
+            
+          }else{
+            console.log (data.result)
+          }
+        }
+      );
     };
 
     $scope.updateStatus = function(){

@@ -55,7 +55,7 @@ class S2bIssuesController < ProjectController
   end
 
   def update
-    logger.info "TRACKer id #{params[:issue][:tracker_id]}"
+    logger.info "Prams Issue #{params[:issue]}"
     @issue = Issue.find(params[:issue][:id])
     if @issue.update_attributes(:subject => params[:issue][:subject], :description => params[:issue][:description], :estimated_hours => params[:issue][:estimated_hours],
                                 :priority_id => params[:issue][:priority_id], :assigned_to_id => params[:issue][:assigned_to_id],
