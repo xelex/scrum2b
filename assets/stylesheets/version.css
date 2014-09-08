@@ -85,7 +85,10 @@
 
   .title_sprint_active {background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a6752d), to(#b88a46)) !important; }
 
-  .title_sprint {font-weight: bold !important; cursor: pointer;background: #275888; border-radius: 0px !important; color: #ebebeb; padding: 10px;margin: 0px 0px 5px 0px; }
+  .title_sprint {text-transform: capitalize; font-weight: bold !important; cursor: pointer;background: #275888; border-radius: 0px !important; color: #ebebeb; padding: 10px;margin: 0px 0px 5px 0px; }
+  .title_sprint a {float: right; color: #ebebeb;}
+
+  .quantity_issue {background: rgb(150, 55, 188); padding: 1px 4px; margin-left: 10px; border-radius: 2px; }
 
   .status_sprint {height: 30px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a6752d), to(#b88a46)); }
   .status_sprint span { line-height: 30px; font-weight: bold; color: #ebebeb; margin-left: 10px; font-size: 16px;}
@@ -118,11 +121,17 @@
   .normal_mode .file {display: none;}
   .normal_mode .comment {display: none;}
 
-  .setting { position: absolute; top: 25px; right: 5px; background: #ddd; z-index: 100; }
-  .setting ul { list-style: none; margin: 0px; padding: 5px; border: 1px solid; }
+  .setting { position: absolute; top: 25px; right: 5px; background: #fff; z-index: 100; width: 100px; }
+  .setting ul { list-style: none; margin: 0px; padding: 2px; border: 1px solid; }
   .setting ul li { font-size: 14px; padding: 3px 0px; }
-  .setting ul li:hover { background: #555; }
+  .setting ul li:hover { background: #ddd; }
   .setting ul li a {display: block;}
+  .setting ul ul {display: none; z-index: 200; position: absolute; width: 90px; left: -93px;  background: #fff;}
+  .setting .change_sprint {top: 69px;}
+  .setting .change_status {top: 90px;}
+
+  .setting .sprint_li:hover .change_sprint { display: block;}
+  .setting .status_li:hover .change_status { display: block;}
 
   .content_issue { position: relative; margin-top: 7px;}
   .content_issue .select_progess_issue { position: absolute; border: 1px solid; top: 21px; right: 0px; width: 51px; padding: 0px; z-index: 300;}

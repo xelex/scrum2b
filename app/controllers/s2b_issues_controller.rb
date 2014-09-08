@@ -75,6 +75,16 @@ class S2bIssuesController < ProjectController
       render :json => {:result => @issue.errors.full_messages}
     end
   end
+
+  def update_version
+    logger.info "update version #{params}"
+    @issue = Issue.find(params[:id])
+    if @issue.update_attributes(:fixed_version_id => params[:fixed_version_id])
+      render :json => {:result => "update_success",:issue => @issue}
+    else
+      render :json => {:result => @issue.errors.full_messages}
+    end
+  end
   
   def load_data
     @versions =  opened_versions_list

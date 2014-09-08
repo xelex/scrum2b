@@ -1,5 +1,9 @@
 <div ng-repeat="version in versions" >
-	<h3 class="title_sprint" ng-class="{'title_sprint_active': isActiveVersion(version)}" ng-click="getIssues(version)" > {{version.name}}</h3>	
+	<h3 class="title_sprint" ng-class="{'title_sprint_active': isActiveVersion(version)}" ng-click="getIssues(version)" > 
+		{{version.name}} 
+		<span class="quantity_issue" ng-if="isActiveVersion(version)">{{issues.length}}</span> 
+		<a href="/versions/{{version.id}} " target="_blank" >See Detail</a>
+	</h3>	
 	<div class="sprint_1 sprint sprint-active clearfix" ng-class="{'active': isActiveVersion(version)}">
 	  <div class="s2b_column_4 hide_backlog"  >
 	    <div class="padding_5 ">

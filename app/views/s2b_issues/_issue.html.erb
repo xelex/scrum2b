@@ -10,16 +10,35 @@
       <a href="" ng-click="deleteIssue(issue)" >Delete</a>
     </li>
     <li>
-      <a href="">View</a>
+      <a href="/issues/{{issue.id}}">View</a>
     </li>
     <li>
       <a href="" class="edit_issue" issue_id="{{issue.id}}">Edit</a>
     </li>
-    <li>
+    <li class="sprint_li">
       <a href="">Change sprint</a>
+      <ul class="change_sprint">
+        <li ng-repeat="version in versions" >
+          <a href="" ng-click="updateVersion(issue, version.id)" version-id="{{version.id}}" issue-id="{{issue.id}}" >{{version.name}}</a>
+        </li>
+      </ul>
     </li>
-    <li>
+    <li class="status_li">
       <a href="">Change status</a>
+      <ul class="change_status">
+        <li>
+          <a href="" ng-click="changeStatus(issue, statusIds.status_no_start, version.id)" class="">New issue</a>
+        </li>
+        <li>
+          <a href="" ng-click="changeStatus(issue, statusIds.status_inprogress, version.id)" class="">In Progess</a>
+        </li>
+        <li>
+          <a href="" ng-click="changeStatus(issue, statusIds.status_completed, version.id)" class="">Resolved</a>
+        </li>
+        <li>
+          <a href="" ng-click="changeStatus(issue, statusIds.status_closed, version.id)" class="">Close</a>
+        </li>
+      </ul>
     </li>
   </ul>
 </div>

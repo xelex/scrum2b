@@ -150,13 +150,13 @@
 
     $scope.deleteIssue = function(issue) {
       ListIssues.deleteIssue(issue).then(
-         function(data){
+        function(data){
           if (data.result == "success") {
             console.log ("xoa thanh cong ")
             $scope.issues.splice($scope.issues.indexOf(issue), 1);
             $scope.filterStatusIssues($scope.issues)
           };
-         }
+        }
       );
     };
 
@@ -171,6 +171,46 @@
           // }
         // }
       // );
+    };
+
+    $scope.updateStatus = function(){
+      console.log ("params update Status ")
+      // ListIssues.updateStatus($scope.issue).then(
+      //   function(data){
+      //     if (data.result == "eidt_success") {
+      //       //chay lai function load data
+      //     }else{
+      //       alert(data.result)
+      //     }
+      //   }
+      // );
+    };
+    
+    $scope.updateVersion = function(issue,version_id) {
+      console.log ("updateVersion")
+      ListIssues.updateVersion(issue.id,version_id).then(
+         function(data){
+          if (data.result == "update_success") {
+            console.log ("update thanh cong ")
+            $scope.issues.splice($scope.issues.indexOf(issue), 1);
+            $scope.filterStatusIssues($scope.issues)
+            issue.fixed_version_id = version_id
+          };
+         }
+      );
+    };
+
+    $scope.changeStatus = function(issue,status_id,version_id) {
+      console.log ("changeStatus")
+      ListIssues.changeStatus(issue.id,status_id, version_id).then(
+         function(data){
+          if (data.result == "update_success") {
+            console.log ("update status thanh cong ")
+            issue.status_id = status_id
+            $scope.filterStatusIssues($scope.issues)
+          };
+         }
+      );
     };
 
     $scope.isActiveVersion = function(version) {
@@ -199,6 +239,8 @@
       $scope.issuesInProgess = arrayIssuesInProgess
       $scope.issuesResolved = arrayIssuesResolved
       $scope.issuesClose = arrayIssuesClose
+
+      console.log (arrayIssuesInProgess )
     }
   });
 
@@ -228,6 +270,7 @@
         $(jqueryElm).on( "sortout", function( event, ui ) {
           $(this).removeClass("background_sortover");
         });
+
         $(jqueryElm).on( "sortstop", function( event, ui ) {
            $( ".location_start_issue" ).remove();
           check_height_max_angular();
@@ -237,6 +280,9 @@
           var issueID = $('.move_issue').attr('issue-id');
           var statusID = $('.move_issue').parent().attr('status-id');
           var versionID = $('.move_issue').parent().attr('version-id');
+          // alert(issueID)
+          // alert(statusID)
+          // alert(versionID)
           $('.move_issue').removeClass('move_issue');
           updateStatus(issueID,statusID,versionID)          
         });
@@ -255,10 +301,12 @@
               project_id: "<%= @project.id %>"
             },
           });
+
           function  handleSuccess( response ){
             return ( response.data );
           }
         }
+        
         function check_height_max_angular(){
           $(".sprint-active .check_height").css("height","auto");
           var height1 = $(".active #sortable1").height();
@@ -358,17 +406,34 @@
       return( request.then( handleSuccess, handleError ) );
     }
 
-    function updateStatus(id,status_id){
-      console.log ("vao nhe ")
+    function updateVersion(issue_id, version_id){
+      var request = $http({
+        method: "post",
+        url: "update_version",
+        params: {
+          action: "get"
+        },
+        data: {
+          id: issue_id,
+          fixed_version_id : version_id,
+          project_id: "<%= @project.id %>"
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+
+    function changeStatus(issue_id, status_id, version_id){
       var request = $http({
         method: "post",
         url: "update_status",
         params: {
-          
+          action: "get"
         },
         data: {
-          id: id,
-          status_id : status_id
+          id: issue_id,
+          status_id : status_id,
+          fixed_version_id : version_id,
+          project_id: "<%= @project.id %>"
         },
       });
       return( request.then( handleSuccess, handleError ) );
@@ -380,7 +445,8 @@
       addIssue: addIssue,
       deleteIssue: deleteIssue,
       editIssue: editIssue,
-      updateStatus: updateStatus,
+      updateVersion: updateVersion,
+      changeStatus: changeStatus
     }
     
     function handleError ( response ){
