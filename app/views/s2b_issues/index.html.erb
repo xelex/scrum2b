@@ -20,25 +20,24 @@
       </div>
 
 	    <div class="filter_right">
+	      <form ng-submit="filterIssues()">
 	      <ul >
 	        <li>
-	          <select>
-	            <option ng-repeat="version in versions" value="{{ version.id }}">{{ version.name }}</option>
+	          <select ng-model="filterversion">
+	            <option ng-repeat="version in versions" value="{{version}}" ng-selected="isActiveVersion(version)">{{ version.name }}</option>
 	          </select>
 	        </li>
 	        <li>
-	          <select name="select_member" id="select_member">
-	            <option value="all" ><%= l(:label_select_all_member)%></option>
-	            <% if User.current.logged? %>
-	             <option value="me" <% if session[:params_select_member] && session[:params_select_member] == "me" %><%= selected="selected" %><% end %>><%= l(:label_select_me)%></option>
-	            <% end %>
-	            <option ng-repeat="member in members" value=" {{ member.id }}">{{ member.firstname }}</option>
+	          <select name="select_member" id="select_member" ng-model='filtermember'>
+	            <option value="all" ng-selected="memberActiveShow == 'all'" ><%= l(:label_select_all_member)%></option>
+	            <option ng-repeat="member in members" value=" {{ member}}" ng-selected="memberActiveShow==member.id">{{ member.firstname }}</option>
 	          </select>
 	        </li>
 	        <li>
-	        	<input type="button" value="Filter">
+	        	<input type="submit" value="Filter">
 	        </li>
 	      </ul>
+	      </form>
 	    </div>
 	  </div> <!--end filter-->
 	  <span class="icon_backlog">Backlog<i class="fa fa-angle-right fa-lg"></i></span>
