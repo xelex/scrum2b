@@ -2,6 +2,7 @@
 	<form ng-submit="addIssue()" class="form_add_new_issue">
 	  <input type="hidden" ng-init="newissue.project_id=<%= @project.id %>" >
 	  <input type="hidden" ng-init="newissue.author_id=<%= User.current.id %>" >
+	  <span style="color:red;font-weight:100">{{errorDateAddNew}}</span>
 		<table >
 			<tr>
 				<td colspan="2"><input type="text" ng-model="newissue.subject"  class="title_issue" placeholder="Enter the issue subject..." required></td>
@@ -28,11 +29,12 @@
 				<td>
 					<span>Assign:</span>
 					<select class="value_content" ng-model="newissue.assigned_to_id" ng-options="member.id as member.firstname for member in members">
+					  <option value="" selected="">Please Choose</option>
 					</select>
 				</td>
 				<td>
 					<span>Est. Hour:</span>
-					<input type="text" ng-model="newissue.estimated_hours" class="time">
+					<input type="number" ng-model="newissue.estimated_hours"  class="time">
 				</td>
 			</tr>
 			<tr>

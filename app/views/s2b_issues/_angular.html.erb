@@ -95,25 +95,30 @@
       $scope.newissue.status_id = $scope.paramsStatusId
       $scope.newissue.fixed_version_id = $scope.paramsVersionId
       console.log ("version  " + $scope.paramsVersionId)
-      ListIssues.addIssue($scope.newissue).then(
-        function(data){
-          if(data.result == 'create_success'){
-            console.log ("da tao thanh cong ")
-            angular.forEach(data.issue, function(value) {
-              if(value.fixed_version_id == null){
-                $scope.issuesBacklog.push(value)
-              }else{
-                $scope.issues.push(value)
-                $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow)
-              }
-              
-            })
-          }else{
-            alert(data.result)
+      if($scope.newissue.start_date > $scope.newissue.due_date){
+        $scope.errorDateAddNew = "Due date must be greater than start date"
+        return "Due date must be greater than start date"
+      }else{
+        ListIssues.addIssue($scope.newissue).then(
+          function(data){
+            if(data.result == 'create_success'){
+              angular.forEach(data.issue, function(value) {
+                if(value.fixed_version_id == null){
+                  $scope.issuesBacklog.push(value);
+                }else{
+                  $scope.allIssues.push(value);
+                  console.log ("issue new add  " + value.assigned_to_id)
+                  $scope.getIssues($scope.versionSelected,$scope.memberActiveShow);
+                }
+                $('.add_new_issue').hide();
+              })
+            }else{
+              console.log (data.result)
+              alert(data.result)
+            }
           }
-        }
-      );
-      $('.add_new_issue').hide();
+        );
+      }
       $('.form_add_new_issue').trigger("reset");
     };
 
@@ -122,8 +127,8 @@
         function(data){
           if (data.result == "success") {
             console.log ("xoa thanh cong ")
-            $scope.issues.splice($scope.issues.indexOf(issue), 1);
-            $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow)
+            $scope.allIssues.splice($scope.allIssues.indexOf(issue), 1);
+            $scope.getIssues($scope.versionSelected,$scope.memberActiveShow);
           };
         }
       );
@@ -145,10 +150,7 @@
       ListIssues.editIssue(issue).then(
         function(data){
           if (data.result == "edit_success") {
-            console.log ("da tao thanh cong ")
-            angular.forEach(data.issue, function(value) {
-              console.log ("edit thanh cong " + value.start_date)
-            })
+            $scope.getIssues($scope.versionSelected,$scope.memberActiveShow);
             var id = issue.id
             $(".from_edit_issue_" + id ).hide();
             
@@ -166,7 +168,7 @@
         $scope.versionSelected = $scope.versionFiltered
       }
       if(!angular.isUndefined($scope.filtermember)){
-        if($scope.member == 'all'){
+        if($scope.filtermember == 'all'){
           $scope.memberActiveShow = 'all'
         }else{
           $scope.memberActiveShow = angular.fromJson($scope.filtermember).id
@@ -175,19 +177,6 @@
         $scope.memberActiveShow = $scope.memberActiveShow
       }
       $scope.getIssues($scope.versionSelected,$scope.memberActiveShow)
-    };
-    
-    $scope.updateStatus = function(){
-      console.log ("params update Status ")
-      // ListIssues.updateStatus($scope.issue).then(
-      //   function(data){
-      //     if (data.result == "eidt_success") {
-      //       //chay lai function load data
-      //     }else{
-      //       alert(data.result)
-      //     }
-      //   }
-      // );
     };
     
     $scope.updateVersion = function(issue,version_id) {
