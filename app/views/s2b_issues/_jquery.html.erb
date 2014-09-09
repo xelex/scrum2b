@@ -149,6 +149,21 @@ $(document).ready(function(){
     $('.content').find('.s2b_column_4').removeClass("s2b_column_5");
   });
 
+  $("body").on('click', document, function(e){
+    $('.select_progess_issue').hide();
+    e.stopPropagation();
+  });
+
+  $("body").on('click', '.select_progess_issue', function(){
+    $(this).show();
+  });
+
+  $("body").on('click', '.value_progess', function(e){
+    $('.select_progess_issue').hide();
+    $(this).parent().find('.select_progess_issue').toggle();
+    e.stopPropagation();
+  });
+
   $(window).on('scroll', window, function(){
     if($('.backlog').offset().top - $(window).scrollTop() > 0){
       if( $('#accordion').offset().top - $(window).scrollTop() > 0){

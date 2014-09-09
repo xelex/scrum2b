@@ -1,6 +1,6 @@
 
 <div class="title_issue">
-  <a href="#">#{{ issue.id }} {{ issue.subject }}</a>
+  <a href="/issues/{{issue.id}}">#{{ issue.id }} {{ issue.subject }}</a>
   <span class="icon_config" ><i class="fa fa-cog"></i></span> 
 
 </div><!--end title issue -->
@@ -46,12 +46,17 @@
   <a href="#" class="avata" title="Quang Thai"><%= image_tag('avata.png', :plugin => 'scrum2b') %></a>
   <div class="progress_issue">
     <div class="value_progess">
-      <span><input type="text" class="amount" readonly value="{{issue.done_ratio}}" >%</span>
+      <!-- <span><input type="text" class="amount" readonly value="{{issue.done_ratio}}"  >%</span> -->
+      <span><input type="text" class="amount" readonly  readonly value="{{issue.done_ratio}}" >%</span>
       <i class="fa fa-caret-down"></i>
     </div>
     <div class="select_progess_issue hide">
       <div class="triangle"></div>
-      <div class="slider-vertical" style="height:100px;"></div>
+      <div slider issue-id="{{issue.id}}" config="sliderConfig" model="price" value="{{issue.done_ratio}}" class="cdbl-slider slider-vertical" ></div>
+
+      <!-- Price: {{issue.done_ratio}} -->
+      <!-- <div slider config="sliderConfig" model="issue.done_ratio" value="{{issue.done_ratio}}" class="cdbl-slider slider-vertical"></div> -->
+      
     </div>
     <br>
     <span class="icon_down"><i issue="123" class="fa fa-angle-double-down fa-lg"></i></span>

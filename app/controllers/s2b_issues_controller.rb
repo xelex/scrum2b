@@ -86,6 +86,16 @@ class S2bIssuesController < ProjectController
     end
   end
   
+  def update_progress
+    logger.info "update version #{params}"
+    @issue = Issue.find(params[:id])
+    if @issue.update_attributes(:done_ratio => params[:done_ratio])
+      render :json => {:result => "update_success",:issue => @issue}
+    else
+      render :json => {:result => @issue.errors.full_messages}
+    end
+  end
+
   def load_data
     @versions =  opened_versions_list
     @priority = IssuePriority.all

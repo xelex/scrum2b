@@ -7,10 +7,15 @@
 <% end %>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
+<style type="text/css">
+	
+</style>
+
 <%= render :partial => "s2b_issues/angular" %>
 
 <div ng-app="scrum2b" >
-  <div class="content full_mode" ng-controller="BoardsCtrl">
+  <div class="content full_mode" ng-controller="BoardsCtrl" >
+
   	<div class="filter" >
       <div class="filter_left">
         <h3>Scrum2B Tool Demo prototype</h3>
@@ -52,3 +57,4 @@
 
 <!-- jquery -->
 <%= render :partial => "s2b_issues/jquery" %>
+

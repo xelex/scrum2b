@@ -66,6 +66,7 @@
         $scope.filterStatusIssues($scope.issues)
         console.log("array new status " + data.status_ids)
       }
+
     );
 
     $scope.getIssues = function(version){
@@ -213,6 +214,20 @@
       );
     };
 
+    $scope.updateProgress = function(issue,version_id) {
+      console.log ("updateProgress")
+      // ListIssues.updateProgress(issue.id,version_id).then(
+      //    function(data){
+      //     if (data.result == "update_success") {
+      //       console.log ("update thanh cong ")
+      //       $scope.issues.splice($scope.issues.indexOf(issue), 1);
+      //       $scope.filterStatusIssues($scope.issues)
+      //       issue.fixed_version_id = version_id
+      //     };
+      //    }
+      // );
+    };
+
     $scope.isActiveVersion = function(version) {
       return $scope.versionSelected === version;
     };
@@ -284,7 +299,7 @@
           // alert(statusID)
           // alert(versionID)
           $('.move_issue').removeClass('move_issue');
-          updateStatus(issueID,statusID,versionID)          
+          updateStatus(issueID,statusID,versionID);          
         });
 
         function updateStatus(id, status_id, version_id){
@@ -335,6 +350,58 @@
         });
       }
     };
+  });
+
+  scrum2b.directive('slider', function($http) {
+    return {
+      link: function(scope, elem,attrs) {
+        console.log("dao vao slider");
+        $(elem).ready(function(){
+          $(elem).slider({
+            orientation: "vertical",
+            range: "min",
+            min: 0,
+            max: 100,
+            step: 10,
+            value: 0,
+
+            slide: function( event, ui ) {
+              $(this).parent().parent().find( ".amount" ).val( ui.value );
+              console.log("slider");
+            } 
+          });
+
+          $(elem).on( "slidestop", function( event, ui ) {
+            var value = ui.value;
+            var issue_id = $(this).attr('issue-id');
+            console.log('slidestop')
+            console.log(value)
+            console.log(issue_id)
+            updateProgress(issue_id, value)
+          });
+
+          function updateProgress(issue_id, value){
+            var request = $http({
+              method: "post",
+              url: "update_progress",
+              params: {
+                action: "get"
+              },
+              data: {
+                id: issue_id,
+                done_ratio : value,
+                project_id: "<%= @project.id %>"
+              },
+            });
+
+            function  handleSuccess( response ){
+              return ( response.data );
+            }
+          }
+
+        });    
+      }
+    }
   });
   
   scrum2b.service('ListIssues', function($http, $q){

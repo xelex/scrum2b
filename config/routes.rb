@@ -10,6 +10,11 @@ get  's2b_issues/update_status' => 's2b_issues#update_status'
 post 's2b_issues/update_status' => 's2b_issues#update_status'
 get  's2b_issues/update_version' => 's2b_issues#update_version'
 post 's2b_issues/update_version' => 's2b_issues#update_version'
+
+
+get  's2b_issues/update_progress' => 's2b_issues#update_progress'
+post 's2b_issues/update_progress' => 's2b_issues#update_progress'
+
 post 's2b_issues/get_issues_version' => 's2b_issues#get_issues_version'
 get  's2b_issues/get_issues_version' => 's2b_issues#get_issues_version'
 post 's2b_issues/create' => 's2b_issues#create'

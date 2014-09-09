@@ -98,6 +98,7 @@
   .title_issue .icon_config{ position: absolute; top: 0px; right: 0px; font-size: 18px;cursor: pointer;}
   .title_issue a { font-size: 14px; line-height: 40px; }
   .issue {background: #f3f3d1 !important; border: 1px solid; padding: 3px; position: relative; margin-bottom: 5px; margin-top: 5px; min-height: 35px;}
+  .issue:hover {border: 1px solid #848484; }
 
   /*cac trang thai cua issue*/
   .mini_mode .title_issue .icon_config { display: none;}
@@ -176,7 +177,7 @@
   .file .view_file { color: #598DC1; font-size: 12px; cursor: pointer; }
 
   .hide { display: none; }
-  .open_sprint_closed { float: right;color: #ebebeb; font-weight: bold; margin-top: 5px; border: 1px; line-height: 20px !important; padding: 1px 4px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important; width: 45px !important; text-align: right;}
+  .open_sprint_closed { float: right;color: #ebebeb; font-weight: bold; margin-top: 10px; border: 1px; line-height: 20px !important; padding: 1px 4px; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9cc3e8), to(#275888)); font-size: 14px !important; width: 45px !important; text-align: right;}
   .test { z-index: 101 !important; top: 310px !important; left: 339px !important; }
   .connectedSortable { min-height: 75px; padding: 5px !important; background: #f4f4f4;}
   .issue_closed .content_issue, .issue_closed .detail_issue { display: none; }
