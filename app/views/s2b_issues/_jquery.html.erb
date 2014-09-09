@@ -54,13 +54,17 @@ $(document).ready(function(){
   $("body").on('click', '.edit_issue', function(){
     var id = $(this).attr("issue_id");
     $(".from_edit_issue_" + id).show();
-    //$(this).parent().parent().parent().parent().hide();
     check_height_max();
   });
   
   $("body").on('click', '.cancel_edit_issue',function(){
     var id = $(this).attr("issue_id");
     $(".from_edit_issue_" + id).hide();
+    check_height_max();
+  });
+  
+  $("body").on('click', '.submit_edit_issue',function(){
+    check_height_max();
   });
 
   $("body").on('click', '.icon_down', function(){

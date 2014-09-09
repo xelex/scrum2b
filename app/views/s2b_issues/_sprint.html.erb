@@ -1,16 +1,16 @@
 <div ng-repeat="version in versions" >
-	<h3 class="title_sprint" ng-class="{'title_sprint_active': isActiveVersion(version)}" ng-click="getIssues(version)" > 
+	<h3 class="title_sprint" ng-class="{'title_sprint_active': isActiveVersion(version)}" ng-click="activeVersion(version)" > 
 		{{version.name}} 
-		<span class="quantity_issue" ng-if="isActiveVersion(version)">{{issues.length}}</span> 
+		<span class="quantity_issue" ng-if="isActiveVersion(version)">{{issueFilter.length}}</span> 
 		<a href="/versions/{{version.id}} " target="_blank" >See Detail</a>
 	</h3>	
 	<div class="sprint_1 sprint sprint-active clearfix" ng-class="{'active': isActiveVersion(version)}">
-	  <div class="s2b_column_4 hide_backlog"  >
+	  <div class="s2b_column_4 hide_backlog">
 	    <div class="padding_5 ">
 	      <div class="border_status">
 	        <div class="status_sprint">
 	          <span>New Isuse</span>
-	          <span class="icon_add_issue button" ng-click="setParams(statusIds.status_no_start,version.id)"><i class="fa fa-plus-circle"></i>Add</span>
+	          <span class="icon_add_issue button" ng-click="setParamsAddIssue(statusIds.status_no_start,version.id)"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <!-- add new issue -->
 	        <%= render :partial => "/s2b_issues/add_new_issue" %> 
@@ -28,7 +28,7 @@
 	    	<div class="border_status">
 	        <div class="status_sprint">
 	          <span>In Progess</span>
-	          <span class="icon_add_issue button" ng-click="setParams(statusIds.status_inprogress,version.id)"><i class="fa fa-plus-circle"></i>Add</span>
+	          <span class="icon_add_issue button" ng-click="setParamsAddIssue(statusIds.status_inprogress,version.id)"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <%= render :partial => "/s2b_issues/add_new_issue" %>
 	        <div class="connectedSortable check_height" status-id="{{statusIds.status_inprogress}}" version-id="{{version.id}}" id="sortable2" sortable >

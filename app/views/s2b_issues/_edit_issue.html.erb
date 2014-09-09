@@ -1,55 +1,63 @@
 <div class="from_add_edit_issue from_edit_issue from_edit_issue_{{issue.id}} hide">
-	<form ng-submit="editIssue()">
+	<form editable-form name="editableForm" onaftersave="editIssue(issue)" onbeforesave="checkParamsEdit(issue)" e-required>
 		<input type="hidden" ng-init="issue.id=issue.id" >
+		<span style="color: red;font-weight: 100;">{{errorDate}}</span>
 		<table >
 			<tr>
-				<td colspan="2"><input type="text" ng-model="issue.subject"  class="title_issue" required ></td>
+				<td colspan="2"><span editable-text="issue.subject" e-name="subject" e-required>{{ issue.subject || 'empty' }}</span></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<textarea ng-model="issue.description" class="issue_description " placeholder="Enter the issue subject..."  ></textarea>
+				  <span editable-textarea="issue.description" e-name="description"  e-rows="5" e-cols="36">{{ issue.description || 'empty' }}</span>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<span>Tracker:</span>
-					<select class="value_content" ng-model="issue.tracker_id">
-						<option ng-repeat="tracker in trackers" value="{{tracker.id}}" ng-selected="tracker.id==issue.tracker_id">{{tracker.name}}</option>
-					</select>
+					<span class="value_content" editable-select="issue.tracker_id" e-name="tracker_id" e-ng-options="tracker.id as tracker.name for tracker in trackers">
+            {{ (trackers | filter:{id: issue.tracker_id})[0].name || 'Not set' }}
+          </span>
 				</td>
 				<td>
 					<span>Priority:</span>
-					<select class="value_content" ng-model="issue.priority_id">
-						<option ng-repeat="priority in priorities" value="{{priority.id}}" ng-selected="priority.id==issue.priority_id">{{priority.name}}</option>
-					</select>
+					<span class="value_content" editable-select="issue.priority_id" e-name="priority_id" e-ng-options="priority.id as priority.name for priority in priorities">
+            {{ (priorities | filter:{id: issue.priority})[0].name || 'Not set' }}
+          </span>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<span>Assign:</span>
-					<select class="value_content" ng-model="issue.assigned_to_id">
-						<option ng-repeat="member in members" value="{{member.id}}" ng-selected="member.id==issue.assigned_to_id">{{member.firstname}} {{member.lastname}}</option>
-					</select>
+					<span class="value_content" editable-select="issue.assigned_to_id" e-name="assigned_to_id" e-ng-options="member.id as member.firstname for member in members">
+            {{ (members | filter:{id: issue.member})[0].firstname || 'Not set' }}
+          </span>
 				</td>
 				<td>
 					<span>Est. Hour:</span>
-					<input type="text" ng-model="issue.estimated_hours" class="time">
+					<span editable-text="issue.estimated_hours" e-name="estimated_hours">{{ issue.estimated_hours || 'empty' }}</span>
+					
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<span>Start: </span>
-					<input type="date" ng-model="issue.start_date" class="begin">
+					<input type="date" ng-model="issue.start_date" value="{{ issue.start_date | date: 'yyyy-MM-dd' }}" class="start_date"/>
 				</td>
 				<td >
 					<span>Due to:</span>
-					<input type="date" ng-model="issue.due_date" class="end">
+					<input type="date" ng-model="issue.due_date" value="{{ issue.due_date | date: 'yyyy-MM-dd' }}" class="due_date"/>
+					<!-- <span editable-date="issue.due_date"  e-name="due_date" e-datepicker-popup="yyyy-MM-dd">{{issue.due_date</span> -->
+					
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="submit" class="submit_issue" value="Submit	">
-					<button type="button" class="cancel_edit_issue" issue_id='{{issue.id}}'>Cancel</button>
+				  <button type="submit" class="submit_edit_issue" issue_id='{{issue.id}}' ng-disabled="editableForm.$waiting">
+            Save
+          </button>
+          <button type="button" class="cancel_edit_issue" issue_id='{{issue.id}}' ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+            Cancel
+          </button>
 				</td>
 			</tr>
 		</table>

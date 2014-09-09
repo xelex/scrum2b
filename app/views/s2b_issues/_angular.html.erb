@@ -1,5 +1,5 @@
 <script>
-  var scrum2b = angular.module('scrum2b', []);
+  var scrum2b = angular.module('scrum2b', ["xeditable"]);
 
   scrum2b.controller('BoardsCtrl', function ($scope, ListIssues,$filter){
 
@@ -14,6 +14,7 @@
         var arrayPriority = [];
         var arrayMembers = [];
         $scope.paramsStatusId = '';
+        $scope.memberActiveShow = 'all';
         $scope.statusIds = data.status_ids
           angular.forEach(data.issues, function(value) {
             angular.forEach(value, function(value,key) {
@@ -59,51 +60,19 @@
         $scope.status = arrayStatus;
         $scope.allIssues = arrayIssues;
         $scope.members = arrayMembers;
-
-        $scope.versionSelected = arrayVersions[0]
-        arrayVersionLoaded.push(arrayVersions[0].id)
-        $scope.versionsLoaded = arrayVersionLoaded
-        $scope.filterStatusIssues($scope.issues)
+        $scope.versionSelected = arrayVersions[0];
+        arrayVersionLoaded.push(arrayVersions[0].id);
+        $scope.versionsLoaded = arrayVersionLoaded;
+        $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow);
         console.log("array new status " + data.status_ids)
       }
 
     );
 
-    $scope.getIssues = function(version){
-      console.log("array version loaded "+ $scope.versionsLoaded)
-      var indexOfVersion  = $scope.versionsLoaded.indexOf(version.id)
-      if (indexOfVersion >= 0){
-        var arrayIssues = [];
-        angular.forEach($scope.allIssues, function(value) {
-          if(value.fixed_version_id == version.id){
-            arrayIssues.push(value);
-          }
-         })
-        $scope.issues = arrayIssues;
-        $scope.filterStatusIssues($scope.issues)
-      }else{
-        $scope.versionsLoaded.push(version.id)
-        ListIssues.getIssues(version.id).then(
-          function(data){
-            var arrayIssues = [];
-            angular.forEach(data, function(value) {
-              angular.forEach(value, function(value,key) {
-                angular.forEach(value, function(value,key) {
-                  arrayIssues.push(value);
-                  $scope.allIssues.push(value);
-                })
-              })
-            })
-            $scope.issues = arrayIssues;
-            $scope.filterStatusIssues($scope.issues)
-          }
-        )
-      }
-      if($scope.versionSelected == version){
-        $scope.versionSelected = !version;
-      }else{
-        $scope.versionSelected = version;
-      }
+    $scope.activeVersion = function(version){
+      $scope.getIssues(version,$scope.memberActiveShow)
+      //set active or unactive version
+      $scope.setUnActiveVersion(version)
     }
     
     $scope.summitIssue = function(){
@@ -115,8 +84,7 @@
       // };
     };
     
-    $scope.setParams = function(status_id,version_id){
-      console.log ("version params "+ version_id)
+    $scope.setParamsAddIssue = function(status_id,version_id){
       $scope.paramsStatusId = status_id
       $scope.paramsVersionId = version_id
     }
@@ -136,7 +104,7 @@
                 $scope.issuesBacklog.push(value)
               }else{
                 $scope.issues.push(value)
-                $scope.filterStatusIssues($scope.issues)
+                $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow)
               }
               
             })
@@ -155,25 +123,60 @@
           if (data.result == "success") {
             console.log ("xoa thanh cong ")
             $scope.issues.splice($scope.issues.indexOf(issue), 1);
-            $scope.filterStatusIssues($scope.issues)
+            $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow)
           };
         }
       );
     };
-
-    $scope.editIssue = function(){
-      console.log ("params edit issue " + $scope.issue)
-      // ListIssues.editIssue($scope.issue).then(
-        // function(data){
-          // if (data.result == "eidt_success") {
-            // //chay lai function load data
-          // }else{
-            // alert(data.result)
-          // }
-        // }
-      // );
+    
+    $scope.checkParamsEdit = function(data) {
+      console.log ("start " + $filter('date')(data.start_date, "yyyy-MM-dd"))
+      console.log ("end "+$filter('date')(data.due_date, "yyyy-MM-dd"))
+      if ($filter('date')(data.start_date, "yyyy-MM-dd") > $filter('date')(data.due_date, "yyyy-MM-dd")) {
+        $scope.errorDate =  "Due date must be greater than start date";
+        return "Due date must be greater than start date";
+      }
+    }; 
+    $scope.editIssue = function(issue){
+      $scope.errorDate = '';
+      console.log ("params edit issue " + issue.start_date)
+      issue.start_date = $filter('date')(issue.start_date, "yyyy-MM-dd")
+      issue.due_date = $filter('date')(issue.due_date, "yyyy-MM-dd")
+      ListIssues.editIssue(issue).then(
+        function(data){
+          if (data.result == "edit_success") {
+            console.log ("da tao thanh cong ")
+            angular.forEach(data.issue, function(value) {
+              console.log ("edit thanh cong " + value.start_date)
+            })
+            var id = issue.id
+            $(".from_edit_issue_" + id ).hide();
+            
+          }else{
+            console.log (data.result)
+          }
+        }
+      );
     };
-
+    
+    $scope.filterIssues = function(){
+      if(!angular.isUndefined($scope.filterversion)){
+        $scope.versionFiltered = $filter('filter')($scope.versions, {id: angular.fromJson($scope.filterversion).id})[0];
+        console.log ($scope.versionSelected === $scope.versionFiltered)
+        $scope.versionSelected = $scope.versionFiltered
+      }
+      if(!angular.isUndefined($scope.filtermember)){
+        if($scope.member == 'all'){
+          $scope.memberActiveShow = 'all'
+        }else{
+          $scope.memberActiveShow = angular.fromJson($scope.filtermember).id
+        }
+      }else{
+        $scope.memberActiveShow = $scope.memberActiveShow
+      }
+      $scope.getIssues($scope.versionSelected,$scope.memberActiveShow)
+    };
+    
     $scope.updateStatus = function(){
       console.log ("params update Status ")
       // ListIssues.updateStatus($scope.issue).then(
@@ -192,9 +195,8 @@
       ListIssues.updateVersion(issue.id,version_id).then(
          function(data){
           if (data.result == "update_success") {
-            console.log ("update thanh cong ")
             $scope.issues.splice($scope.issues.indexOf(issue), 1);
-            $scope.filterStatusIssues($scope.issues)
+            $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow)
             issue.fixed_version_id = version_id
           };
          }
@@ -208,54 +210,91 @@
           if (data.result == "update_success") {
             console.log ("update status thanh cong ")
             issue.status_id = status_id
-            $scope.filterStatusIssues($scope.issues)
+            $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow)
           };
          }
       );
     };
-
-    $scope.updateProgress = function(issue,version_id) {
-      console.log ("updateProgress")
-      // ListIssues.updateProgress(issue.id,version_id).then(
-      //    function(data){
-      //     if (data.result == "update_success") {
-      //       console.log ("update thanh cong ")
-      //       $scope.issues.splice($scope.issues.indexOf(issue), 1);
-      //       $scope.filterStatusIssues($scope.issues)
-      //       issue.fixed_version_id = version_id
-      //     };
-      //    }
-      // );
-    };
-
+    
+    $scope.getIssues = function(version,member_id){
+      console.log("array version loaded "+ $scope.versionsLoaded)
+      console.log("params version id "+ version.id)
+      var indexOfVersion  = $scope.versionsLoaded.indexOf(version.id)
+      if (indexOfVersion >= 0){
+        var arrayIssues = [];
+        angular.forEach($scope.allIssues, function(value) {
+          if(value.fixed_version_id == version.id){
+            arrayIssues.push(value);
+          }
+         })
+        $scope.issues = arrayIssues;
+        $scope.filterStatusIssues($scope.issues,member_id)
+      }else{
+        $scope.versionsLoaded.push(version.id)
+        ListIssues.getIssues(version.id).then(
+          function(data){
+            var arrayIssues = [];
+            angular.forEach(data, function(value) {
+              angular.forEach(value, function(value,key) {
+                angular.forEach(value, function(value,key) {
+                  arrayIssues.push(value);
+                  $scope.allIssues.push(value);
+                })
+              })
+            })
+            $scope.issues = arrayIssues;
+            $scope.filterStatusIssues($scope.issues,member_id)
+          }
+        )
+      }
+    }
+    
+    $scope.setUnActiveVersion = function(version){
+      if($scope.versionSelected == version){
+        $scope.versionSelected = !version;
+      }else{
+        $scope.versionSelected = version;
+      }
+      console.log ("version select "+$scope.versionSelected.id)
+    }
+    
     $scope.isActiveVersion = function(version) {
       return $scope.versionSelected === version;
     };
     
-    $scope.filterStatusIssues = function(issues) {
+    $scope.filterStatusIssues = function(issues,member_id) {
       var arrayIssuesNew = [];
       var arrayIssuesInProgess = [];
       var arrayIssuesResolved = [];
       var arrayIssuesClose = [];
-      angular.forEach(issues, function(value) {
-        if ($scope.statusIds.status_no_start == value.status_id){
-          arrayIssuesNew.push(value)
-        }else if($scope.statusIds.status_inprogress == value.status_id){
-          arrayIssuesInProgess.push(value)
-        }else if($scope.statusIds.status_completed == value.status_id ){
-          arrayIssuesResolved.push(value)
-        }else if($scope.statusIds.status_closed == value.status_id ){
-          arrayIssuesClose.push(value)
-        }else{
-
-        }
-      })
+      var issueFilter = []
+      console.log ("member active show " + member_id)
+      if(member_id == 'all'){
+        issueFilter = issues
+      }else{
+        angular.forEach(issues, function(value) {
+          if(value.assigned_to_id == member_id){
+            issueFilter.push(value)
+          }
+        })
+        console.log ("array issue after filter " + issueFilter)
+      }
+      angular.forEach(issueFilter, function(value) {
+          if ($scope.statusIds.status_no_start == value.status_id){
+            arrayIssuesNew.push(value)
+          }else if($scope.statusIds.status_inprogress == value.status_id){
+            arrayIssuesInProgess.push(value)
+          }else if($scope.statusIds.status_completed == value.status_id ){
+            arrayIssuesResolved.push(value)
+          }else if($scope.statusIds.status_closed == value.status_id ){
+            arrayIssuesClose.push(value)
+          }
+        })
       $scope.issuesNew = arrayIssuesNew
       $scope.issuesInProgess = arrayIssuesInProgess
       $scope.issuesResolved = arrayIssuesResolved
       $scope.issuesClose = arrayIssuesClose
-
-      console.log (arrayIssuesInProgess )
+      $scope.issueFilter = issueFilter
     }
   });
 
