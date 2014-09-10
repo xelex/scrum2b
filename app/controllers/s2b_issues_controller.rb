@@ -118,4 +118,13 @@ class S2bIssuesController < ProjectController
       render :json => {:result => attachment.errors.full_messages}
     end
   end
+  
+  def upload_file
+    issue = Issue.find(params[:id])
+    logger.info "AAAAAAAAAAAAAAAAA #{params[:file]}"
+    if issue.save_attachments(params[:file])
+      render :json => {:result => "success"}
+    end
+  end
+  
 end

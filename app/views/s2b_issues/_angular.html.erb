@@ -265,7 +265,22 @@
     }
     
     $scope.uploadFile = function(){
-      console.log("AAAAAAAAAAAA " + $scope.file)
+      console.log("file " + $scope.file)
+      // ListIssues.uploadFile($scope.file,issue).then(
+        // function(data){
+          // if (data.result == "success") {
+            // console.log("file thanh cong ")
+          // }else{
+            // alert(data.result)
+          // }
+        // }
+      // )
+    }
+    
+    $scope.updateStatus = function(issue_id,status_id,version_id){
+      issue =  $filter('filter')($scope.allIssues, {id: issue_id})[0];
+      issue.status_id = status_id
+      issue.assigned_to_id = version_id
     }
     
     $scope.author = function(author_id){
@@ -361,7 +376,8 @@
           // alert(statusID)
           // alert(versionID)
           $('.move_issue').removeClass('move_issue');
-          updateStatus(issueID,statusID,versionID);          
+          updateStatus(issueID,statusID,versionID);
+          scope.updateStatus(issueID,statusID,versionID)
         });
 
         function updateStatus(id, status_id, version_id){
@@ -596,6 +612,22 @@
       });
       return( request.then( handleSuccess, handleError ) );
     }
+    
+    function uploadFile(file,issue){
+      var request = $http({
+        method: "post",
+        url: "update_file",
+        params: {
+          action: "get"
+        },
+        data: {
+          id: issue.id,
+          file : file,
+          project_id: "<%= @project.id %>"
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
 
     return {
       list: getData,
@@ -607,6 +639,7 @@
       changeStatus: changeStatus,
       getFiles: getFiles,
       deleteFile: deleteFile,
+      uploadFile: uploadFile,
     }
     
     function handleError ( response ){

@@ -13,6 +13,7 @@ post 's2b_issues/update_version' => 's2b_issues#update_version'
 
 post 's2b_issues/get_files' => 's2b_issues#get_files'
 post 's2b_issues/delete_file' => 's2b_issues#delete_file'
+post 's2b_issues/upload_file' => 's2b_issues#upload_file'
 
 get  's2b_issues/update_progress' => 's2b_issues#update_progress'
 post 's2b_issues/update_progress' => 's2b_issues#update_progress'
