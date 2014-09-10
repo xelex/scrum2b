@@ -18,7 +18,7 @@
     <li class="sprint_li">
       <a href="">Change sprint</a>
       <ul class="change_sprint">
-        <li ng-repeat="version in versions" >
+        <li ng-repeat="version in versions" ng-hide="isActiveVersion(version)" >
           <a href="" ng-click="updateVersion(issue, version.id)" version-id="{{version.id}}" issue-id="{{issue.id}}" >{{version.name}}</a>
         </li>
       </ul>
@@ -26,16 +26,16 @@
     <li class="status_li">
       <a href="">Change status</a>
       <ul class="change_status">
-        <li>
+        <li ng-hide="issue.status_id===statusIds.status_no_start">
           <a href="" ng-click="changeStatus(issue, statusIds.status_no_start, version.id)" class="">New issue</a>
         </li>
-        <li>
+        <li ng-hide="issue.status_id===statusIds.status_inprogress">
           <a href="" ng-click="changeStatus(issue, statusIds.status_inprogress, version.id)" class="">In Progess</a>
         </li>
-        <li>
+        <li ng-hide="issue.status_id===statusIds.status_completed">
           <a href="" ng-click="changeStatus(issue, statusIds.status_completed, version.id)" class="">Resolved</a>
         </li>
-        <li>
+        <li ng-hide="issue.status_id===statusIds.status_closed">
           <a href="" ng-click="changeStatus(issue, statusIds.status_closed, version.id)" class="">Close</a>
         </li>
       </ul>
@@ -71,7 +71,7 @@
   <div class="file_comment">
     <ul>
       <li>
-        <span class="open_file">File</span>
+        <span class="open_file" ng-click="getFiles(issue)">File</span>
       </li>
       <li>
         <span class="open_comment">Comment</span>
@@ -80,26 +80,26 @@
     <span class="icon_top "><i class="fa fa-angle-double-up fa-lg"></i></span>
   </div>
 
-  <div class="file">
-    <p>File</p>
-    <span class="view_file">View more comments</span>
+  <div class="file" style="min-height: 50px">
     <ul>
-      <li>
-        <a href="" class="icon_file"><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></a>
-        <span>Comment Comment Comment Comment </span>
-      </li>
-      <li>
-        <a href="" class="icon_file"><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></a>
-        <span>Donec et ante. Phasellus eu ligula.</span>
-      </li>
-      <li>
-        <a href="" class="icon_file"><%= image_tag('icon-file.png', :plugin => 'scrum2b') %></a>
-        <span>Donec et ante. Phasellus eu ligula.</span>
+      <li ng-repeat="attach in issue.attachments">
+        <p>
+          <a href="/attachments/download/{{attach.id}}" class="icon icon-attachment">{{attach.filename}}</a>
+          <span class="size">({{attach.filesize}})</span>
+          <% if User.current.member_of?(@project) || User.current.admin %>
+            <a href="" ng-click="deleteFiles(attach,issue)" class="icon icon-del delete" title="Delete"></a>
+          <% end %>
+          <span class="author">{{author(attach.author_id)}} , {{attach.created_on | date: 'yyyy/MM/dd hh:mm'}}</span>
+        </p>
       </li>
     </ul>
+    <form ng-submit="uploadFile()">
+      <input type="file" ng-model="file" />
+      <input type="submit" value="Upload" />
+    </form>
+    
   </div><!--end file-->
   <div class="comment">
-    <p>Comment</p>
     <span class="view_comment">View more comments</span>
     <ul>
       <li>

@@ -238,6 +238,40 @@
       }
     }
     
+    $scope.getFiles = function(issue){
+      console.log ("issue "+ issue.id)
+      ListIssues.getFiles(issue).then(
+         function(data){
+           issue.attachments = [];
+           angular.forEach(data.attachments, function(value) {
+             angular.forEach(value, function(attach,key) {
+               issue.attachments.push(attach);
+             })
+           });
+         }
+      );
+    }
+    
+    $scope.deleteFiles = function(attach,issue){
+      ListIssues.deleteFile(attach).then(
+        function(data){
+          if (data.result == "success") {
+            issue.attachments.splice(issue.attachments.indexOf(attach), 1);
+          }else{
+            alert(data.result)
+          }
+        }
+      )
+    }
+    
+    $scope.uploadFile = function(){
+      console.log("AAAAAAAAAAAA " + $scope.file)
+    }
+    
+    $scope.author = function(author_id){
+      return $filter('filter')($scope.members, {id: author_id})[0].firstname;
+    }
+    
     $scope.setUnActiveVersion = function(version){
       if($scope.versionSelected == version){
         $scope.versionSelected = !version;
@@ -383,7 +417,6 @@
   scrum2b.directive('slider', function($http) {
     return {
       link: function(scope, elem,attrs) {
-        console.log("dao vao slider");
         $(elem).ready(function(){
           $(elem).slider({
             orientation: "vertical",
@@ -443,6 +476,36 @@
         data: {
           project_id: "<%= @project.id %>",
           version_id: version_id,
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+    
+    function getFiles(issue){
+       var request = $http({
+        method: "post",
+        url: "get_files",
+        params: {
+          action: "get"
+        },
+        data: {
+          project_id: "<%= @project.id %>",
+          issue_id: issue.id,
+        },
+      });
+      return( request.then( handleSuccess, handleError ) );
+    }
+    
+    function deleteFile(file){
+      var request = $http({
+        method: "post",
+        url: "delete_file",
+        params: {
+          action: "get"
+        },
+        data: {
+          project_id: "<%= @project.id %>",
+          file_id: file.id,
         },
       });
       return( request.then( handleSuccess, handleError ) );
@@ -541,7 +604,9 @@
       deleteIssue: deleteIssue,
       editIssue: editIssue,
       updateVersion: updateVersion,
-      changeStatus: changeStatus
+      changeStatus: changeStatus,
+      getFiles: getFiles,
+      deleteFile: deleteFile,
     }
     
     function handleError ( response ){

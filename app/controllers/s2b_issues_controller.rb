@@ -102,4 +102,20 @@ class S2bIssuesController < ProjectController
     @tracker = Tracker.all
     @status = IssueStatus.where("id IN (?)" , DEFAULT_STATUS_IDS['status_no_start'])
   end
+  
+  def get_files
+    @issue = Issue.find(params[:issue_id])
+    @attachments = @issue.attachments
+    logger.info "Array file #{@attachments}"
+    render :json => {:attachments => @attachments}
+  end
+  
+  def delete_file
+    attachment = Attachment.find(params[:file_id])
+    if attachment.destroy
+      render :json => {:result => "success"}
+    else
+      render :json => {:result => attachment.errors.full_messages}
+    end
+  end
 end

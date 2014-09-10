@@ -159,7 +159,7 @@
   .file_comment ul li:first-child {margin-left: 0px !important;}
   .file_comment ul li:hover {color: #ebebeb;}
   .file_comment .open_file, .file_comment  .open_comment { cursor: pointer;} 
-  .comment, .file { background: #7996a5; }
+  .comment, .file { background: #FFFFFF; }
   .comment p { margin: 0px; padding: 5px 0px;}
   .comment ul {list-style: none; padding: 0px; }
   .comment ul li{ display: none; }
@@ -170,7 +170,6 @@
 
   .file ul { list-style: none; padding: 0px; }
   .file p {  margin: 0px; padding: 5px 0px; }
-  .file ul li{  display: none; }
   .file ul li:first-child { display: inline; }
   .file .icon_file img { height: 30px; width: 30px; }
   .file ul li span { font-size: 12px; }

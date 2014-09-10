@@ -11,6 +11,8 @@ post 's2b_issues/update_status' => 's2b_issues#update_status'
 get  's2b_issues/update_version' => 's2b_issues#update_version'
 post 's2b_issues/update_version' => 's2b_issues#update_version'
 
+post 's2b_issues/get_files' => 's2b_issues#get_files'
+post 's2b_issues/delete_file' => 's2b_issues#delete_file'
 
 get  's2b_issues/update_progress' => 's2b_issues#update_progress'
 post 's2b_issues/update_progress' => 's2b_issues#update_progress'
