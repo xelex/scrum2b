@@ -85,7 +85,7 @@
       <li ng-repeat="attach in issue.attachments">
         <p>
           <a href="/attachments/download/{{attach.id}}" class="icon icon-attachment">{{attach.filename}}</a>
-          <span class="size">({{attach.filesize}})</span>
+          <span class="size">({{bytesToSize(attach.filesize)}})</span>
           <% if User.current.member_of?(@project) || User.current.admin %>
             <a href="" ng-click="deleteFiles(attach,issue)" class="icon icon-del delete" title="Delete"></a>
           <% end %>

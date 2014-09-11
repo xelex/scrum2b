@@ -58,21 +58,21 @@
         $scope.priorities = arrayPriority;
         $scope.trackers = arrayTracker;
         $scope.status = arrayStatus;
-        $scope.allIssues = arrayIssues;
+        $scope.allIssues = arrayIssues.concat(arrayIssuesBacklog);
         $scope.members = arrayMembers;
         $scope.versionSelected = arrayVersions[0];
         arrayVersionLoaded.push(arrayVersions[0].id);
         $scope.versionsLoaded = arrayVersionLoaded;
         $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow);
-        console.log("array new status " + data.status_ids)
       }
 
     );
 
     $scope.activeVersion = function(version){
-      $scope.getIssues(version,$scope.memberActiveShow)
+      $scope.getIssues(version,$scope.memberActiveShow);
       //set active or unactive version
-      $scope.setUnActiveVersion(version)
+      $scope.setUnActiveVersion(version);
+      //$scope.loadIssueBacklog();
     }
     
     $scope.summitIssue = function(){
@@ -90,11 +90,10 @@
     }
     
     $scope.addIssue = function(){
-      $scope.newissue.start_date = $filter('date')($scope.newissue.start_date, "yyyy-MM-dd")
-      $scope.newissue.due_date = $filter('date')($scope.newissue.due_date, "yyyy-MM-dd")
-      $scope.newissue.status_id = $scope.paramsStatusId
-      $scope.newissue.fixed_version_id = $scope.paramsVersionId
-      console.log ("version  " + $scope.paramsVersionId)
+      $scope.newissue.start_date = $filter('date')($scope.newissue.start_date, "yyyy-MM-dd");
+      $scope.newissue.due_date = $filter('date')($scope.newissue.due_date, "yyyy-MM-dd");
+      $scope.newissue.status_id = $scope.paramsStatusId;
+      $scope.newissue.fixed_version_id = $scope.paramsVersionId;
       if($scope.newissue.start_date > $scope.newissue.due_date){
         $scope.errorDateAddNew = "Due date must be greater than start date"
         return "Due date must be greater than start date"
@@ -107,14 +106,14 @@
                   $scope.issuesBacklog.push(value);
                 }else{
                   $scope.allIssues.push(value);
-                  console.log ("issue new add  " + value.assigned_to_id)
+                  console.log ("issue new add  " + value.assigned_to_id);
                   $scope.getIssues($scope.versionSelected,$scope.memberActiveShow);
                 }
                 $('.add_new_issue').hide();
               })
             }else{
-              console.log (data.result)
-              alert(data.result)
+              console.log (data.result);
+              alert(data.result);
             }
           }
         );
@@ -126,7 +125,7 @@
       ListIssues.deleteIssue(issue).then(
         function(data){
           if (data.result == "success") {
-            console.log ("xoa thanh cong ")
+            console.log ("xoa thanh cong ");
             $scope.allIssues.splice($scope.allIssues.indexOf(issue), 1);
             $scope.getIssues($scope.versionSelected,$scope.memberActiveShow);
           };
@@ -135,8 +134,8 @@
     };
     
     $scope.checkParamsEdit = function(data) {
-      console.log ("start " + $filter('date')(data.start_date, "yyyy-MM-dd"))
-      console.log ("end "+$filter('date')(data.due_date, "yyyy-MM-dd"))
+      console.log ("start " + $filter('date')(data.start_date, "yyyy-MM-dd"));
+      console.log ("end "+$filter('date')(data.due_date, "yyyy-MM-dd"));
       if ($filter('date')(data.start_date, "yyyy-MM-dd") > $filter('date')(data.due_date, "yyyy-MM-dd")) {
         $scope.errorDate =  "Due date must be greater than start date";
         return "Due date must be greater than start date";
@@ -144,9 +143,9 @@
     }; 
     $scope.editIssue = function(issue){
       $scope.errorDate = '';
-      console.log ("params edit issue " + issue.start_date)
-      issue.start_date = $filter('date')(issue.start_date, "yyyy-MM-dd")
-      issue.due_date = $filter('date')(issue.due_date, "yyyy-MM-dd")
+      console.log ("params edit issue " + issue.start_date);
+      issue.start_date = $filter('date')(issue.start_date, "yyyy-MM-dd");
+      issue.due_date = $filter('date')(issue.due_date, "yyyy-MM-dd");
       ListIssues.editIssue(issue).then(
         function(data){
           if (data.result == "edit_success") {
@@ -155,7 +154,7 @@
             $(".from_edit_issue_" + id ).hide();
             
           }else{
-            console.log (data.result)
+            console.log (data.result);
           }
         }
       );
@@ -164,19 +163,19 @@
     $scope.filterIssues = function(){
       if(!angular.isUndefined($scope.filterversion)){
         $scope.versionFiltered = $filter('filter')($scope.versions, {id: angular.fromJson($scope.filterversion).id})[0];
-        console.log ($scope.versionSelected === $scope.versionFiltered)
-        $scope.versionSelected = $scope.versionFiltered
+        console.log ($scope.versionSelected === $scope.versionFiltered);
+        $scope.versionSelected = $scope.versionFiltered;
       }
       if(!angular.isUndefined($scope.filtermember)){
         if($scope.filtermember == 'all'){
-          $scope.memberActiveShow = 'all'
+          $scope.memberActiveShow = 'all';
         }else{
-          $scope.memberActiveShow = angular.fromJson($scope.filtermember).id
+          $scope.memberActiveShow = angular.fromJson($scope.filtermember).id;
         }
       }else{
-        $scope.memberActiveShow = $scope.memberActiveShow
+        $scope.memberActiveShow = $scope.memberActiveShow;
       }
-      $scope.getIssues($scope.versionSelected,$scope.memberActiveShow)
+      $scope.getIssues($scope.versionSelected,$scope.memberActiveShow);
     };
     
     $scope.updateVersion = function(issue,version_id) {
@@ -185,8 +184,8 @@
          function(data){
           if (data.result == "update_success") {
             $scope.issues.splice($scope.issues.indexOf(issue), 1);
-            $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow)
-            issue.fixed_version_id = version_id
+            $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow);
+            issue.fixed_version_id = version_id;
           };
          }
       );
@@ -197,17 +196,17 @@
       ListIssues.changeStatus(issue.id,status_id, version_id).then(
          function(data){
           if (data.result == "update_success") {
-            console.log ("update status thanh cong ")
-            issue.status_id = status_id
-            $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow)
+            console.log ("update status thanh cong ");
+            issue.status_id = status_id;
+            $scope.filterStatusIssues($scope.issues,$scope.memberActiveShow);
           };
          }
       );
     };
     
     $scope.getIssues = function(version,member_id){
-      console.log("array version loaded "+ $scope.versionsLoaded)
-      console.log("params version id "+ version.id)
+      console.log("array version loaded "+ $scope.versionsLoaded);
+      console.log("params version id "+ version.id);
       var indexOfVersion  = $scope.versionsLoaded.indexOf(version.id)
       if (indexOfVersion >= 0){
         var arrayIssues = [];
@@ -219,7 +218,7 @@
         $scope.issues = arrayIssues;
         $scope.filterStatusIssues($scope.issues,member_id)
       }else{
-        $scope.versionsLoaded.push(version.id)
+        $scope.versionsLoaded.push(version.id);
         ListIssues.getIssues(version.id).then(
           function(data){
             var arrayIssues = [];
@@ -232,7 +231,7 @@
               })
             })
             $scope.issues = arrayIssues;
-            $scope.filterStatusIssues($scope.issues,member_id)
+            $scope.filterStatusIssues($scope.issues,member_id);
           }
         )
       }
@@ -258,29 +257,17 @@
           if (data.result == "success") {
             issue.attachments.splice(issue.attachments.indexOf(attach), 1);
           }else{
-            alert(data.result)
+            alert(data.result);
           }
         }
       )
     }
     
-    $scope.uploadFile = function(){
-      console.log("file " + $scope.file)
-      // ListIssues.uploadFile($scope.file,issue).then(
-        // function(data){
-          // if (data.result == "success") {
-            // console.log("file thanh cong ")
-          // }else{
-            // alert(data.result)
-          // }
-        // }
-      // )
-    }
-    
-    $scope.updateStatus = function(issue_id,status_id,version_id){
+    $scope.sortStop = function(issue_id,status_id,version_id){
       issue =  $filter('filter')($scope.allIssues, {id: issue_id})[0];
-      issue.status_id = status_id
-      issue.assigned_to_id = version_id
+      issue.status_id = status_id;
+      issue.fixed_version_id = version_id;
+      //$scope.loadIssueBacklog();
     }
     
     $scope.author = function(author_id){
@@ -293,47 +280,77 @@
       }else{
         $scope.versionSelected = version;
       }
-      console.log ("version select "+$scope.versionSelected.id)
+      console.log ("version select "+$scope.versionSelected.id);
     }
     
     $scope.isActiveVersion = function(version) {
       return $scope.versionSelected === version;
     };
     
+    $scope.loadIssueBacklog = function(){
+      var issuesBacklog = []
+      angular.forEach($scope.allIssues, function(value) {
+        if(value.fixed_version_id == '' || value.fixed_version_id == null){
+          issuesBacklog.push(value);
+        }
+      })
+      $scope.issuesBacklog = issuesBacklog;
+      console.log ("Length backlog " + $scope.issuesBacklog.length);
+    }
+    
+    $scope.getNumberIssuesAfter = function(version_id){
+      if(version_id){
+        $scope.numberIssuesOfVersionActive = $scope.numberIssuesOfVersionActive + 1;
+      }else{
+        $scope.numberIssuesOfVersionActive = $scope.numberIssuesOfVersionActive - 1;
+      }
+      //$scope.numberIssuesOfVersionActive =  $filter('filter')($scope.allIssues, {fixed_version_id: $scope.versionSelected.id}).length;
+    }
+    
     $scope.filterStatusIssues = function(issues,member_id) {
       var arrayIssuesNew = [];
       var arrayIssuesInProgess = [];
       var arrayIssuesResolved = [];
       var arrayIssuesClose = [];
-      var issueFilter = []
+      var issueFilter = [];
+      $('.div_ui').remove();
+      $scope.loadIssueBacklog();
       console.log ("member active show " + member_id)
       if(member_id == 'all'){
         issueFilter = issues
       }else{
         angular.forEach(issues, function(value) {
           if(value.assigned_to_id == member_id){
-            issueFilter.push(value)
+            issueFilter.push(value);
           }
         })
         console.log ("array issue after filter " + issueFilter)
       }
       angular.forEach(issueFilter, function(value) {
           if ($scope.statusIds.status_no_start == value.status_id){
-            arrayIssuesNew.push(value)
+            arrayIssuesNew.push(value);
           }else if($scope.statusIds.status_inprogress == value.status_id){
-            arrayIssuesInProgess.push(value)
+            arrayIssuesInProgess.push(value);
           }else if($scope.statusIds.status_completed == value.status_id ){
-            arrayIssuesResolved.push(value)
+            arrayIssuesResolved.push(value);
           }else if($scope.statusIds.status_closed == value.status_id ){
-            arrayIssuesClose.push(value)
+            arrayIssuesClose.push(value);
           }
         })
-      $scope.issuesNew = arrayIssuesNew
-      $scope.issuesInProgess = arrayIssuesInProgess
-      $scope.issuesResolved = arrayIssuesResolved
-      $scope.issuesClose = arrayIssuesClose
-      $scope.issueFilter = issueFilter
+      $scope.issuesNew = arrayIssuesNew;
+      $scope.issuesInProgess = arrayIssuesInProgess;
+      $scope.issuesResolved = arrayIssuesResolved;
+      $scope.issuesClose = arrayIssuesClose;
+      $scope.issueFilter = issueFilter;
+      $scope.numberIssuesOfVersionActive = issueFilter.length;
     }
+    
+    $scope.bytesToSize =  function(bytes) {
+      if(bytes < 1024) return bytes + " Bytes";
+      else if(bytes < 1048576) return(bytes / 1024).toFixed(3) + " KB";
+      else if(bytes < 1073741824) return(bytes / 1048576).toFixed(3) + " MB";
+      else return(bytes / 1073741824).toFixed(3) + " GB";
+    };
   });
 
   scrum2b.directive('sortable', function($http) {
@@ -352,6 +369,7 @@
         $(jqueryElm).on( "sortover", function( event, ui ) {
           $(this).addClass('background_sortover');
           $('.ui-sortable-helper').addClass('move_issue');
+          $('.ui-sortable-helper').addClass('div_ui');
           a = $(this).attr('class');
           if ($('.location_start_issue').length == 0 ) {
             $("<div class='location_start_issue'></div>").insertAfter(".move_issue");
@@ -369,15 +387,25 @@
         });
       
         $(jqueryElm).on( "sortbeforestop", function( event, ui ) {
+          var div_start = $(this).attr('id');
+          var div_end = $('.move_issue').parent().attr('id');
           var issueID = $('.move_issue').attr('issue-id');
           var statusID = $('.move_issue').parent().attr('status-id');
           var versionID = $('.move_issue').parent().attr('version-id');
-          // alert(issueID)
-          // alert(statusID)
-          // alert(versionID)
           $('.move_issue').removeClass('move_issue');
-          updateStatus(issueID,statusID,versionID);
-          scope.updateStatus(issueID,statusID,versionID)
+          // if(div_end == "sortable_backlog"){
+            // $('.move_issue').remove();
+          // }else{
+            // $('.move_issue').removeClass('move_issue');
+          // }
+          if(statusID){
+            updateStatus(issueID,statusID,versionID);
+            scope.sortStop(issueID,statusID,versionID);
+          }
+          if( div_start == "sortable_backlog" || div_end == "sortable_backlog"){
+            scope.getNumberIssuesAfter(versionID);
+          }
+          
         });
 
         function updateStatus(id, status_id, version_id){
