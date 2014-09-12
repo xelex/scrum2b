@@ -387,7 +387,6 @@
       $scope.issuesClose = arrayIssuesClose;
       $scope.issueFilter = issueFilter;
       $scope.numberIssuesOfVersionActive = issueFilter.length;
-
     }
     
     $scope.bytesToSize =  function(bytes) {
@@ -437,9 +436,6 @@
           var issueID = $('.move_issue').attr('issue-id');
           var statusID = $('.move_issue').parent().attr('status-id');
           var versionID = $('.move_issue').parent().attr('version-id');
-          // alert(issueID)
-          // alert(statusID)
-          // alert(versionID)
           $('.move_issue').removeClass('move_issue');
           // if(div_end == "sortable_backlog"){
             // $('.move_issue').remove();
@@ -718,7 +714,6 @@
       });
       return( request.then( handleSuccess, handleError ) );
     }
-    
     function deleteComment(comment){
       var request = $http({
         method: "post",
