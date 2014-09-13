@@ -135,10 +135,10 @@
   .setting .status_li:hover .change_status { display: block;}
 
   .content_issue { position: relative; margin-top: 7px;}
-  .content_issue .select_progess_issue { position: absolute; border: 1px solid; top: 21px; right: 0px; width: 51px; padding: 0px; z-index: 300;}
+  .content_issue .select_progess_issue { position: absolute; top: 21px; right: 0px; width: 47px; padding: 0px; z-index: 300;background: #fff}
   .amount {width: 30px; border: 0px}
   .slider-vertical {float: right;}
-  .triangle {width: 0px; height: 0px; float: left; border-top: 0 solid transparent; border-bottom: 102px solid transparent; border-right: 34px solid yellow; }
+  .triangle {width: 0px; height: 0px; float: left; border-top: 0 solid transparent; border-bottom: 102px solid transparent; border-right: 34px solid blue; background: #fff }
 
   .detail_issue {}
   .content_issue .avata img { height: 40px; width: 40px; }
@@ -202,7 +202,7 @@
   .from_add_edit_issue .select_assign ul { list-style: none; padding-left: 0px; margin: 0px;}
   .from_add_edit_issue .select_assign ul li {padding-left: 5px;}
   .from_add_edit_issue .select_assign ul li:hover {background: #666 }
-
+  
   .absolute_backlog { position: absolute;}
   .fixed_backlog { position: fixed; top: 0px;}
 

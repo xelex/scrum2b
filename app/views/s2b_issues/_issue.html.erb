@@ -1,4 +1,4 @@
-
+<div class="issue_{{issue.id}}">
 <div class="title_issue">
   <a href="/issues/{{issue.id}}">#{{ issue.id }} {{ issue.subject }}</a>
   <span class="icon_config" ><i class="fa fa-cog"></i></span> 
@@ -52,7 +52,7 @@
     </div>
     <div class="select_progess_issue hide">
       <div class="triangle"></div>
-      <div slider issue-id="{{issue.id}}" config="sliderConfig" model="price" value="{{issue.done_ratio}}" class="cdbl-slider slider-vertical" ></div>
+      <div slider issue-id="{{issue.id}}" config="sliderConfig" model="done_ratio" value="{{issue.done_ratio}}" class="cdbl-slider slider-vertical" ></div>
 
       <!-- Price: {{issue.done_ratio}} -->
       <!-- <div slider config="sliderConfig" model="issue.done_ratio" value="{{issue.done_ratio}}" class="cdbl-slider slider-vertical"></div> -->
@@ -103,21 +103,22 @@
           {{ comment.notes || 'empty' }}
         </span>
         
-        <a href="" ng-click="textBtnForm.$show()" ng-if="<%= User.current.id %> == comment.user_id" ng-hide="textBtnForm.$visible" class="icon icon-edit edit_comment"></a>
+        <!-- <a href="" ng-click="textBtnForm.$show()" ng-if="<%= User.current.id %> == comment.user_id" ng-hide="textBtnForm.$visible" class="icon icon-edit edit_comment"></a>
         <a href="" ng-click="deleteComment(issue,comment)" class="icon icon-del delete" title="Delete" ng-hide="textBtnForm.$visible"></a>
+       -->
       </li>
     </ul><br />
-    <form ng-submit="createComment(comment)" >
-      <input ng-init="comment.journalized_type" type="hidden" value="Issue" />
-      <input ng-init="comment.journalized_id" type="hidden" value="{{issue.id}}" />
-      <input ng-init="comment.user_id" type="hidden" value="<%= User.current.id %>" />
-      <input ng-model="comment.notes" type="text" required/>
+    <!-- <form ng-submit="createComment(newcomment)">
+      <input type="hidden" ng-init="newcomment.journalized_type"  value="Issue" />
+      <input type="hidden" ng-init="newcomment.journalized_id"  value="{{issue.id}}" />
+      <input type="hidden" ng-init="newcomment.user_id" value="<%= User.current.id %>" />
+      <input type="text" ng-model="newcomment.notes" required/>
       <input type="submit" value="Create"/>
-    </form>
+    </form> -->
   </div><!--end comment-->
 
 </div><!--end detail issue-->
-  
+</div>
 
 <!-- from edit issue -->
 <%= render :partial => "s2b_issues/edit_issue" %>

@@ -145,6 +145,7 @@
             $scope.getIssues($scope.versionSelected,$scope.memberActiveShow);
             var id = issue.id
             $(".from_edit_issue_" + id ).hide();
+            $('.issue_' + id).show();
             
           }else{
             console.log (data.result);
@@ -294,8 +295,8 @@
       )
     }
     
-    $scope.createComment = function(){
-      console.log ("params create comment "  + $scope.comment)
+    $scope.createComment = function(newcomment){
+      console.log ("params create comment "  + newcomment.journalized_type)
       //ListIssues.createComment(comment).then(
         // function(data){
           // if (data.result == "update_success") {
@@ -316,6 +317,11 @@
     
     $scope.author = function(author_id){
       return $filter('filter')($scope.members, {id: author_id})[0].firstname;
+    }
+    
+    $scope.updateProgress = function(issue_id, value){
+      issue =  $filter('filter')($scope.allIssues, {id: issue_id})[0];
+      issue.done_ratio = value;
     }
     
     $scope.setUnActiveVersion = function(version){
@@ -505,6 +511,7 @@
     return {
       link: function(scope, elem,attrs) {
         $(elem).ready(function(){
+          var a = $(elem).val();
           $(elem).slider({
             orientation: "vertical",
             range: "min",
@@ -512,20 +519,16 @@
             max: 100,
             step: 10,
             value: 0,
-
             slide: function( event, ui ) {
               $(this).parent().parent().find( ".amount" ).val( ui.value );
-              console.log("slider");
             } 
           });
 
           $(elem).on( "slidestop", function( event, ui ) {
             var value = ui.value;
             var issue_id = $(this).attr('issue-id');
-            console.log('slidestop')
-            console.log(value)
-            console.log(issue_id)
             updateProgress(issue_id, value)
+            scope.updateProgress(issue_id,value);
           });
 
           function updateProgress(issue_id, value){
