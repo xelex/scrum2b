@@ -76,12 +76,13 @@ class S2bApplicationController < ApplicationController
   
   def opened_versions_list
     find_project unless @project
-    return @project.versions.where(:status => "open")
+    return Version.open.where("project_id IN (?)", @hierarchy_project_id)
+    #return @project.shared_versions.open
   end
   
   def closed_versions_list 
     find_project unless @project
-    return @project.versions.where(:status => "closed")
+    return @project.shared_versions.where(:status => "closed")
   end
   
   def find_project

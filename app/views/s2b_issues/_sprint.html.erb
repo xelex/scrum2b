@@ -2,14 +2,14 @@
 	<h3 class="title_sprint" ng-class="{'title_sprint_active': isActiveVersion(version)}" ng-click="activeVersion(version)" > 
 		{{version.name}} 
 		<span class="quantity_issue" ng-if="isActiveVersion(version)">{{numberIssuesOfVersionActive}}</span> 
-		<a href="/versions/{{version.id}} " target="_blank" >See Detail</a>
+		<a href="/versions/{{version.id}} " target="_blank">See Detail</a>
 	</h3>	
 	<div class="sprint_1 sprint sprint-active clearfix" ng-class="{'active': isActiveVersion(version)}">
 	  <div class="s2b_column_4 hide_backlog">
 	    <div class="padding_5 ">
 	      <div class="border_status">
 	        <div class="status_sprint">
-	          <span>New Isuse</span>
+	          <span>New Issue</span>
 	          <span class="icon_add_issue button" ng-click="setParamsAddIssue(statusIds.status_no_start,version.id)"><i class="fa fa-plus-circle"></i>Add</span>
 	        </div>
 	        <!-- add new issue -->
