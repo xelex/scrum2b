@@ -1,4 +1,4 @@
-class S2bIssuesController < ProjectController
+class S2bIssuesController < S2bApplicationController
 
   #before_filter :check_before, :only => [:index]
   before_filter :get_members, :only => [:index, :get_data, :load_data]
@@ -121,7 +121,6 @@ class S2bIssuesController < ProjectController
   
   def upload_file
     issue = Issue.find(params[:id])
-    logger.info "AAAAAAAAAAAAAAAAA #{params[:file]}"
     if issue.save_attachments(params[:file])
       render :json => {:result => "success"}
     end
@@ -151,7 +150,6 @@ class S2bIssuesController < ProjectController
     end
   end
   def create_comment
-    logger.info "PARAMS comment #{params}"
     render :json => {:result => "update_success"}
   end
 end

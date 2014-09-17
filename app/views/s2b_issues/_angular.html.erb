@@ -173,7 +173,7 @@
       $scope.getIssues($scope.versionSelected,$scope.memberActiveShow);
     };
     
-    $scope.updateVersion = function(issue,version_id) {
+    $scope.updateVersion = function(issue, version_id) {
       console.log ("updateVersion")
       ListIssues.updateVersion(issue.id,version_id).then(
          function(data){
@@ -186,7 +186,7 @@
       );
     };
 
-    $scope.changeStatus = function(issue,status_id,version_id) {
+    $scope.changeStatus = function(issue, status_id, version_id) {
       console.log ("changeStatus")
       ListIssues.changeStatus(issue.id,status_id, version_id).then(
          function(data){
@@ -199,7 +199,7 @@
       );
     };
     
-    $scope.getIssues = function(version,member_id){
+    $scope.getIssues = function(version, member_id){
       var indexOfVersion  = $scope.versionsLoaded.indexOf(version.id)
       if (indexOfVersion >= 0){
         var arrayIssues = [];
@@ -258,7 +258,7 @@
       );
     }
     
-    $scope.deleteFiles = function(attach,issue){
+    $scope.deleteFiles = function(attach, issue){
       ListIssues.deleteFile(attach).then(
         function(data){
           if (data.result == "success") {
@@ -270,7 +270,7 @@
       )
     }
     
-    $scope.deleteComment = function(issue,comment){
+    $scope.deleteComment = function(issue, comment){
       ListIssues.deleteComment(comment).then(
         function(data){
           if (data.result == "success") {
@@ -283,7 +283,7 @@
       )
     }
     
-    $scope.editComment = function(id,notes){
+    $scope.editComment = function(id, notes){
       ListIssues.editComment(id,notes).then(
         function(data){
           if (data.result == "update_success") {
@@ -308,7 +308,7 @@
       // )
     }
     
-    $scope.sortStop = function(issue_id,status_id,version_id){
+    $scope.sortStop = function(issue_id, status_id, version_id){
       issue =  $filter('filter')($scope.allIssues, {id: issue_id})[0];
       issue.status_id = status_id;
       issue.fixed_version_id = version_id;
@@ -357,7 +357,7 @@
       //$scope.numberIssuesOfVersionActive =  $filter('filter')($scope.allIssues, {fixed_version_id: $scope.versionSelected.id}).length;
     }
     
-    $scope.filterStatusIssues = function(issues,member_id) {
+    $scope.filterStatusIssues = function(issues, member_id) {
       var arrayIssuesNew = [];
       var arrayIssuesInProgess = [];
       var arrayIssuesResolved = [];
@@ -732,7 +732,7 @@
       return( request.then( handleSuccess, handleError ) );
     }
     
-    function editComment(id,notes){
+    function editComment(id, notes){
       var request = $http({
         method: "post",
         url: "edit_comment",
