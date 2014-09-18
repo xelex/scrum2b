@@ -76,8 +76,9 @@ class S2bApplicationController < ApplicationController
   
   def opened_versions_list
     find_project unless @project
-    return Version.open.where("project_id IN (?)", @hierarchy_project_id).order('-effective_date DESC')
-    #return @project.shared_versions.open
+    versions = Version.open.where("project_id IN (?)", @hierarchy_project_id).where('effective_date IS NOT NULL').order(:effective_date)
+    versions2 = Version.open.where("project_id IN (?)", @hierarchy_project_id).where('effective_date IS NULL')
+    return versions + versions2
   end
   
   def closed_versions_list 
