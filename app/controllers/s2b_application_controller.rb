@@ -76,7 +76,7 @@ class S2bApplicationController < ApplicationController
   
   def opened_versions_list
     find_project unless @project
-    return Version.open.where("project_id IN (?)", @hierarchy_project_id)
+    return Version.open.where("project_id IN (?)", @hierarchy_project_id).order('-effective_date DESC')
     #return @project.shared_versions.open
   end
   
