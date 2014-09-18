@@ -216,16 +216,22 @@
     margin-top: 11px;
     top: 100%;
     position: relative;
+    z-index: 1000;
   }
   
   .icon_top{
-    margin-right: -60px;
     margin-top: 0px;
+    margin-top: -15px;
   }
 
   .icon_down i, .icon_top i {cursor: pointer; font-size: 20px !important;}
   .icon_down:hover , .icon_top:hover {color: #ebebeb !important;}
-  .progress_issue { width: 20%; float: right; text-align: right; margin-top: 0px; }
+  .progress_issue {
+    width: 20%; 
+    float: right; 
+    text-align: right; 
+    margin-top: -10px;
+  }
   .progress_issue span { font-size: 14px; color: #e77315; float: left; }
   .progress_issue .value_progess {
     width: 70px; 
