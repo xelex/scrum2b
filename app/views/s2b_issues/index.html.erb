@@ -1,6 +1,7 @@
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'xeditable', :plugin => 'scrum2b' %>
   <%= stylesheet_link_tag 'version', :plugin => 'scrum2b' %>
+  <%= stylesheet_link_tag 'theme', :plugin => 'scrum2b' %>
   <%= stylesheet_link_tag 'application', :plugin => 'scrum2b' %>
   <%= javascript_include_tag "application", :plugin => 'scrum2b' %>
   <%= javascript_include_tag "jquery-ui", :plugin => 'scrum2b' %>
@@ -20,8 +21,8 @@
 
   	<div class="filter" >
       <div class="filter_left">
-        <h3><a style="color: white;" href="https://github.com/scrum2b/scrum2b/tree/2-1-stable" target="_blank">Scrum2B Tool</a> (Brand: 2-1-stable, desktop only)</h3>
-        <p>Supported by <a style="color: white;" href="http://www.scrumtobe.com" target="_blank">ScrumTobe Software</a></p>
+        <span style="display: block;">&nbsp;</span>
+        <span style="display: block; position: relative; top: -10px;" class="icon_backlog">Backlog<i class="fa fa-angle-right fa-lg"></i></span>
       </div>
 
 	    <div class="filter_right">
@@ -45,7 +46,6 @@
 	      </form>
 	    </div>
 	  </div> <!--end filter-->
-	  <span class="icon_backlog">Backlog<i class="fa fa-angle-right fa-lg"></i></span>
 	  
 	  <!-- Backlog -->
 	  <%= render :partial => "s2b_issues/backlog" %>
